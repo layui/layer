@@ -5,3 +5,4 @@
 据不完全统计，截至到2014年5月13号，layer已服务于10000多家web平台。layer作为layui库的成员，将一直致力于为web开发提供动力。
 
 官网：http://sentsin.com/jquery/layer/
+交流：http://say.sentsin.com/home-48.html
