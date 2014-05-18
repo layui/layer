@@ -1,0 +1,26 @@
+{
+  "name": "layer",
+  "version": "1.8.1",
+  "readmeFilename": "README.md",
+  "description": "最懂你的弹层组件，想到即可做到",
+  "main": "layer/layer.js",
+  "scripts": {
+    "test": "layer.msg('hello')"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sentsin/layer.git"
+  },
+  "keywords": [
+    "layer"
+  ],
+  "author": "贤心",
+  "license": "LGPL",
+  "bugs": {
+    "url": "https://github.com/sentsin/layer/issues"
+  },
+  "homepage": "http://sentsin.com/sentsin/layer",
+  "devDependencies": {
+    "grunt": "~0.4.5"
+  }
+}

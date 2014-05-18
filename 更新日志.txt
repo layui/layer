@@ -1,0 +1,47 @@
+﻿【1.8.1更新日志】2014-5-16
+1、紧急修复ie7下无法显示关闭按钮的bug
+2、紧急修复ie6最小化按钮高度稍微溢出的bug
+3、去掉layer.css的reset，以避免可能存在的样式冲突
+
+【1.8.0更新日志】2014-5-15
+
+01、新增窗口最小化/全屏/还原功能，通过配置参数 maxmin:true，不开启不用配置。本功能只针对普通页面层（type:1）和iframe层（type：2）有效。另外还需注意一点，参数area一旦配置%，将不会输出此项图标。
+02、新增窗口最小化回调函数min: function(index){}
+03、新增窗口全屏回调函数full: function(index){}
+04、新增窗口还原回调函数restore: function(index){}
+05、新增方法layer.min(index, options)/layer.full(index, options)/layer.restore(index)，分别用于外部设置新增窗口最小化/全屏/还原
+06、iframe层新增一个scrolling参数，用于控制是否显示滚动条。默认自动，如果想不显示，配置 iframe: {scrolling: 'no'} 即可
+07、layer.shift方法增加一个stop参数，用于设置是否动画到最顶部。如layer.shift('bottom', 500, 1)则表示从最顶部动画到指定坐标。
+
+08、优化IE6-8下拖动iframe层一卡一卡的问题
+09、优化在IE低版本下的内存占用问题。
+10、优化内部代码。
+
+11、修复layer.load('文字',time)第二个参数不能倒计时关闭的小bug
+12、修复ie个别版本的低级浏览器，第二次弹出iframe层时，无法获取焦点的bug
+13、修改弹出动画到offset设定好的位置，不再只是在边缘。
+14、修复layer.autoArea(index)的重大bug
+15、修复当fix设为false时，layer.shift动画弹出的bug。
+16、修复layer.use无法正确执行回调的bug
+
+17、layer.shift不再对ie6提供支持。
+18、为了规范统一性，关闭loading加载层的方法：layer.loadClose()改成layer.closeLoad()
+19、对layer所需要的icon做了预先加载
+20、layer.use支持加载外部的css/js
+
+【拓展模块】
+提示：相册支持左右方向键切换，以及ESC键关闭。
+21、新增layer.photos(options)，以实现图片的相册模式浏览。支持获取页面指定区域所有图片、支持异步请求过来的json数据
+22、新增layer.photosPage(options)，用于相册模式查看页面指定区域的所有图片。
+23、新增layer.ext = function(){}回调方法，用于首次加载layer.ext.js时立即执行拓展层。
+24、layer.prompt方法新增title和length参数，title用于自定义标题，length用于文本框的字数。如：layer.prompt({title:'helllo prompt', title: 300});
+25、layer.tab方法新增offset参数，用于控制坐标
+
+
+
+【小提示：如果亲们觉得layer对你有所帮助，可以去layer官网适当点击下广告支持一下。】
+官网： http://sentsin.com/jquery/layer/
+日志：http://say.sentsin.com/say-706.html
+
+
+
