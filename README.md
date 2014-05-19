@@ -1,8 +1,8 @@
 ﻿<h2>前言</h2>
-layer需要更优秀的代码，以让“易用”具备更强大的技术支撑。因此我们强烈呼吁有缘人加入进来，共同完善这位最懂你的精灵。
+layer需要更优秀的代码，以让其“易用和实用性”具备更强大的技术支撑。因此我们强烈呼吁有缘人加入进来，共同完善这位最懂你的精灵。
 
-<h2>使命</h2>
-打造国内最懂你、最实用的新一代弹层组件，始终致力于为web开发提供强劲动力。
+<h2>愿景</h2>
+致力于打造国内最盛行的弹层组件，为web开发提供强劲动力。
 
 
 <h2>简要</h2>
@@ -22,9 +22,8 @@ layer遵循于LGPL开源协议，她是一枚可以让你想到即可做到的�
     <li><a href="http://www.bayuanbao.com/" target="_blank">八圆包</a></li>
 </ul>
 
-在此，我们也呼吁更多已经在使用layer的优秀网站，能告之我们。
+在此，我们也希望更多已经在使用layer的优秀网站，都能告之我们。
 
 
 <h2>备注</h2>
-<p><a href="http://sentsin.com/jquery/layer/" target="_blank">官网</a></p>
-<p><a href="http://say.sentsin.com/home-48.html" target="_blank">交流</a></p>
+<p><a href="http://sentsin.com/jquery/layer/" target="_blank">官网</a>、<a href="http://say.sentsin.com/home-48.html" target="_blank">Say交流</a>、<a href="hhttp://url.cn/RAejZY" target="_blank">商业支持</a></p>
