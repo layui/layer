@@ -1,13 +1,30 @@
-﻿<h3>前言</h3>
-从本质上而言，layer需要更优秀的代码，以让“易用”具备更强大的技术支撑。因此我强烈呼吁有缘人加入进来，共同完善她。
+﻿<h2>前言</h2>
+layer需要更优秀的代码，以让“易用”具备更强大的技术支撑。因此我们强烈呼吁有缘人加入进来，共同完善这位最懂你的精灵。
 
-<h2>背景</h2>
+<h2>使命</h2>
+打造国内最懂你、最实用的新一代弹层组件，始终致力于为web开发提供强劲动力。
+
+
+<h2>简要</h2>
 layer遵循于LGPL开源协议，她是一枚可以让你想到即可做到的新生代web弹窗/层js组件。layer侧重于用户灵活的自定义，为不同人的使用习惯提供全方位设计，您的页面会因此拥有更丰富、友好的操作体验，而您只需在调用时简单地配置相关参数，即可轻松实现各类交互。
 
 与同类弹出层组件相比，layer的优势明显，她尽可能地在以更少的代码展现出更强健的功能。layer格外注重性能的提升、易用和实用性，正因如此，越来越多的开发者将媚眼投上了小小的layer。当你问及她的兼容时，layer必须告诉你，她兼容了一切浏览器，包括古老的ie6。layer公开了如此多的接口，这使得您可以DIY太多您需要的风格，尤其是页面层模式，意味着必要时您可以完全抛弃layer的现有皮肤，并用你的思维去勾勒她的衣着。而问题在于，我必须中止“王婆卖瓜”的陈述。因为一切的不足或友好，都需要您在使用过程中去发现。
 
-据不完全统计，截至到2014年5月13号，layer已服务于15000多家web平台。layer作为layui库的成员，将一直致力于为web开发提供动力。
+<h2>现状</h2>
+从两年前初出茅庐，到后来成为小众组件，再发展到今天，已为数以万计的人所熟知。
+据不完全统计，截至到2014年5月13号，layer已服务于15万多家web平台。
+其中包括：
+<ul>
+    <li><a href="http://app.10010.com/" target="_blank">中国联通</a></li>
+    <li><a href="http://www.mayi.com/" target="_blank">蚂蚁短租</a></li>
+    <li><a href="http://www.phpyun.com/" target="_blank">phpyun</a></li>
+    <li><a href="http://www.kapai.com/" target="_blank">卡牌网</a></li>
+    <li><a href="http://www.bayuanbao.com/" target="_blank">八圆包</a></li>
+</ul>
 
-官网：http://sentsin.com/jquery/layer/
+在此，我们也呼吁更多已经在使用layer的优秀网站，能告之我们。
 
-交流：http://say.sentsin.com/home-48.html
+
+<h2>备注</h2>
+<p><a href="http://sentsin.com/jquery/layer/" target="_blank">官网</a></p>
+<p><a href="http://say.sentsin.com/home-48.html" target="_blank">交流</a></p>
