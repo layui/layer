@@ -9,7 +9,6 @@
 
 *html{background-image:url(about:blank); background-attachment:fixed;}
 
-
 /** common **/
 .xubox_shade, .xubox_layer{position:fixed; _position:absolute;}
 .xubox_shade{top:0; left:0; width:100%; height:100%; _height:expression(document.body.offsetHeight+"px");}
@@ -57,7 +56,7 @@
 .xubox_setwin .xubox_maxmin:hover{background-position:-29px -206px;}
 .xubox_setwin .xubox_close0{ width:14px; height:14px; background-position: -31px -7px; cursor:pointer;}
 .xubox_setwin .xubox_close0:hover{background-position:-51px -7px;}
-.xubox_setwin .xubox_close1{position:absolute; right:-28px; top:-28px; _right:-15px; _top:-23px; width:30px; height:30px; _width:14px; _height:14px; margin-left:0; background-position:-60px -195px; _background-position:-31px -7px;}
+.xubox_setwin .xubox_close1{position:absolute; right:-28px; top:-28px; width:30px; height:30px;  margin-left:0; background-position:-60px -195px; *right:-18px; _right:-15px; _top:-23px; _width:14px; _height:14px; _background-position:-31px -7px;}
 .xubox_setwin .xubox_close1:hover{ background-position:-91px -195px; _background-position:-51px -7px;}
 
 .xubox_title{width:100%; height:35px; line-height:35px; border-bottom:1px solid #D5D5D5; background:url(default/xubox_title0.png) #EBEBEB repeat-x; cursor:move; font-size:14px; color:#333;}
