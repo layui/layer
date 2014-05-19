@@ -26,4 +26,4 @@ layer遵循于LGPL开源协议，她是一枚可以让你想到即可做到的�
 
 
 <h2>备注</h2>
-<p><a href="http://sentsin.com/jquery/layer/" target="_blank">官网</a>、<a href="http://say.sentsin.com/home-48.html" target="_blank">Say交流</a>、<a href="hhttp://url.cn/RAejZY" target="_blank">商业支持</a></p>
+<p><a href="http://sentsin.com/jquery/layer/" target="_blank">官网</a>、<a href="https://github.com/sentsin/layer/blob/master/Update%20Notes.txt" target="_blank">更新日志</a>、<a href="http://say.sentsin.com/home-48.html" target="_blank">Say交流</a>、<a href="http://url.cn/RAejZY" target="_blank">商业支持</a></p>
