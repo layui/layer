@@ -17,11 +17,10 @@ layer遵循于LGPL开源协议，她是一枚可以让你想到即可做到的�
 * [中国联通](http://app.10010.com/)
 * [蚂蚁短租](http://www.mayi.com/)
 * [phpyun](http://www.phpyun.com/)
-* [卡牌网](http://www.kapai.com/)
 * [八圆包](http://www.bayuanbao.com/)
 
 
-在此，我们也希望更多已经在使用layer的优秀网站，都能告之我们。
+如果您有大型项目也在使用layer，您可以联系作者，以便在layer官网展现案例，也为您的品牌推广尽一些绵薄之力。
 
 
 ## 备注
