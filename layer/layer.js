@@ -110,7 +110,7 @@ window.layer = {
     //加载层快捷引用
     load: function(parme, icon){
         if(typeof parme === 'string'){
-            return this.msg(parme, icon, 16);
+            return this.msg(parme, icon || 0, 16);
         } else {
             return $.layer({
                 time: parme,
