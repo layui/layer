@@ -1,6 +1,6 @@
-{
+﻿{
   "name": "layer",
-  "version": "1.8.1",
+  "version": "1.8",
   "readmeFilename": "README.md",
   "description": "最懂你的弹层组件，想到即可做到",
   "main": "layer/layer.js",
