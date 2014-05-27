@@ -1,13 +1,13 @@
 ﻿/**************************************************************
 
- @Name: layer v1.8.1 弹层组件开发版
- @Author: 贤心
- @Date: 2014-05-19
- @Blog: http://sentsin.com
+ @Name：layer v1.8.2 弹层组件开发版
+ @Author：贤心
+ @Date：2014-05-27
+ @Blog：http://sentsin.com
  @QQ群：78803422 (layer组件群3)
- @Copyright: Sentsin Xu(贤心)
+ @Copyright：Sentsin Xu(贤心)
  @官网：http://sentsin.com/jquery/layer
- @授权: http://item.taobao.com/item.htm?id=37295654589
+ @授权：http://url.cn/RAejZY
         
  *************************************************************/
 
@@ -15,28 +15,23 @@
 "use strict";
 
 var pathType = true, //是否采用自动获取绝对路径。false：将采用下述变量中的配置
-pathUrl = 'lily/lib/layer/', //上述变量为false才有效，当前layerjs所在目录(不用填写host，相对站点的根目录即可)。
+pathUrl = '/lily/lib/layer/', //上述变量为false才有效，当前layerjs所在目录(不用填写host，相对站点的根目录即可)。
 
 $, win, ready = {
-    hosts: (function(){
-        var dk = location.href.match(/\:\d+/);
-        dk = dk ? dk[0] : '';
-        return 'http://' + document.domain + dk + '/';
-    }()),
-    
+    host: 'http://' + location.host,
     getPath: function(){
         var js = document.scripts, jsPath = js[js.length - 1].src;
         if(pathType){
             return jsPath.substring(0, jsPath.lastIndexOf("/") + 1);
         } else {
-            return this.hosts + pathUrl;
+            return this.host + pathUrl;
         } 
     }
 };
 
 //默认内置方法。
 window.layer = {
-    v : '1.8.1', //版本号
+    v : '1.8.2', //版本号
     ie6: !-[1,] && !window.XMLHttpRequest,
     index: 0,
     path: ready.getPath(),
@@ -49,11 +44,11 @@ window.layer = {
         var node = document.createElement(iscss ? 'link' : 'script');
         var id = module.replace(/\.|\//g, '');
         if(iscss){
-            node.setAttribute('type', 'text/css');
-            node.setAttribute('rel', 'stylesheet');
+            node.type = 'text/css';
+            node.rel = 'stylesheet';
         }
-        node.setAttribute((iscss ? 'href' : 'src'), /^http:\/\//.test(module) ? module : layer.path + module);
-        node.setAttribute('id', id);
+        node[iscss ? 'href' : 'src'] = /^http:\/\//.test(module) ? module : layer.path + module;
+        node.id = id;
         if(!$('#'+ id)[0]){
             head.appendChild(node);
         }
@@ -226,7 +221,7 @@ Class.pt.space = function(html){
 };
 
 //缓存字符
-Class.pt.dom = {
+ready.dom = Class.pt.dom = {
     lay: 'xubox_layer',
     ifr: 'xubox_iframe',
     title: '.xubox_title',
@@ -778,29 +773,12 @@ Class.pt.openLayer = function(){
         typeof ready.config.end[index] === 'function' && ready.config.end[index]();
         delete ready.config.end[index]; 
     };
-
+    
     //关闭加载层
     layer.closeLoad = function(){
         var parent = $('.xubox_loading').parents('.'+dom.lay),
         index = parent.attr('times');
         layer.close(index);
-    };
-    
-    //关闭tips层
-    layer.closeTips = function(){
-        var tips = $('.xubox_tips');
-        if(tips[0]){
-            layer.close(tips.parents('.xubox_layer').attr('times'));
-        }
-    };
-    
-    //关闭所有层
-    layer.closeAll = function(){
-        var layerObj = $('.'+dom.lay);
-        $.each(layerObj, function(){
-            var i = $(this).attr('times');
-            layer.close(i);
-        });
     };
 
     //出场内置动画
@@ -882,6 +860,23 @@ Class.pt.openLayer = function(){
         layerNow.on('mousedown', setZindex);
         return layer.zIndex;
     };
+};
+
+//关闭tips层
+layer.closeTips = function(){
+    var tips = $('.xubox_tips');
+    if(tips[0]){
+        layer.close(tips.parents('.xubox_layer').attr('times'));
+    }
+};
+
+//关闭所有层
+layer.closeAll = function(){
+    var layerObj = $('.'+ready.dom.lay);
+    $.each(layerObj, function(){
+        var i = $(this).attr('times');
+        layer.close(i);
+    });
 };
 
 //主入口
