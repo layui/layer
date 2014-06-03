@@ -1,8 +1,8 @@
 ﻿/**************************************************************
 
- @Name：layer v1.8.2 弹层组件开发版
+ @Name：layer v1.8.3 弹层组件开发版
  @Author：贤心
- @Date：2014-05-27
+ @Date：2014-06-04
  @Blog：http://sentsin.com
  @QQ群：78803422 (layer组件群3)
  @Copyright：Sentsin Xu(贤心)
@@ -26,12 +26,15 @@ $, win, ready = {
         } else {
             return this.host + pathUrl;
         } 
-    }
+    },
+    
+    //五种原始层模式
+    type: ['dialog', 'page', 'iframe', 'loading', 'tips']
 };
 
 //默认内置方法。
 window.layer = {
-    v : '1.8.2', //版本号
+    v: '1.8.3', //版本号
     ie6: !-[1,] && !window.XMLHttpRequest,
     index: 0,
     path: ready.getPath(),
@@ -105,7 +108,7 @@ window.layer = {
     //加载层快捷引用
     load: function(parme, icon){
         if(typeof parme === 'string'){
-            return this.msg(parme, icon || 0, 16);
+            return layer.msg(parme, icon || 0, 16);
         } else {
             return $.layer({
                 time: parme,
@@ -137,17 +140,20 @@ window.layer = {
     }
 };
 
+//缓存常用字符
+var doms = {lay: 'xubox_layer', ifr: 'xubox_iframe', title: '.xubox_title', text: '.xubox_text', page: '.xubox_page'};
+
 var Class = function(setings){    
-    var config = this.config;
+    var that = this, config = that.config;
     layer.index++;
-    this.index = layer.index;
-    this.config = $.extend({} , config , setings);
-    this.config.dialog = $.extend({}, config.dialog , setings.dialog);
-    this.config.page = $.extend({}, config.page , setings.page);
-    this.config.iframe = $.extend({}, config.iframe , setings.iframe);    
-    this.config.loading = $.extend({}, config.loading , setings.loading);
-    this.config.tips = $.extend({}, config.tips , setings.tips);
-    this.creat();
+    that.index = layer.index;
+    that.config = $.extend({} , config , setings);
+    that.config.dialog = $.extend({}, config.dialog , setings.dialog);
+    that.config.page = $.extend({}, config.page , setings.page);
+    that.config.iframe = $.extend({}, config.iframe , setings.iframe);    
+    that.config.loading = $.extend({}, config.loading , setings.loading);
+    that.config.tips = $.extend({}, config.tips , setings.tips);
+    that.creat();
 };
 
 Class.pt = Class.prototype;
@@ -169,7 +175,7 @@ Class.pt.config = layer.config || {
     border: [6, 0.3, '#000'],
     zIndex: 19891014, 
     maxWidth: 400,
-    dialog: {btns : 1, btn : ['确定','取消'], type : 3, msg : '', yes : function(index){ layer.close(index);}, no : function(index){ layer.close(index);}
+    dialog: {btns : 1, btn : ['确定','取消'], type : 8, msg : '', yes : function(index){ layer.close(index);}, no : function(index){ layer.close(index);}
     },
     page: {dom: '#xulayer', html: '', url: ''},
     iframe: {src: 'http://sentsin.com', scrolling: 'auto'},
@@ -180,16 +186,14 @@ Class.pt.config = layer.config || {
     end: function(){} //终极销毁回调
 };
 
-Class.pt.type = ['dialog', 'page', 'iframe', 'loading', 'tips'];
-
 //容器
 Class.pt.space = function(html){
-    var html = html || '', times = this.index, config = this.config, dialog = config.dialog, dom = this.dom,
+    var that = this, html = html || '', times = that.index, config = that.config, dialog = config.dialog,
     ico = dialog.type === -1 ? '' : '<span class="xubox_msg xulayer_png32 xubox_msgico xubox_msgtype' + dialog.type + '"></span>',
     frame = [
     '<div class="xubox_dialog">'+ ico +'<span class="xubox_msg xubox_text" style="'+ (ico ? '' : 'padding-left:20px') +'">' + dialog.msg + '</span></div>',    
     '<div class="xubox_page">'+ html +'</div>',
-    '<iframe scrolling="'+ config.iframe.scrolling +'" allowtransparency="true" id="'+ dom.ifr +''+ times +'" name="'+ dom.ifr +''+ times +'" onload="$(this).removeClass(\'xubox_load\');" class="'+ dom.ifr +'" frameborder="0" src="' + config.iframe.src + '"></iframe>',                
+    '<iframe scrolling="'+ config.iframe.scrolling +'" allowtransparency="true" id="'+ doms.ifr +''+ times +'" name="'+ doms.ifr +''+ times +'" onload="this.className=\''+ doms.ifr +'\'" class="'+ doms.ifr +'" frameborder="0" src="' + config.iframe.src + '"></iframe>',                
     '<span class="xubox_loading xubox_loading_'+ config.loading.type +'"></span>',
     '<div class="xubox_tips" style="'+ config.tips.style[0] +'"><div class="xubox_tipsMsg">'+ config.tips.msg +'</div><i class="layerTipsG"></i></div>'
     ],
@@ -209,8 +213,8 @@ Class.pt.space = function(html){
     
     config.title[1] && (title = '<div class="xubox_title"><em>' + config.title[0] + '</em></div>');
     return [shade, 
-    '<div times="'+ times +'" showtime="'+ config.time +'" style="z-index:'+ zIndex +'" id="'+ dom.lay +''+ times 
-    +'" class="'+ dom.lay +'">'    
+    '<div times="'+ times +'" showtime="'+ config.time +'" style="z-index:'+ zIndex +'" id="'+ doms.lay +''+ times 
+    +'" class="'+ doms.lay +'">'    
     + '<div style="background-color:'+ config.bgcolor +'; z-index:'+ zIndex +'" class="xubox_main">'
     + frame[config.type]
     + title
@@ -220,18 +224,9 @@ Class.pt.space = function(html){
     ];
 };
 
-//缓存字符
-ready.dom = Class.pt.dom = {
-    lay: 'xubox_layer',
-    ifr: 'xubox_iframe',
-    title: '.xubox_title',
-    text: '.xubox_text',
-    page: '.xubox_page'
-};
-
 //创建骨架
 Class.pt.creat = function(){
-    var that = this , space = '', config = that.config, dialog = config.dialog, dom = that.dom, times = that.index;
+    var that = this , space = '', config = that.config, dialog = config.dialog, times = that.index;
     var page = config.page, body = $("body"), setSpace = function(html){
         var html = html || '';
         space = that.space(html);
@@ -245,7 +240,7 @@ Class.pt.creat = function(){
     switch(config.type){
         case 0: 
             config.title[1] || (config.area = ['auto','auto']);
-            $('.xubox_dialog')[0] && layer.close($('.xubox_dialog').parents('.'+ dom.lay).attr('times'));
+            $('.xubox_dialog')[0] && layer.close($('.xubox_dialog').parents('.'+ doms.lay).attr('times'));
         break;
         
         case 1:
@@ -260,7 +255,7 @@ Class.pt.creat = function(){
                     page.ok && page.ok(datas);
                 });
             } else {
-                if($(page.dom).parents(dom.page).length == 0){
+                if($(page.dom).parents(doms.page).length == 0){
                     setSpace();
                     $(page.dom).show().wrap($(space[1]));
                 } else {
@@ -273,7 +268,7 @@ Class.pt.creat = function(){
             config.title = [];
             config.area = ['auto', 'auto']; 
             config.closeBtn = ['', false];
-            $('.xubox_loading')[0] && layer.close($('.xubox_loading').parents('.'+ dom.lay).attr('times'));
+            $('.xubox_loading')[0] && layer.close($('.xubox_loading').parents('.'+ doms.lay).attr('times'));
         break;
         
         case 4:
@@ -281,7 +276,7 @@ Class.pt.creat = function(){
             config.area = ['auto', 'auto'];
             config.fix = false;
             config.border = [0];
-            $('.xubox_tips')[0] && layer.close($('.xubox_tips').parents('.'+ dom.lay).attr('times'));
+            $('.xubox_tips')[0] && layer.close($('.xubox_tips').parents('.'+ doms.lay).attr('times'));
         break;
     };
     if(config.type !== 1){
@@ -289,7 +284,7 @@ Class.pt.creat = function(){
         body.append($(space[1]));
     }
 
-    var layerE = that.layerE = $('#'+ dom.lay + times);
+    var layerE = that.layerE = $('#'+ doms.lay + times);
 
     //设置layer面积坐标等数据 
     if(config.offset[0].indexOf("px") != -1){
@@ -341,9 +336,13 @@ Class.pt.creat = function(){
     that.callback();
 };
 
+ready.fade = function(obj, time, opa){
+    obj.css({opacity: 0}).animate({opacity: opa}, time);
+};
+
 //初始化骨架
 Class.pt.set = function(times){
-    var that = this, dom = that.dom, layerE = that.layerE, layerTitle = layerE.find(dom.title);
+    var that = this, layerE = that.layerE, layerTitle = layerE.find(doms.title);
     var config = that.config, dialog = config.dialog, page = config.page, loading = config.loading;
     that.autoArea(times);
     if(config.title[1]){
@@ -354,27 +353,27 @@ Class.pt.set = function(times){
         config.type != 4 && layerE.find('.xubox_close').addClass('xubox_close1');
     };
 
-    layerE.attr({'type' :  that.type[config.type]});
+    layerE.attr({'type' :  ready.type[config.type]});
 
     switch(config.type){
         case 0:
             layerE.find('.xubox_main').css({'background-color': '#fff'});
             if(config.title[1]){
-                layerE.find(dom.text).css({paddingTop: 18 + layerTitle.outerHeight()});
+                layerE.find(doms.text).css({paddingTop: 18 + layerTitle.outerHeight()});
             }else{
                 layerE.find('.xubox_msgico').css({top: 8});
-                layerE.find(dom.text).css({marginTop : 11});    
+                layerE.find(doms.text).css({marginTop : 11});    
             }
         break;
         
         case 1:     
             layerE.find(page.dom).addClass('layer_pageContent');
             config.shade[0] && layerE.css({zIndex: config.zIndex + 1});
-            config.title[1] && layerE.find(dom.page).css({top: layerTitle.outerHeight()});
+            config.title[1] && layerE.find(doms.page).css({top: layerTitle.outerHeight()});
         break;
         
         case 2:
-            var iframe = layerE.find('.'+ dom.ifr), heg = layerE.height();
+            var iframe = layerE.find('.'+ doms.ifr), heg = layerE.height();
             iframe.addClass('xubox_load').css({width: layerE.width()});
             config.title[1] ? iframe.css({top: layerTitle.height(), height: heg - layerTitle.height()}) : iframe.css({top: 0, height : heg});
             layer.ie6 && iframe.attr('src', config.iframe.src);
@@ -428,14 +427,17 @@ Class.pt.set = function(times){
         break;
     };
     
-    config.fadeIn && layerE.css({opacity: 0}).animate({opacity: 1}, config.fadeIn);
+    if(config.fadeIn){
+        ready.fade(layerE, config.fadeIn, 1);
+        ready.fade($('#xubox_shade'+ times), config.fadeIn, config.shade[0]);
+    }
     that.move();
 };
 
 //自适应宽高
 Class.pt.autoArea = function(times){
-    var that = this, times = times || that.index, dom = that.dom, config = that.config, page = config.page;
-    var layerE = $('#'+ dom.lay + times), layerTitle = layerE.find(dom.title), layerMian = layerE.find('.xubox_main');
+    var that = this, times = times || that.index, config = that.config, page = config.page;
+    var layerE = $('#'+ doms.lay + times), layerTitle = layerE.find(doms.title), layerMian = layerE.find('.xubox_main');
     var titHeight = config.title[1] ? layerTitle.innerHeight() : 0, outHeight, btnHeight = 0;
     if(config.area[0] === 'auto' && layerMian.outerWidth() >= config.maxWidth){    
         layerE.css({width : config.maxWidth});
@@ -443,13 +445,13 @@ Class.pt.autoArea = function(times){
     switch(config.type){
         case 0:
             var aBtn = layerE.find('.xubox_botton>a');
-            outHeight = layerE.find(dom.text).outerHeight() + 20;
+            outHeight = layerE.find(doms.text).outerHeight() + 20;
             if(aBtn.length > 0){
                 btnHeight = aBtn.outerHeight() +  20;
             }
         break;
         case 1:
-            var layerPage = layerE.find(dom.page);
+            var layerPage = layerE.find(doms.page);
             outHeight = $(page.dom).outerHeight();
             config.area[0] === 'auto' && layerE.css({width : layerPage.outerWidth()});
             if(page.html !== '' || page.url !== ''){
@@ -473,7 +475,7 @@ Class.pt.autoArea = function(times){
 
 //拖拽层
 Class.pt.move = function(){
-    var that = this, config = this.config, dom = that.dom, conf = {
+    var that = this, config = that.config, conf = {
         setY: 0,
         moveLayer: function(){
             if(parseInt(conf.layerE.css('margin-left')) == 0){
@@ -496,7 +498,7 @@ Class.pt.move = function(){
         M.preventDefault();
         if($(this).attr('move') === 'ok'){
             conf.ismove = true;
-            conf.layerE = $(this).parents('.'+ dom.lay);
+            conf.layerE = $(this).parents('.'+ doms.lay);
             var xx = conf.layerE.offset().left, yy = conf.layerE.offset().top, ww = conf.layerE.width() - 6, hh = conf.layerE.height() - 6;
             if(!$('#xubox_moves')[0]){
                 $('body').append('<div id="xubox_moves" class="xubox_moves" style="left:'+ xx +'px; top:'+ yy +'px; width:'+ ww +'px; height:'+ hh +'px; z-index:2147483584"></div>');
@@ -549,14 +551,14 @@ Class.pt.move = function(){
 
 //自动关闭layer
 Class.pt.autoclose = function(){
-    var that = this, time = this.config.time, maxLoad = function(){
+    var that = this, time = that.config.time, maxLoad = function(){
         time--;
         if(time === 0){
             layer.close(that.index);
             clearInterval(that.autotime);
         }
     };
-    this.autotime = setInterval(maxLoad , 1000);
+    that.autotime = setInterval(maxLoad , 1000);
 };
 
 ready.config = {
@@ -609,8 +611,19 @@ Class.pt.callback = function(){
     ready.config.end[that.index] = config.end;
 };
 
+//恢复select
+ready.reselect = function(){
+    $.each($('select'), function(index , value){
+        var sthis = $(this);
+        if(!sthis.parents('.'+doms.lay)[0]){
+            (sthis.attr('layer') == 1 && $('.'+doms.lay).length < 1) && sthis.removeAttr('layer').show(); 
+        }
+        sthis = null;
+    });
+}; 
+
 Class.pt.IE6 = function(layerE){
-    var that = this, select = $('select'), dom = that.dom;
+    var that = this;
     var _ieTop = layerE.offset().top;    
     //ie6的固定与相对定位
     if(that.config.fix){
@@ -626,159 +639,22 @@ Class.pt.IE6 = function(layerE){
     win.scroll(ie6Fix);
 
     //隐藏select
-    $.each(select, function(index , value){
+    $.each($('select'), function(index , value){
         var sthis = $(this);
-        if(!sthis.parents('.'+dom.lay)[0]){
+        if(!sthis.parents('.'+doms.lay)[0]){
             sthis.css('display') == 'none' || sthis.attr({'layer' : '1'}).hide();
         }
         sthis = null;
     });
-
-    //恢复select
-    that.reselect = function(){
-        $.each(select, function(index , value){
-            var sthis = $(this);
-            if(!sthis.parents('.'+dom.lay)[0]){
-                (sthis.attr('layer') == 1 && $('.'+dom.lay).length < 1) && sthis.removeAttr('layer').show(); 
-            }
-            sthis = null;
-        });
-    }; 
 };
 
 //给layer对象拓展方法
 Class.pt.openLayer = function(){
-    var that = this, dom = that.dom, conf = {};
-    dom.html = $('html');
+    var that = this;
 
     //自适应宽高
     layer.autoArea = function(index){
         return that.autoArea(index);
-    };
-
-    //获取layer当前索引
-    layer.getIndex = function(selector){
-        return $(selector).parents('.'+dom.lay).attr('times');    
-    };
-
-    //获取子iframe的DOM
-    layer.getChildFrame = function(selector, index){
-        index = index || $('.'+ dom.ifr).parents('.'+dom.lay).attr('times');
-        return $('#'+ dom.lay + index).find('.'+ dom.ifr).contents().find(selector);    
-    };
-
-    //得到当前iframe层的索引，子iframe时使用
-    layer.getFrameIndex = function(name){
-        return $(name ? '#'+ name : '.'+ dom.ifr).parents('.'+dom.lay).attr('times');
-    };
-
-    //iframe层自适应宽高
-    layer.iframeAuto = function(index){
-        index = index || $('.'+ dom.ifr).parents('.'+dom.lay).attr('times');
-        var heg = this.getChildFrame('body', index).outerHeight(),
-        layero = $('#'+ dom.lay + index), tit = layero.find(dom.title), titHt = 0;
-        tit && (titHt = tit.height());
-        layero.css({height: heg + titHt});
-        var bs = -parseInt($('#xubox_border'+ index).css('top'));
-        $('#xubox_border'+ index).css({height: heg + 2*bs + titHt});
-        $('#'+ dom.ifr + index).css({height: heg});
-    };
-    
-    conf.isauto = function(layero, options, offset){
-        options.area[0] === 'auto' && (options.area[0] = layero.outerWidth());
-        options.area[1] === 'auto' && (options.area[1]  = layero.outerHeight());
-        layero.attr({area: options.area + ',' + offset});
-        layero.find('.xubox_max').addClass('xubox_maxmin');
-    };
-    
-    conf.rescollbar = function(index){
-        if(dom.html.attr('layer-full') == index){
-            if(dom.html[0].style.removeProperty){
-                dom.html[0].style.removeProperty('overflow');
-            } else {
-                dom.html[0].style.removeAttribute('overflow');
-            }
-            dom.html.removeAttr('layer-full');
-        }
-    };
-    
-    //最小化
-    layer.min = function(index, options){
-        var layero = $('#'+ dom.lay + index), offset = [layero.position().top, layero.position().left + parseFloat(layero.css('margin-left'))];
-        conf.isauto(layero, options, offset);
-        layer.area(index, {width: 180, height: 35});
-        layero.find('.xubox_min').hide();
-        layero.attr('type') === 'page' && layero.find(dom.page).hide();
-        conf.rescollbar(index);
-    };
-    
-    //还原
-    layer.restore = function(index){
-        var layero = $('#'+ dom.lay + index), area = layero.attr('area').split(',');
-        var type = layero.attr('type');
-        layer.area(index, {
-            width: parseFloat(area[0]), 
-            height: parseFloat(area[1]), 
-            top: parseFloat(area[2]), 
-            left: parseFloat(area[3])
-        });
-        layero.find('.xubox_max').removeClass('xubox_maxmin');
-        layero.find('.xubox_min').show();
-        layero.attr('type') === 'page' && layero.find(dom.page).show();
-        conf.rescollbar(index);
-    };
-    
-    //全屏
-    layer.full = function(index, options){
-        var layero = $('#'+ dom.lay + index), borders = options.border[0]*2, timer;
-        var offset = [layero.position().top, layero.position().left + parseFloat(layero.css('margin-left'))];
-        conf.isauto(layero, options, offset);
-        if(!dom.html.attr('layer-full')){
-            dom.html.css('overflow','hidden').attr('layer-full', index);
-        }
-        clearTimeout(timer);
-        timer = setTimeout(function(){
-            layer.area(index, {
-                 top: layero.css('position') === 'fixed' ? 0 : win.scrollTop(),
-                 left: layero.css('position') === 'fixed' ? 0 : win.scrollLeft(),
-                 width: win.width() - borders,
-                 height: win.height() - borders
-            });
-        }, 100);
-    };
-
-    //关闭layer
-    layer.close = function(index){
-        var layero = $('#'+ dom.lay + index), type = layero.attr('type'), shadeNow = $('#xubox_moves, #xubox_shade' + index);
-        if(!layero[0]){
-            return;
-        }
-        if(type == that.type[1]){
-            if(layero.find('.xuboxPageHtml')[0]){
-                layero[0].innerHTML = '';
-                layero.remove();
-            }else{
-                layero.find('.xubox_setwin,.xubox_close,.xubox_botton,.xubox_title,.xubox_border').remove();
-                for(var i = 0 ; i < 3 ; i++){
-                    layero.find('.layer_pageContent').unwrap().hide();
-                }
-            }
-        }else{
-            layero[0].innerHTML = '';
-            layero.remove();
-        }
-        shadeNow.remove();
-        layer.ie6 && that.reselect();
-        conf.rescollbar(index);
-        typeof ready.config.end[index] === 'function' && ready.config.end[index]();
-        delete ready.config.end[index]; 
-    };
-    
-    //关闭加载层
-    layer.closeLoad = function(){
-        var parent = $('.xubox_loading').parents('.'+dom.lay),
-        index = parent.attr('times');
-        layer.close(index);
     };
 
     //出场内置动画
@@ -817,38 +693,7 @@ Class.pt.openLayer = function(){
     layer.setMove = function(){
         return that.move();
     };
-
-    //给指定层重置属性
-    layer.area = function(index, options){
-        var layero = [$('#'+ dom.lay + index), $('#xubox_border'+ index)],
-        type = layero[0].attr('type'), main = layero[0].find('.xubox_main'),
-        title = layero[0].find(dom.title);
-        if(type === that.type[1] || type === that.type[2]){
-            layero[0].css(options);
-            main.css({width: options.width, height: options.height});
-            if(type === that.type[2]){
-                var iframe = layero[0].find('iframe');
-                iframe.css({width: options.width, height: title ? options.height - title.innerHeight() : options.height});
-            }
-            if(layero[0].css('margin-left') !== '0px') {
-                options.hasOwnProperty('top') && layero[0].css({top: options.top - (layero[1][0] && parseFloat(layero[1].css('top')))});
-                options.hasOwnProperty('left') && layero[0].css({left: options.left + layero[0].outerWidth()/2 - (layero[1][0] && parseFloat(layero[1].css('left')))});
-                layero[0].css({marginLeft : -layero[0].outerWidth()/2});
-            }
-            if(layero[1][0]){
-                layero[1].css({
-                    width: parseFloat(options.width) - 2*parseFloat(layero[1].css('left')), 
-                    height: parseFloat(options.height) - 2*parseFloat(layero[1].css('top'))
-                });
-            }
-        }
-    };
     
-    //重置iframe url
-    layer.iframeSrc = function(index, url){
-        $('#'+ dom.lay + index).find('iframe').attr('src', url);
-    };
-
     //置顶当前窗口
     layer.zIndex = that.config.zIndex;
     layer.setTop = function(layerNow){
@@ -862,27 +707,185 @@ Class.pt.openLayer = function(){
     };
 };
 
+ready.isauto = function(layero, options, offset){
+    options.area[0] === 'auto' && (options.area[0] = layero.outerWidth());
+    options.area[1] === 'auto' && (options.area[1]  = layero.outerHeight());
+    layero.attr({area: options.area + ',' + offset});
+    layero.find('.xubox_max').addClass('xubox_maxmin');
+};
+
+ready.rescollbar = function(index){
+    if(doms.html.attr('layer-full') == index){
+        if(doms.html[0].style.removeProperty){
+            doms.html[0].style.removeProperty('overflow');
+        } else {
+            doms.html[0].style.removeAttribute('overflow');
+        }
+        doms.html.removeAttr('layer-full');
+    }
+};
+
+
+/**
+ * 集成属性/方法
+ **/
+ 
+
+//获取page层所在索引
+layer.getIndex = function(selector){
+    return $(selector).parents('.'+doms.lay).attr('times');    
+};
+
+//获取子iframe的DOM
+layer.getChildFrame = function(selector, index){
+    index = index || $('.'+ doms.ifr).parents('.'+doms.lay).attr('times');
+    return $('#'+ doms.lay + index).find('.'+ doms.ifr).contents().find(selector);    
+};
+
+//得到当前iframe层的索引，子iframe时使用
+layer.getFrameIndex = function(name){
+    return $(name ? '#'+ name : '.'+ doms.ifr).parents('.'+doms.lay).attr('times');
+};
+
+//iframe层自适应宽高
+layer.iframeAuto = function(index){
+    index = index || $('.'+ doms.ifr).parents('.'+doms.lay).attr('times');
+    var heg = layer.getChildFrame('body', index).outerHeight(),
+    layero = $('#'+ doms.lay + index), tit = layero.find(doms.title), titHt = 0;
+    tit && (titHt = tit.height());
+    layero.css({height: heg + titHt});
+    var bs = -parseInt($('#xubox_border'+ index).css('top'));
+    $('#xubox_border'+ index).css({height: heg + 2*bs + titHt});
+    $('#'+ doms.ifr + index).css({height: heg});
+};
+
+//重置iframe url
+layer.iframeSrc = function(index, url){
+    $('#'+ doms.lay + index).find('iframe').attr('src', url);
+};
+
+//重置层
+layer.area = function(index, options){
+    var layero = [$('#'+ doms.lay + index), $('#xubox_border'+ index)],
+    type = layero[0].attr('type'), main = layero[0].find('.xubox_main'),
+    title = layero[0].find(doms.title);
+    
+    if(type === ready.type[1] || type === ready.type[2]){
+        layero[0].css(options);
+        main.css({width: options.width, height: options.height});
+        if(type === ready.type[2]){
+            var iframe = layero[0].find('iframe');
+            iframe.css({width: options.width, height: title ? options.height - title.innerHeight() : options.height});
+        }
+        if(layero[0].css('margin-left') !== '0px') {
+            options.hasOwnProperty('top') && layero[0].css({top: options.top - (layero[1][0] ? parseFloat(layero[1].css('top')) : 0)});
+            options.hasOwnProperty('left') && layero[0].css({left: options.left + layero[0].outerWidth()/2 - (layero[1][0] ? parseFloat(layero[1].css('left')) : 0)});
+            layero[0].css({marginLeft : -layero[0].outerWidth()/2});
+        }
+        if(layero[1][0]){
+            layero[1].css({
+                width: parseFloat(options.width) - 2*parseFloat(layero[1].css('left')), 
+                height: parseFloat(options.height) - 2*parseFloat(layero[1].css('top'))
+            });
+        }
+    }
+};
+
+//最小化
+layer.min = function(index, options){
+    var layero = $('#'+ doms.lay + index), offset = [layero.position().top, layero.position().left + parseFloat(layero.css('margin-left'))];
+    ready.isauto(layero, options, offset);
+    layer.area(index, {width: 180, height: 35});
+    layero.find('.xubox_min').hide();
+    layero.attr('type') === 'page' && layero.find(doms.page).hide();
+    ready.rescollbar(index);
+};
+
+//还原
+layer.restore = function(index){
+    var layero = $('#'+ doms.lay + index), area = layero.attr('area').split(',');
+    var type = layero.attr('type');
+    layer.area(index, {
+        width: parseFloat(area[0]), 
+        height: parseFloat(area[1]), 
+        top: parseFloat(area[2]), 
+        left: parseFloat(area[3])
+    });
+    layero.find('.xubox_max').removeClass('xubox_maxmin');
+    layero.find('.xubox_min').show();
+    layero.attr('type') === 'page' && layero.find(doms.page).show();
+    ready.rescollbar(index);
+};
+
+//全屏
+layer.full = function(index, options){
+    var layero = $('#'+ doms.lay + index), borders = options.border[0]*2, timer;
+    var offset = [layero.position().top, layero.position().left + parseFloat(layero.css('margin-left'))];
+    ready.isauto(layero, options, offset);
+    if(!doms.html.attr('layer-full')){
+        doms.html.css('overflow','hidden').attr('layer-full', index);
+    }
+    clearTimeout(timer);
+    timer = setTimeout(function(){
+        layer.area(index, {
+             top: layero.css('position') === 'fixed' ? 0 : win.scrollTop(),
+             left: layero.css('position') === 'fixed' ? 0 : win.scrollLeft(),
+             width: win.width() - borders,
+             height: win.height() - borders
+        });
+    }, 100);
+};
+
+//关闭layer总方法
+layer.close = function(index){
+    var layero = $('#'+ doms.lay + index), type = layero.attr('type'), shadeNow = $('#xubox_moves, #xubox_shade' + index);
+    if(!layero[0]){
+        return;
+    }
+    if(type == ready.type[1]){
+        if(layero.find('.xuboxPageHtml')[0]){
+            layero[0].innerHTML = '';
+            layero.remove();
+        }else{
+            layero.find('.xubox_setwin,.xubox_close,.xubox_botton,.xubox_title,.xubox_border').remove();
+            for(var i = 0 ; i < 3 ; i++){
+                layero.find('.layer_pageContent').unwrap().hide();
+            }
+        }
+    }else{
+        layero[0].innerHTML = '';
+        layero.remove();
+    }
+    shadeNow.remove();
+    layer.ie6 && ready.reselect();
+    ready.rescollbar(index);
+    typeof ready.config.end[index] === 'function' && ready.config.end[index]();
+    delete ready.config.end[index]; 
+};
+
+//关闭loading层
+layer.closeLoad = function(){
+    layer.close($('.xubox_loading').parents('.'+doms.lay).attr('times'));
+};
+
 //关闭tips层
 layer.closeTips = function(){
-    var tips = $('.xubox_tips');
-    if(tips[0]){
-        layer.close(tips.parents('.xubox_layer').attr('times'));
-    }
+    layer.close($('.xubox_tips').parents('.'+doms.lay).attr('times'));
 };
 
 //关闭所有层
 layer.closeAll = function(){
-    var layerObj = $('.'+ready.dom.lay);
-    $.each(layerObj, function(){
-        var i = $(this).attr('times');
-        layer.close(i);
+    $.each($('.'+doms.lay), function(){
+        layer.close($(this).attr('times'));
     });
 };
+
 
 //主入口
 ready.run = function(){
     $ = jQuery; 
     win = $(window);
+    doms.html = $('html');
     layer.use('skin/layer.css');
     $.layer = function(deliver){
         var o = new Class(deliver);

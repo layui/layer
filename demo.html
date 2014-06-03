@@ -2,7 +2,6 @@
 <html>
 <head>
 <title>layer-更懂你的web弹窗解决方案</title>
-</head>
 <script src="http://res.xiami.net/pc/lay/lib.js"></script>
 <script src="layer/layer.min.js"></script>
 
@@ -18,22 +17,21 @@ pre{font-family:'微软雅黑'}
 .button{display:inline-block; *display:inline; *zoom:1; line-height:30px; padding:0 20px; background-color:#56B4DC; color:#fff; font-size:14px; border-radius:3px; cursor:pointer; font-weight:normal;}
 .imgs img{width:300px;}
 </style>
+</head>
 <body>
 <div class="box">
 <pre>
- @Name : layer v<script>document.write(layer.v)</script> 弹层组件说明
- @author: 贤心
- @Copyright: Sentsin Xu(贤心)
- 
- @blog: <a href="http://sentsin.com" target="_blank">http://sentsin.com</a>
+ @Name：layer-v<script>document.write(layer.v)</script> 弹层组件说明
+ @Author：贤心
+ @Blog：<a href="http://sentsin.com" target="_blank">http://sentsin.com</a>
  @官网：<a href="http://sentsin.com/jquery/layer"  target="_blank">http://sentsin.com/jquery/layer</a>
- @授权:<a href="http://item.taobao.com/item.htm?id=37295654589"  target="_blank">http://item.taobao.com/item.htm?id=37295654589</a>
+ @授权：<a href="http://item.taobao.com/item.htm?id=37295654589"  target="_blank">http://url.cn/RAejZY</a>
 
 
-【注意事项】
-一、使用时，请将layer整个文件夹放置你站点的任何一个目录，只需引入layer.min.js即可，css等其它文件无需引入。
+<strong>【注意事项】</strong>
+一、使用时，请把文件夹layer整个放置在您站点的任何一个目录，只需引入layer.min.js即可，除jQuery外，其它文件无需再引入。
 二、如果您的js引入是通过合并处理或者您不想采用layer自动获取的绝对路径，您需要打开layer.min.js 去配置相对路径url。（默认采用自动获取layer所在的路径）
-三、jquery必须为1.8或1.8以上版本（原因，更小，性能更好，且新版layer使用了部分jq1.8+的特性），下载包里即为jquery1.9下载地址
+三、jquery必须为1.8或1.8以上版本（原因，更小，性能更好，且新版layer使用了部分jq1.8+的特性），下载包里doc文件里有jquery1.9下载地址
 四、更多使用说明与演示（demo），请参见layer官网。
 五、layer使用免费，可应用于任何类型的web平台（违法站除外），使用时请务必保留来源。
 六、如果您用于商业平台，您须经过授权。
@@ -85,7 +83,6 @@ layer.use('extend/layer.ext.js', function(){
 $('#suggest').on('click',function(event){
 	var height = $(window).height(), index = $.layer({
 		type : 2,
-		fix : false,
 		shade : [0.5 , '#000' , true],
 		shadeClose : true,
 		border : [!0],
