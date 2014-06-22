@@ -14,7 +14,7 @@
 ;!function(window, undefined){        
 "use strict";
 
-var pathType = false, //是否采用自动获取绝对路径。false：将采用下述变量中的配置
+var pathType = true, //是否采用自动获取绝对路径。false：将采用下述变量中的配置
 pathUrl = '/lily/lib/layer/', //上述变量为false才有效，当前layerjs所在目录(不用填写host，相对站点的根目录即可)。
 
 $, win, ready = {
