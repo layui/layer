@@ -1,9 +1,9 @@
 ﻿/**
  
  @Name: layer拓展类，依赖于layer
- @Date: 2014.05.16
+ @Date: 2014.07.04
  @Author: 贤心
- @Versions：1.3
+ @Versions：1.8.4-ext
  @Api：http://sentsin.com/jquery/layer
  @Desc: 本拓展会持续更新
 
@@ -13,13 +13,10 @@ layer.use('skin/layer.ext.css', function(){
     layer.ext && layer.ext();
 });
 
-layer.extv = '1.3';
-
 
 /**
 
  系统prompt
- 2014.5.11
  By 贤心
  
 **/
@@ -27,7 +24,7 @@ layer.extv = '1.3';
 layer.prompt = function(parme, yes, no){
     var log = {}, parme = parme || {}, conf = {
         area: ['auto', 'auto'],
-        offset: [parme.top || '200px', ''],
+        offset: [parme.top || '', ''],
         title: parme.title || '信息',
         dialog: {
             btns: 2,
@@ -40,7 +37,7 @@ layer.prompt = function(parme, yes, no){
                 } else {
                     return 'text';
                 }
-            }() +'" class="xubox_prompt xubox_form" id="xubox_prompt" value="" />',
+            }() +'" class="xubox_prompt xubox_form" id="xubox_prompt" value="'+ (parme.val || '') +'" />',
             yes: function(index){
                 var val = log.prompt.val();
                 if(val === ''){
@@ -48,8 +45,7 @@ layer.prompt = function(parme, yes, no){
                 } else if(val.replace(/\s/g, '').length > (parme.length || 1000)) {
                     layer.tips('最多输入'+ (parme.length || 1000) +'个字数', '#xubox_prompt', 2);
                 } else {
-                    layer.close(index);
-                    yes && yes(val);
+                    yes && yes(val, index, log.prompt);
                 }
                 
             }, no: no
@@ -66,8 +62,7 @@ layer.prompt = function(parme, yes, no){
 
 /**
 
- tab层 v1.0.0
- 2014.5.11
+ tab层
  By 贤心
  
 **/
@@ -77,6 +72,7 @@ layer.tab = function(parme){
         type: 1,
         border: [0],
         area: ['auto', 'auto'],
+        bgcolor: '',
         title: false,
         shade : parme.shade,
         offset: parme.offset,
@@ -131,8 +127,7 @@ layer.tab = function(parme){
 
 /**
 
- 相册层 v1.0.0
- 2014.5.11
+ 相册层
  By 贤心
  
 **/
@@ -171,7 +166,7 @@ layer.photos = function(options){
         log.pid = nowimg.attr('pid');
         log.imgLen = imgs.length;
         log.imgsname = (page.title || '');
-        log.name = nowimg.attr('layer-pname');
+        log.name = nowimg.attr('alt');
         log.imgIndex = page.start + 1;
     }
     
@@ -215,7 +210,6 @@ layer.photos = function(options){
             img.load(function(){
                 log.imgarea = [img.outerWidth(), img.outerHeight()];
                 log.resize(layero);
-                options.success && options.success(json || page);
             });
             
             log.event();
@@ -288,7 +282,7 @@ layer.photos = function(options){
                 var thisimg = imgs.eq(log.imgIndex - 1);
                 src = thisimg.attr('layer-img') || thisimg.attr('src');
                 pid = thisimg.attr('layer-pid') || '';
-                name = thisimg.attr('layer-pname') || '';
+                name = thisimg.attr('alt') || '';
             }
             log.imgs.attr({
                 src: src,
@@ -297,6 +291,7 @@ layer.photos = function(options){
             });
             log.imgtit.find('em').text(log.imgIndex + '/' + log.imgLen);
             log.imgsee.show();
+            options.tab && options.tab({pid: pid, name: name});
         }
     };
     

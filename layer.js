@@ -1,8 +1,8 @@
 ﻿/**************************************************************
 
- @Name：layer v1.8.3 弹层组件开发版
+ @Name：layer v1.8.4 弹层组件开发版
  @Author：贤心
- @Date：2014-06-04
+ @Date：2014-07-07
  @Blog：http://sentsin.com
  @QQ群：78803422 (layer组件群3)
  @Copyright：Sentsin Xu(贤心)
@@ -14,18 +14,13 @@
 ;!function(window, undefined){        
 "use strict";
 
-var pathType = true, //是否采用自动获取绝对路径。false：将采用下述变量中的配置
-pathUrl = '/lily/lib/layer/', //上述变量为false才有效，当前layerjs所在目录(不用填写host，相对站点的根目录即可)。
+var path = '', //组件存放目录，为空表示自动获取(不用填写host，相对站点的根目录即可)。
 
 $, win, ready = {
     host: 'http://' + location.host,
     getPath: function(){
         var js = document.scripts, jsPath = js[js.length - 1].src;
-        if(pathType){
-            return jsPath.substring(0, jsPath.lastIndexOf("/") + 1);
-        } else {
-            return this.host + pathUrl;
-        } 
+        return path ? ready.host + path : jsPath.substring(0, jsPath.lastIndexOf("/") + 1);
     },
     
     //五种原始层模式
@@ -34,7 +29,7 @@ $, win, ready = {
 
 //默认内置方法。
 window.layer = {
-    v: '1.8.3', //版本号
+    v: '1.8.4',
     ie6: !-[1,] && !window.XMLHttpRequest,
     index: 0,
     path: ready.getPath(),
@@ -64,10 +59,6 @@ window.layer = {
         }
     },
     
-    ready: function(callback){
-        layer.use('skin/layer.css', callback);
-    }, 
-    
     alert: function(msg, icon, fn, yes){
         var isfn = (typeof fn === 'function'), conf = {
             dialog: {msg: msg, type: icon, yes: isfn ? fn : yes},
@@ -95,8 +86,8 @@ window.layer = {
         };
         if(typeof parme === 'object'){
             conf.dialog.type = parme.type;
-            conf.shade = parme.shade;  
-            conf.success = function(){layer.shift(parme.rate)};
+            conf.shade = parme.shade;
+            conf.shift = parme.rate;
         } else if(typeof parme === 'function') {
             conf.end = parme
         } else {
@@ -115,7 +106,7 @@ window.layer = {
                 loading: {type : icon},
                 bgcolor: icon ? '#fff' : '',
                 shade: icon ? [0.1, '#000'] : [0],
-                border: (icon === 3 || !icon) ? false : [6, 0.3, '#000'],
+                border: (icon === 3 || !icon) ? [0] : [6, 0.3, '#000'],
                 type : 3,
                 title : ['',false],
                 closeBtn : [0 , false]
@@ -125,23 +116,28 @@ window.layer = {
     
     //tips层快捷引用
     tips: function(html, follow, parme, maxWidth, guide, style){
-        var conf = {type: 4, shade: false, success: function(layerE){
-            if(!this.closeBtn){
-                layerE.find('.xubox_tips').css({'padding-right': 10});
-            }
-        }, bgcolor:'', tips:{msg: html, follow: follow}};
+        var conf = {
+            type: 4, shade: false, 
+            success: function(layero){
+                if(!this.closeBtn){
+                    layero.find('.xubox_tips').css({'padding-right': 10});
+                }
+            }, 
+            bgcolor:'', tips: {msg: html, follow: follow}    
+        };
+        conf.time = typeof parme === 'object' ? parme.time : (parme|0);
         parme = parme || {};
-        conf.time = parme.time || parme;
         conf.closeBtn = parme.closeBtn || false
         conf.maxWidth = parme.maxWidth || maxWidth;
         conf.tips.guide = parme.guide || guide;
         conf.tips.style = parme.style || style;
+        conf.tips.more = parme.more;
         return $.layer(conf);
     }
 };
 
 //缓存常用字符
-var doms = {lay: 'xubox_layer', ifr: 'xubox_iframe', title: '.xubox_title', text: '.xubox_text', page: '.xubox_page'};
+var doms = ['xubox_layer', 'xubox_iframe', '.xubox_title', '.xubox_text', '.xubox_page', '.xubox_main'];
 
 var Class = function(setings){    
     var that = this, config = that.config;
@@ -159,15 +155,13 @@ var Class = function(setings){
 Class.pt = Class.prototype;
 
 //默认配置
-Class.pt.config = layer.config || {
+Class.pt.config = {
     type: 0,
     shade: [0.3, '#000'],
-    shadeClose: false,
     fix: true,
     move: '.xubox_title',
-    moveOut: false,
     title: ['信息', true],
-    offset: ['200px', '50%'],
+    offset: ['', '50%'],
     area: ['310px', 'auto'],
     closeBtn: [0, true],
     time: 0,
@@ -175,8 +169,7 @@ Class.pt.config = layer.config || {
     border: [6, 0.3, '#000'],
     zIndex: 19891014, 
     maxWidth: 400,
-    dialog: {btns : 1, btn : ['确定','取消'], type : 8, msg : '', yes : function(index){ layer.close(index);}, no : function(index){ layer.close(index);}
-    },
+    dialog: {btns: 1, btn: ['确定','取消'], type : 8, msg: '', yes: function(index){layer.close(index);}, no: function(index){layer.close(index);}},
     page: {dom: '#xulayer', html: '', url: ''},
     iframe: {src: 'http://sentsin.com', scrolling: 'auto'},
     loading: {type: 0},
@@ -193,13 +186,12 @@ Class.pt.space = function(html){
     frame = [
     '<div class="xubox_dialog">'+ ico +'<span class="xubox_msg xubox_text" style="'+ (ico ? '' : 'padding-left:20px') +'">' + dialog.msg + '</span></div>',    
     '<div class="xubox_page">'+ html +'</div>',
-    '<iframe scrolling="'+ config.iframe.scrolling +'" allowtransparency="true" id="'+ doms.ifr +''+ times +'" name="'+ doms.ifr +''+ times +'" onload="this.className=\''+ doms.ifr +'\'" class="'+ doms.ifr +'" frameborder="0" src="' + config.iframe.src + '"></iframe>',                
+    '<iframe scrolling="'+ config.iframe.scrolling +'" allowtransparency="true" id="'+ doms[1] +''+ times +'" name="'+ doms[1] +''+ times +'" onload="this.className=\''+ doms[1] +'\'" class="'+ doms[1] +'" frameborder="0" src="' + config.iframe.src + '"></iframe>',                
     '<span class="xubox_loading xubox_loading_'+ config.loading.type +'"></span>',
     '<div class="xubox_tips" style="'+ config.tips.style[0] +'"><div class="xubox_tipsMsg">'+ config.tips.msg +'</div><i class="layerTipsG"></i></div>'
     ],
     shade = '' , border = '', zIndex = config.zIndex + times,
     shadeStyle = 'z-index:'+ zIndex +'; background-color:'+ config.shade[1] +'; opacity:'+ config.shade[0] +'; filter:alpha(opacity='+ config.shade[0]*100 +');';
-
     config.shade[0] && (shade = '<div times="'+ times +'" id="xubox_shade' + times + '" class="xubox_shade" style="'+ shadeStyle +'"></div>');
 
     config.zIndex = zIndex;
@@ -213,8 +205,8 @@ Class.pt.space = function(html){
     
     config.title[1] && (title = '<div class="xubox_title"><em>' + config.title[0] + '</em></div>');
     return [shade, 
-    '<div times="'+ times +'" showtime="'+ config.time +'" style="z-index:'+ zIndex +'" id="'+ doms.lay +''+ times 
-    +'" class="'+ doms.lay +'">'    
+    '<div times="'+ times +'" showtime="'+ config.time +'" style="z-index:'+ zIndex +'" id="'+ doms[0] +''+ times 
+    +'" class="'+ doms[0] +'">'    
     + '<div style="background-color:'+ config.bgcolor +'; z-index:'+ zIndex +'" class="xubox_main">'
     + frame[config.type]
     + title
@@ -240,7 +232,7 @@ Class.pt.creat = function(){
     switch(config.type){
         case 0: 
             config.title[1] || (config.area = ['auto','auto']);
-            $('.xubox_dialog')[0] && layer.close($('.xubox_dialog').parents('.'+ doms.lay).attr('times'));
+            $('.xubox_dialog')[0] && layer.close($('.xubox_dialog').parents('.'+ doms[0]).attr('times'));
         break;
         
         case 1:
@@ -255,7 +247,7 @@ Class.pt.creat = function(){
                     page.ok && page.ok(datas);
                 });
             } else {
-                if($(page.dom).parents(doms.page).length == 0){
+                if($(page.dom).parents(doms[4]).length == 0){
                     setSpace();
                     $(page.dom).show().wrap($(space[1]));
                 } else {
@@ -268,7 +260,7 @@ Class.pt.creat = function(){
             config.title = [];
             config.area = ['auto', 'auto']; 
             config.closeBtn = ['', false];
-            $('.xubox_loading')[0] && layer.close($('.xubox_loading').parents('.'+ doms.lay).attr('times'));
+            $('.xubox_loading')[0] && layer.closeLoad();
         break;
         
         case 4:
@@ -276,7 +268,7 @@ Class.pt.creat = function(){
             config.area = ['auto', 'auto'];
             config.fix = false;
             config.border = [0];
-            $('.xubox_tips')[0] && layer.close($('.xubox_tips').parents('.'+ doms.lay).attr('times'));
+            config.tips.more || layer.closeTips();
         break;
     };
     if(config.type !== 1){
@@ -284,26 +276,9 @@ Class.pt.creat = function(){
         body.append($(space[1]));
     }
 
-    var layerE = that.layerE = $('#'+ doms.lay + times);
-
-    //设置layer面积坐标等数据 
-    if(config.offset[0].indexOf("px") != -1){
-        that.offsetTop = parseFloat(config.offset[0]);
-    } else {
-        that.offsetTop = parseFloat(config.offset[0])/100 * win.height();
-    }
-    that.offsetTop = that.offsetTop + config.border[0] + (config.fix ? 0 : win.scrollTop());
-    if(config.offset[1].indexOf("px") != -1){
-        that.offsetLeft = parseFloat(config.offset[1]) + config.border[0];
-    } else {
-        config.offset[1] = config.offset[1] === '' ? '50%' : config.offset[1];
-        if(config.offset[1] === '50%'){
-            that.offsetLeft = config.offset[1];
-        }else{
-            that.offsetLeft =  parseFloat(config.offset[1])/100 * win.width() + config.border[0];
-        }
-    };
-    layerE.css({left: that.offsetLeft, top: that.offsetTop, width: config.area[0], height: config.area[1]});
+    var layerE = that.layerE = $('#'+ doms[0] + times);
+    
+    layerE.css({width: config.area[0], height: config.area[1]});
     config.fix || layerE.css({position: 'absolute'});    
 
     //配置按钮
@@ -340,40 +315,84 @@ ready.fade = function(obj, time, opa){
     obj.css({opacity: 0}).animate({opacity: opa}, time);
 };
 
+//计算坐标
+Class.pt.offset = function(){
+    var that = this, config = that.config, layerE = that.layerE, laywid = layerE.outerHeight();
+    if(config.offset[0] === '' && laywid < win.height()){
+        that.offsetTop = (win.height() - laywid - 2*config.border[0])/2;
+    }else if(config.offset[0].indexOf("px") != -1){
+        that.offsetTop = parseFloat(config.offset[0]);
+    } else {
+        that.offsetTop = parseFloat(config.offset[0]||0)/100 * win.height();
+    }
+    that.offsetTop = that.offsetTop + config.border[0] + (config.fix ? 0 : win.scrollTop());
+    if(config.offset[1].indexOf("px") != -1){
+        that.offsetLeft = parseFloat(config.offset[1]) + config.border[0];
+    } else {
+        config.offset[1] = config.offset[1] === '' ? '50%' : config.offset[1];
+        if(config.offset[1] === '50%'){
+            that.offsetLeft = config.offset[1];
+        }else{
+            that.offsetLeft =  parseFloat(config.offset[1])/100 * win.width() + config.border[0];
+        }
+    }; 
+};
+
 //初始化骨架
 Class.pt.set = function(times){
-    var that = this, layerE = that.layerE, layerTitle = layerE.find(doms.title);
-    var config = that.config, dialog = config.dialog, page = config.page, loading = config.loading;
+    var that = this;
+    var config = that.config;
+    var dialog = config.dialog;
+    var page = config.page;
+    var loading = config.loading;
+    var layerE = that.layerE;
+    var layerTitle = layerE.find(doms[2]);
+    
     that.autoArea(times);
+    
     if(config.title[1]){
         if(config.type === 0){
             layer.ie6 && layerTitle.css({width : layerE.outerWidth()});
         }
     }else{
-        config.type != 4 && layerE.find('.xubox_close').addClass('xubox_close1');
+        config.type !== 4 && layerE.find('.xubox_close').addClass('xubox_close1');
     };
 
     layerE.attr({'type' :  ready.type[config.type]});
-
+    that.offset();
+    
+    //判断是否动画弹出
+    if(config.type !== 4){
+        if(config.shift && !layer.ie6){
+            if(typeof config.shift === 'object'){
+                that.shift(config.shift[0], config.shift[1]||500, config.shift[2]);
+            } else {
+                that.shift(config.shift, 500);
+            }
+        } else {
+            layerE.css({top: that.offsetTop, left: that.offsetLeft});
+        }
+    }
+    
     switch(config.type){
         case 0:
-            layerE.find('.xubox_main').css({'background-color': '#fff'});
+            layerE.find(doms[5]).css({'background-color': '#fff'});
             if(config.title[1]){
-                layerE.find(doms.text).css({paddingTop: 18 + layerTitle.outerHeight()});
+                layerE.find(doms[3]).css({paddingTop: 18 + layerTitle.outerHeight()});
             }else{
                 layerE.find('.xubox_msgico').css({top: 8});
-                layerE.find(doms.text).css({marginTop : 11});    
+                layerE.find(doms[3]).css({marginTop : 11});    
             }
         break;
         
         case 1:     
             layerE.find(page.dom).addClass('layer_pageContent');
             config.shade[0] && layerE.css({zIndex: config.zIndex + 1});
-            config.title[1] && layerE.find(doms.page).css({top: layerTitle.outerHeight()});
+            config.title[1] && layerE.find(doms[4]).css({top: layerTitle.outerHeight()});
         break;
         
         case 2:
-            var iframe = layerE.find('.'+ doms.ifr), heg = layerE.height();
+            var iframe = layerE.find('.'+ doms[1]), heg = layerE.height();
             iframe.addClass('xubox_load').css({width: layerE.width()});
             config.title[1] ? iframe.css({top: layerTitle.height(), height: heg - layerTitle.height()}) : iframe.css({top: 0, height : heg});
             layer.ie6 && iframe.attr('src', config.iframe.src);
@@ -393,17 +412,26 @@ Class.pt.set = function(times){
             fowo.tipColor = config.tips.style[1];
             layArea[0] = layerE.outerWidth();
             
+            fowo.autoLeft = function(){
+                if(fowo.left + layArea[0] - win.width() > 0){
+                    fowo.tipLeft = fowo.left + fowo.width - layArea[0];
+                    tipsG.css({right: 12, left: 'auto'});
+                } else {
+                    fowo.tipLeft = fowo.left;
+                };
+            };
+            
             //辨别tips的方位
-            fowo.where = [function(){ //上
-                fowo.tipLeft = fowo.left;
+            fowo.where = [function(){ //上                
+                fowo.autoLeft();
                 fowo.tipTop = fowo.top - layArea[1] - 10;
-                tipsG.removeClass('layerTipsB').addClass('layerTipsT').css({'border-right-color': fowo.tipColor});   
+                tipsG.removeClass('layerTipsB').addClass('layerTipsT').css({'border-right-color': fowo.tipColor});  
             }, function(){ //右
                 fowo.tipLeft = fowo.left + fowo.width + 10;
                 fowo.tipTop = fowo.top;
                 tipsG.removeClass('layerTipsL').addClass('layerTipsR').css({'border-bottom-color': fowo.tipColor}); 
             }, function(){ //下
-                fowo.tipLeft = fowo.left;
+                fowo.autoLeft();
                 fowo.tipTop = fowo.top + fowo.height + 10;
                 tipsG.removeClass('layerTipsT').addClass('layerTipsB').css({'border-right-color': fowo.tipColor});
             }, function(){ //左
@@ -416,12 +444,14 @@ Class.pt.set = function(times){
             /* 8*2为小三角形占据的空间 */
             if(config.tips.guide === 0){
                 fowo.top - (win.scrollTop() + layArea[1] + 8*2) < 0 && fowo.where[2]();
-            } else if (config.tips.guide === 1){
+            } else if(config.tips.guide === 1){
                 win.width() - (fowo.left + fowo.width + layArea[0] + 8*2) > 0 || fowo.where[3]()
-            } else if (config.tips.guide === 2){
+            } else if(config.tips.guide === 2){
                 (fowo.top - win.scrollTop() + fowo.height + layArea[1] + 8*2) - win.height() > 0 && fowo.where[0]();
-            } else if (config.tips.guide === 3){
+            } else if(config.tips.guide === 3){
                layArea[0] + 8*2 - fowo.left > 0 && fowo.where[1]()
+            } else if(config.tips.guide === 4){
+                
             }
             layerE.css({left: fowo.tipLeft, top: fowo.tipTop});
         break;
@@ -431,13 +461,67 @@ Class.pt.set = function(times){
         ready.fade(layerE, config.fadeIn, 1);
         ready.fade($('#xubox_shade'+ times), config.fadeIn, config.shade[0]);
     }
+    
+    //坐标自适应浏览器窗口尺寸
+    if(config.fix && config.offset[0] === '' && !config.shift){
+        win.on('resize', function(){
+            layerE.css({top: (win.height() - layerE.outerHeight())/2});
+        });
+    }
+    
     that.move();
+};
+
+//动画进入
+Class.pt.shift = function(type, rate, stop){
+    var that = this, config = that.config;
+    var layerE = that.layerE;
+    var cutWth = 0, ww = win.width();
+    var wh = win.height() + (config.fix ? 0 : win.scrollTop());
+    
+    if(config.offset[1] == '50%' || config.offset[1] == ''){
+        cutWth = layerE.outerWidth()/2;
+    } else {
+        cutWth = layerE.outerWidth();
+    }
+    
+    var anim = {
+        t: {top: that.offsetTop},
+        b: {top : wh - layerE.outerHeight() - config.border[0]},
+        cl: cutWth + config.border[0],
+        ct: -layerE.outerHeight(),
+        cr: ww - cutWth - config.border[0]
+    };
+    
+    switch(type){
+        case 'left-top': 
+            layerE.css({left: anim.cl, top: anim.ct}).animate(anim.t, rate);
+        break; 
+        case 'top': 
+            layerE.css({top: anim.ct}).animate(anim.t, rate);
+        break;
+        case 'right-top': 
+            layerE.css({left: anim.cr, top: anim.ct}).animate(anim.t, rate);
+        break;
+        case 'right-bottom': 
+            layerE.css({left: anim.cr, top: wh}).animate(stop ? anim.t : anim.b, rate);
+        break;
+        case 'bottom': 
+            layerE.css({top: wh}).animate(stop ? anim.t : anim.b, rate);
+        break;
+        case 'left-bottom': 
+            layerE.css({left: anim.cl, top: wh}).animate(stop ? anim.t : anim.b, rate);
+        break;
+        case 'left': 
+            layerE.css({left: -layerE.outerWidth()}).animate({left: that.offsetLeft}, rate);
+        break;
+    } 
 };
 
 //自适应宽高
 Class.pt.autoArea = function(times){
     var that = this, times = times || that.index, config = that.config, page = config.page;
-    var layerE = $('#'+ doms.lay + times), layerTitle = layerE.find(doms.title), layerMian = layerE.find('.xubox_main');
+    var layerE = $('#'+ doms[0] + times), layerTitle = layerE.find(doms[2]), layerMian = layerE.find(doms[5]);
     var titHeight = config.title[1] ? layerTitle.innerHeight() : 0, outHeight, btnHeight = 0;
     if(config.area[0] === 'auto' && layerMian.outerWidth() >= config.maxWidth){    
         layerE.css({width : config.maxWidth});
@@ -445,13 +529,13 @@ Class.pt.autoArea = function(times){
     switch(config.type){
         case 0:
             var aBtn = layerE.find('.xubox_botton>a');
-            outHeight = layerE.find(doms.text).outerHeight() + 20;
+            outHeight = layerE.find(doms[3]).outerHeight() + 20;
             if(aBtn.length > 0){
                 btnHeight = aBtn.outerHeight() +  20;
             }
         break;
         case 1:
-            var layerPage = layerE.find(doms.page);
+            var layerPage = layerE.find(doms[4]);
             outHeight = $(page.dom).outerHeight();
             config.area[0] === 'auto' && layerE.css({width : layerPage.outerWidth()});
             if(page.html !== '' || page.url !== ''){
@@ -498,7 +582,7 @@ Class.pt.move = function(){
         M.preventDefault();
         if($(this).attr('move') === 'ok'){
             conf.ismove = true;
-            conf.layerE = $(this).parents('.'+ doms.lay);
+            conf.layerE = $(this).parents('.'+ doms[0]);
             var xx = conf.layerE.offset().left, yy = conf.layerE.offset().top, ww = conf.layerE.width() - 6, hh = conf.layerE.height() - 6;
             if(!$('#xubox_moves')[0]){
                 $('body').append('<div id="xubox_moves" class="xubox_moves" style="left:'+ xx +'px; top:'+ yy +'px; width:'+ ww +'px; height:'+ hh +'px; z-index:2147483584"></div>');
@@ -512,7 +596,7 @@ Class.pt.move = function(){
         }
     });
     
-    $(document).mousemove(function(M){            
+    $(document).mousemove(function(M){
         if(conf.ismove){
             var offsetX = M.pageX - conf.moveX, offsetY = M.pageY - conf.moveY;
             M.preventDefault();
@@ -562,7 +646,7 @@ Class.pt.autoclose = function(){
 };
 
 ready.config = {
-    end : {}
+    end: {}
 };
 
 Class.pt.callback = function(){
@@ -615,8 +699,8 @@ Class.pt.callback = function(){
 ready.reselect = function(){
     $.each($('select'), function(index , value){
         var sthis = $(this);
-        if(!sthis.parents('.'+doms.lay)[0]){
-            (sthis.attr('layer') == 1 && $('.'+doms.lay).length < 1) && sthis.removeAttr('layer').show(); 
+        if(!sthis.parents('.'+doms[0])[0]){
+            (sthis.attr('layer') == 1 && $('.'+doms[0]).length < 1) && sthis.removeAttr('layer').show(); 
         }
         sthis = null;
     });
@@ -641,7 +725,7 @@ Class.pt.IE6 = function(layerE){
     //隐藏select
     $.each($('select'), function(index , value){
         var sthis = $(this);
-        if(!sthis.parents('.'+doms.lay)[0]){
+        if(!sthis.parents('.'+doms[0])[0]){
             sthis.css('display') == 'none' || sthis.attr({'layer' : '1'}).hide();
         }
         sthis = null;
@@ -650,43 +734,16 @@ Class.pt.IE6 = function(layerE){
 
 //给layer对象拓展方法
 Class.pt.openLayer = function(){
-    var that = this;
+    var that = this, layerE = that.layerE;
 
     //自适应宽高
     layer.autoArea = function(index){
         return that.autoArea(index);
     };
 
-    //出场内置动画
+    //兼容旧版出场动画
     layer.shift = function(type, rate, stop){
-        if(layer.ie6){
-            return;
-        }
-        var config = that.config, layerE = that.layerE, cutWth = 0, ww = win.width(), wh = win.height() + (config.fix ? 0 : win.scrollTop());
-        (config.offset[1] == '50%' || config.offset[1] == '') ? cutWth = layerE.outerWidth()/2 : cutWth = layerE.outerWidth();
-        var anim = {
-            t: {top: that.offsetTop},
-            b: {top : wh - layerE.outerHeight() - config.border[0]},
-            cl: cutWth + config.border[0],
-            ct: -layerE.outerHeight(),
-            cr: ww - cutWth - config.border[0]
-        };
-        switch(type){
-            case 'left-top': layerE.css({left: anim.cl, top: anim.ct}).animate(anim.t, rate);
-            break; 
-            case 'top': layerE.css({top: anim.ct}).animate(anim.t, rate);
-            break;
-            case 'right-top': layerE.css({left: anim.cr, top: anim.ct}).animate(anim.t, rate);
-            break;
-            case 'right-bottom': layerE.css({left: anim.cr, top: wh}).animate(stop ? anim.t : anim.b, rate);
-            break;
-            case 'bottom': layerE.css({top: wh}).animate(stop ? anim.t : anim.b, rate);
-            break;
-            case 'left-bottom': layerE.css({left: anim.cl, top: wh}).animate(stop ? anim.t : anim.b, rate);
-            break;
-            case 'left': layerE.css({left: -layerE.outerWidth()}).animate({left: that.offsetLeft}, rate);
-            break;
-        } 
+        that.shift(type, rate, stop);
     };
 
     //初始化拖拽元素
@@ -705,6 +762,7 @@ Class.pt.openLayer = function(){
         layerNow.on('mousedown', setZindex);
         return layer.zIndex;
     };
+    
 };
 
 ready.isauto = function(layero, options, offset){
@@ -733,42 +791,42 @@ ready.rescollbar = function(index){
 
 //获取page层所在索引
 layer.getIndex = function(selector){
-    return $(selector).parents('.'+doms.lay).attr('times');    
+    return $(selector).parents('.'+doms[0]).attr('times');    
 };
 
 //获取子iframe的DOM
 layer.getChildFrame = function(selector, index){
-    index = index || $('.'+ doms.ifr).parents('.'+doms.lay).attr('times');
-    return $('#'+ doms.lay + index).find('.'+ doms.ifr).contents().find(selector);    
+    index = index || $('.'+ doms[1]).parents('.'+doms[0]).attr('times');
+    return $('#'+ doms[0] + index).find('.'+ doms[1]).contents().find(selector);    
 };
 
 //得到当前iframe层的索引，子iframe时使用
 layer.getFrameIndex = function(name){
-    return $(name ? '#'+ name : '.'+ doms.ifr).parents('.'+doms.lay).attr('times');
+    return $(name ? '#'+ name : '.'+ doms[1]).parents('.'+doms[0]).attr('times');
 };
 
 //iframe层自适应宽高
 layer.iframeAuto = function(index){
-    index = index || $('.'+ doms.ifr).parents('.'+doms.lay).attr('times');
+    index = index || $('.'+ doms[1]).parents('.'+doms[0]).attr('times');
     var heg = layer.getChildFrame('body', index).outerHeight(),
-    layero = $('#'+ doms.lay + index), tit = layero.find(doms.title), titHt = 0;
+    layero = $('#'+ doms[0] + index), tit = layero.find(doms[2]), titHt = 0;
     tit && (titHt = tit.height());
     layero.css({height: heg + titHt});
     var bs = -parseInt($('#xubox_border'+ index).css('top'));
     $('#xubox_border'+ index).css({height: heg + 2*bs + titHt});
-    $('#'+ doms.ifr + index).css({height: heg});
+    $('#'+ doms[1] + index).css({height: heg});
 };
 
 //重置iframe url
 layer.iframeSrc = function(index, url){
-    $('#'+ doms.lay + index).find('iframe').attr('src', url);
+    $('#'+ doms[0] + index).find('iframe').attr('src', url);
 };
 
 //重置层
 layer.area = function(index, options){
-    var layero = [$('#'+ doms.lay + index), $('#xubox_border'+ index)],
-    type = layero[0].attr('type'), main = layero[0].find('.xubox_main'),
-    title = layero[0].find(doms.title);
+    var layero = [$('#'+ doms[0] + index), $('#xubox_border'+ index)],
+    type = layero[0].attr('type'), main = layero[0].find(doms[5]),
+    title = layero[0].find(doms[2]);
     
     if(type === ready.type[1] || type === ready.type[2]){
         layero[0].css(options);
@@ -793,17 +851,17 @@ layer.area = function(index, options){
 
 //最小化
 layer.min = function(index, options){
-    var layero = $('#'+ doms.lay + index), offset = [layero.position().top, layero.position().left + parseFloat(layero.css('margin-left'))];
+    var layero = $('#'+ doms[0] + index), offset = [layero.position().top, layero.position().left + parseFloat(layero.css('margin-left'))];
     ready.isauto(layero, options, offset);
     layer.area(index, {width: 180, height: 35});
     layero.find('.xubox_min').hide();
-    layero.attr('type') === 'page' && layero.find(doms.page).hide();
+    layero.attr('type') === 'page' && layero.find(doms[4]).hide();
     ready.rescollbar(index);
 };
 
 //还原
 layer.restore = function(index){
-    var layero = $('#'+ doms.lay + index), area = layero.attr('area').split(',');
+    var layero = $('#'+ doms[0] + index), area = layero.attr('area').split(',');
     var type = layero.attr('type');
     layer.area(index, {
         width: parseFloat(area[0]), 
@@ -813,13 +871,13 @@ layer.restore = function(index){
     });
     layero.find('.xubox_max').removeClass('xubox_maxmin');
     layero.find('.xubox_min').show();
-    layero.attr('type') === 'page' && layero.find(doms.page).show();
+    layero.attr('type') === 'page' && layero.find(doms[4]).show();
     ready.rescollbar(index);
 };
 
 //全屏
 layer.full = function(index, options){
-    var layero = $('#'+ doms.lay + index), borders = options.border[0]*2, timer;
+    var layero = $('#'+ doms[0] + index), borders = options.border[0]*2 || 6, timer;
     var offset = [layero.position().top, layero.position().left + parseFloat(layero.css('margin-left'))];
     ready.isauto(layero, options, offset);
     if(!doms.html.attr('layer-full')){
@@ -836,9 +894,15 @@ layer.full = function(index, options){
     }, 100);
 };
 
+//改变title
+layer.title = function(name, index){
+    var title = $('#'+ doms[0] + (index||layer.index)).find('.xubox_title>em');
+    title.html(name);
+};
+
 //关闭layer总方法
 layer.close = function(index){
-    var layero = $('#'+ doms.lay + index), type = layero.attr('type'), shadeNow = $('#xubox_moves, #xubox_shade' + index);
+    var layero = $('#'+ doms[0] + index), type = layero.attr('type'), shadeNow = $('#xubox_moves, #xubox_shade' + index);
     if(!layero[0]){
         return;
     }
@@ -865,21 +929,25 @@ layer.close = function(index){
 
 //关闭loading层
 layer.closeLoad = function(){
-    layer.close($('.xubox_loading').parents('.'+doms.lay).attr('times'));
+    layer.close($('.xubox_loading').parents('.'+doms[0]).attr('times'));
 };
 
 //关闭tips层
 layer.closeTips = function(){
-    layer.close($('.xubox_tips').parents('.'+doms.lay).attr('times'));
+    layer.closeAll('tips');
 };
 
 //关闭所有层
-layer.closeAll = function(){
-    $.each($('.'+doms.lay), function(){
-        layer.close($(this).attr('times'));
+layer.closeAll = function(type){
+    $.each($('.'+doms[0]), function(){
+        var othis = $(this);
+        var is = type ? (othis.attr('type') === type) : 1;
+        if(is){
+            layer.close(othis.attr('times'));
+        }
+        is = null;
     });
 };
-
 
 //主入口
 ready.run = function(){

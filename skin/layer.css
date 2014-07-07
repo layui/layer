@@ -70,7 +70,7 @@
 .xubox_botton2:hover{ background-position:-5px -146px;}
 .xubox_botton .xubox_botton3{width:71px; height:29px; line-height:29px; margin-left:10px; background-position:-81px -114px;}
 .xubox_botton3:hover{background-position:-81px -146px;}
-.xubox_tips{position:relative; line-height:20px; padding:3px 30px 3px 10px; font-size:12px; _float:left; border-radius:3px; box-shadow: 1px 1px 3px rgba(0,0,0,.3);}
+.xubox_tips{position:relative; line-height:20px; min-width: 12px; padding:3px 30px 3px 10px; font-size:12px; _float:left; border-radius:3px; box-shadow: 1px 1px 3px rgba(0,0,0,.3);}
 .xubox_tips i.layerTipsG{ position:absolute;  width:0; height:0; border-width:8px; border-color:transparent; border-style:dashed; *overflow:hidden;}
 .xubox_tips i.layerTipsT, .xubox_tips i.layerTipsB{left:5px; border-right-style:solid;}
 .xubox_tips i.layerTipsT{bottom:-8px;}

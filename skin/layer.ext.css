@@ -14,11 +14,11 @@
 .xubox_layer .xubox_formArea{width:300px; height:100px; line-height:20px;}
 
 /* tab模式 */
-.xubox_layer .xubox_tab{position:relative; border:1px solid #ccc;}
+.xubox_layer .xubox_tab{position:relative; background-color:#fff; box-shadow:1px 1px 50px rgba(0,0,0,.4)}
 .xubox_layer .xubox_tabmove{position:absolute; width:600px; height:30px; top:0; left:0;}
-.xubox_layer .xubox_tabtit{ display:block; height:30px; border-bottom:1px solid #ccc; background-color:#eee;}
-.xubox_layer .xubox_tabtit span{position:relative; float:left; width:120px; height:30px; line-height:30px; text-align:center; cursor:default;}
-.xubox_layer .xubox_tabtit span.xubox_tabnow{left:-1px; _top:1px; height:31px; border-left:1px solid #ccc; border-right:1px solid #ccc; background-color:#fff; z-index:10;}
+.xubox_layer .xubox_tabtit{ display:block; height:34px; border-bottom:1px solid #ccc; background-color:#eee;}
+.xubox_layer .xubox_tabtit span{position:relative; float:left; width:120px; height:34px; line-height:34px; text-align:center; cursor:default;}
+.xubox_layer .xubox_tabtit span.xubox_tabnow{left:-1px; _top:1px; height:35px; border-left:1px solid #ccc; border-right:1px solid #ccc; background-color:#fff; z-index:10;}
 .xubox_layer .xubox_tab_main{line-height:24px; clear:both;}
 .xubox_layer .xubox_tab_main .xubox_tabli{display:none;}
 .xubox_layer .xubox_tab_main .xubox_tabli.xubox_tab_layer{display:block;}
