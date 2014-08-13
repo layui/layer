@@ -1,15 +1,13 @@
-﻿/**************************************************************
+﻿/****************************************
 
- @Name：layer v1.8.4 弹层组件开发版
+ @Name：layer v1.8.5 弹层组件开发版
  @Author：贤心
- @Date：2014-07-07
+ @Date：2014-08-13
  @Blog：http://sentsin.com
- @QQ群：78803422 (layer组件群3)
  @Copyright：Sentsin Xu(贤心)
  @官网：http://sentsin.com/jquery/layer
- @授权：http://url.cn/RAejZY
         
- *************************************************************/
+ */
 
 ;!function(window, undefined){        
 "use strict";
@@ -29,7 +27,7 @@ $, win, ready = {
 
 //默认内置方法。
 window.layer = {
-    v: '1.8.4',
+    v: '1.8.5',
     ie6: !-[1,] && !window.XMLHttpRequest,
     index: 0,
     path: ready.getPath(),
@@ -160,7 +158,7 @@ Class.pt.config = {
     shade: [0.3, '#000'],
     fix: true,
     move: '.xubox_title',
-    title: ['信息', true],
+    title: '信息',
     offset: ['', '50%'],
     area: ['310px', 'auto'],
     closeBtn: [0, true],
@@ -202,8 +200,8 @@ Class.pt.space = function(html){
         closebtn = '<a class="xubox_min" href="javascript:;"><cite></cite></a><a class="xubox_max xulayer_png32" href="javascript:;"></a>';
     }
     config.closeBtn[1] && (closebtn += '<a class="xubox_close xulayer_png32 xubox_close' + config.closeBtn[0] +'" href="javascript:;" style="'+ (config.type === 4 ? 'position:absolute; right:-3px; _right:7px; top:-4px;' : '') +'"></a>'); 
-    
-    config.title[1] && (title = '<div class="xubox_title"><em>' + config.title[0] + '</em></div>');
+    var titype = typeof config.title === 'object';
+    config.title && (title = '<div class="xubox_title" style="'+ (titype ? config.title[1] : '') +'"><em>' + (titype ? config.title[0] : config.title) + '</em></div>');
     return [shade, 
     '<div times="'+ times +'" showtime="'+ config.time +'" style="z-index:'+ zIndex +'" id="'+ doms[0] +''+ times 
     +'" class="'+ doms[0] +'">'    
@@ -224,14 +222,10 @@ Class.pt.creat = function(){
         space = that.space(html);
         body.append($(space[0]));
     };
-    if(config.title === false){
-        config.title = [];
-    } else if(typeof config.title === 'string') {
-        config.title = [config.title, true]
-    }
+
     switch(config.type){
         case 0: 
-            config.title[1] || (config.area = ['auto','auto']);
+            config.title || (config.area = ['auto','auto']);
             $('.xubox_dialog')[0] && layer.close($('.xubox_dialog').parents('.'+ doms[0]).attr('times'));
         break;
         
@@ -257,14 +251,14 @@ Class.pt.creat = function(){
         break;
         
         case 3:
-            config.title = [];
+            config.title = false;
             config.area = ['auto', 'auto']; 
             config.closeBtn = ['', false];
             $('.xubox_loading')[0] && layer.closeLoad();
         break;
         
         case 4:
-            config.title = [];
+            config.title = false;
             config.area = ['auto', 'auto'];
             config.fix = false;
             config.border = [0];
@@ -282,7 +276,7 @@ Class.pt.creat = function(){
     config.fix || layerE.css({position: 'absolute'});    
 
     //配置按钮
-    if(config.title[1] && (config.type !== 3 || config.type !== 4)){
+    if(config.title && (config.type !== 3 || config.type !== 4)){
         var confbtn = config.type === 0 ? dialog : config, layerBtn = layerE.find('.xubox_botton');
         confbtn.btn = config.btn || dialog.btn;
         switch(confbtn.btns){
@@ -350,7 +344,7 @@ Class.pt.set = function(times){
     
     that.autoArea(times);
     
-    if(config.title[1]){
+    if(config.title){
         if(config.type === 0){
             layer.ie6 && layerTitle.css({width : layerE.outerWidth()});
         }
@@ -377,7 +371,7 @@ Class.pt.set = function(times){
     switch(config.type){
         case 0:
             layerE.find(doms[5]).css({'background-color': '#fff'});
-            if(config.title[1]){
+            if(config.title){
                 layerE.find(doms[3]).css({paddingTop: 18 + layerTitle.outerHeight()});
             }else{
                 layerE.find('.xubox_msgico').css({top: 8});
@@ -388,13 +382,13 @@ Class.pt.set = function(times){
         case 1:     
             layerE.find(page.dom).addClass('layer_pageContent');
             config.shade[0] && layerE.css({zIndex: config.zIndex + 1});
-            config.title[1] && layerE.find(doms[4]).css({top: layerTitle.outerHeight()});
+            config.title && layerE.find(doms[4]).css({top: layerTitle.outerHeight()});
         break;
         
         case 2:
             var iframe = layerE.find('.'+ doms[1]), heg = layerE.height();
             iframe.addClass('xubox_load').css({width: layerE.width()});
-            config.title[1] ? iframe.css({top: layerTitle.height(), height: heg - layerTitle.height()}) : iframe.css({top: 0, height : heg});
+            config.title ? iframe.css({top: layerTitle.height(), height: heg - layerTitle.height()}) : iframe.css({top: 0, height : heg});
             layer.ie6 && iframe.attr('src', config.iframe.src);
         break;
 
@@ -522,7 +516,7 @@ Class.pt.shift = function(type, rate, stop){
 Class.pt.autoArea = function(times){
     var that = this, times = times || that.index, config = that.config, page = config.page;
     var layerE = $('#'+ doms[0] + times), layerTitle = layerE.find(doms[2]), layerMian = layerE.find(doms[5]);
-    var titHeight = config.title[1] ? layerTitle.innerHeight() : 0, outHeight, btnHeight = 0;
+    var titHeight = config.title ? layerTitle.innerHeight() : 0, outHeight, btnHeight = 0;
     if(config.area[0] === 'auto' && layerMian.outerWidth() >= config.maxWidth){    
         layerE.css({width : config.maxWidth});
     }
@@ -543,7 +537,7 @@ Class.pt.autoArea = function(times){
             }
         break;
         case 2:
-            layerE.find('iframe').css({width: layerE.outerWidth(), height: layerE.outerHeight() - (config.title[1] ? layerTitle.innerHeight() : 0)});
+            layerE.find('iframe').css({width: layerE.outerWidth(), height: layerE.outerHeight() - (config.title ? layerTitle.innerHeight() : 0)});
         break;
         case 3:
             var load = layerE.find(".xubox_loading");
@@ -575,8 +569,9 @@ Class.pt.move = function(){
         }
     };
     
-    config.move && that.layerE.find(config.move).attr('move','ok');
-    config.move ? that.layerE.find(config.move).css({cursor: 'move'}) : that.layerE.find(config.move).css({cursor: 'auto'});
+    var movedom = that.layerE.find(config.move);
+    config.move && movedom.attr('move','ok');
+    config.move ? movedom.css({cursor: 'move'}) : movedom.css({cursor: 'auto'});
     
     $(config.move).on('mousedown', function(M){    
         M.preventDefault();
@@ -962,12 +957,11 @@ ready.run = function(){
     (new Image()).src = layer.path + 'skin/default/xubox_ico0.png';
 };
 
-//为支持seajs模块加载
 var require = '../../init/jquery'; //若采用seajs，需正确配置jquery的相对路径。未用可无视此处。
 if(window.seajs){
     define([require], function(require, exports, module){
         ready.run();
-        exports.layer = [window.layer, window['$'].layer];
+        module.exports = layer;
     });
 }else{
     ready.run();

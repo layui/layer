@@ -1,4 +1,4 @@
-/** 
+﻿/** 
  
  @Name: layer's style
  @Date: 2012.09.15
@@ -59,7 +59,7 @@
 .xubox_setwin .xubox_close1{position:absolute; right:-28px; top:-28px; width:30px; height:30px;  margin-left:0; background-position:-60px -195px; *right:-18px; _right:-15px; _top:-23px; _width:14px; _height:14px; _background-position:-31px -7px;}
 .xubox_setwin .xubox_close1:hover{ background-position:-91px -195px; _background-position:-51px -7px;}
 
-.xubox_title{width:100%; height:35px; line-height:35px; border-bottom:1px solid #D5D5D5; background:url(default/xubox_title0.png) #EBEBEB repeat-x; cursor:move; font-size:14px; color:#333;}
+.xubox_title{width:100%; height:35px; line-height:35px; border-bottom:1px solid #D5D5D5; background:url(default/xubox_title0.png) #EBEBEB repeat-x; font-size:14px; color:#333;}
 .xubox_title em{height:20px; line-height:20px; width:60%; top:7px; left:10px; font-style:normal; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
 
 .xubox_botton a{position:absolute; bottom:10px; left:50%; background:url(default/xubox_ico0.png) repeat; text-decoration:none; color:#FFF;  font-size:14px;  text-align:center; font-weight:bold; overflow:hidden; }

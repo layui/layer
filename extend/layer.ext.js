@@ -1,13 +1,13 @@
 ﻿/**
  
  @Name: layer拓展类，依赖于layer
- @Date: 2014.07.04
+ @Date: 2014.08.13
  @Author: 贤心
- @Versions：1.8.4-ext
+ @Versions：1.8.5-ext
  @Api：http://sentsin.com/jquery/layer
  @Desc: 本拓展会持续更新
 
- **/
+ */
  
 layer.use('skin/layer.ext.css', function(){
     layer.ext && layer.ext();
@@ -17,9 +17,8 @@ layer.use('skin/layer.ext.css', function(){
 /**
 
  系统prompt
- By 贤心
  
-**/
+*/
 
 layer.prompt = function(parme, yes, no){
     var log = {}, parme = parme || {}, conf = {
@@ -51,10 +50,11 @@ layer.prompt = function(parme, yes, no){
             }, no: no
         }, success: function(){
             log.prompt = $('#xubox_prompt');
+            log.prompt.focus();
         }
     };
     if(parme.type === 3){
-        conf.dialog.msg = '<textarea class="xubox_prompt xubox_form xubox_formArea" id="xubox_prompt"></textarea>'
+        conf.dialog.msg = '<textarea class="xubox_prompt xubox_form xubox_formArea" id="xubox_prompt">'+ (parme.val || '') +'</textarea>'
     }
     return $.layer(conf);
 };
@@ -63,9 +63,8 @@ layer.prompt = function(parme, yes, no){
 /**
 
  tab层
- By 贤心
  
-**/
+*/
 
 layer.tab = function(parme){
     var log = {}, parme = parme || {}, data = parme.data || [], conf = {
@@ -128,9 +127,8 @@ layer.tab = function(parme){
 /**
 
  相册层
- By 贤心
  
-**/
+*/
 
 
 layer.photos = function(options){
