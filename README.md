@@ -42,4 +42,4 @@ layer是一款口碑非常不错的web弹层组件，她具备全方位的解决
 
 
 ## 备注
-[官网](http://sentsin.com/jquery/layer/)、[更新日志](https://github.com/sentsin/layer/blob/master/Update%20Notes.txt)、[Say交流](http://say.sentsin.com/home-48.html)、[商业支持](http://url.cn/RAejZY)
+[官网](http://sentsin.com/jquery/layer/)、[更新日志](https://github.com/sentsin/layer/blob/master/Update%20Notes.txt)、[Say交流](http://say.sentsin.com/home-48.html)
