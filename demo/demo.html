@@ -25,7 +25,6 @@ pre{font-family:'微软雅黑'}
  @Author：贤心
  @Blog：<a href="http://sentsin.com" target="_blank">http://sentsin.com</a>
  @官网：<a href="http://sentsin.com/jquery/layer"  target="_blank">http://sentsin.com/jquery/layer</a>
- @授权：<a href="http://item.taobao.com/item.htm?id=37295654589"  target="_blank">http://url.cn/RAejZY</a>
 
 
 <strong>【注意事项】</strong>
@@ -33,19 +32,18 @@ pre{font-family:'微软雅黑'}
 二、如果您的js引入是通过合并处理或者您不想采用layer自动获取的绝对路径，您需要打开layer.min.js 去配置相对路径url。（默认采用自动获取layer所在的路径）
 三、jquery必须为1.8或1.8以上版本（原因，更小，性能更好，且新版layer使用了部分jq1.8+的特性），下载包里doc文件里有jquery1.9下载地址
 四、更多使用说明与演示（demo），请参见layer官网。
-五、layer使用免费，可应用于任何类型的web平台（违法站除外），使用时请务必保留来源。
-六、如果您用于商业平台，您须经过授权。
-七、您也可申请VIP技术服务。版权最终解释权：贤心。
+五、使用时请务必保留来源，请勿用于违反我国法律的web平台。
+六、layer遵循LGPL协议，将永久性提供无偿服务。版权最终解释权：贤心。
 </pre>
 </div>
 
 <div class="box">
     <h2 style="padding-bottom:20px;">layer1.8相册模块，点击下述图片试试</h2>
     <div id="imgs" class="imgs">
-        <img src="http://static.oschina.net/uploads/space/2014/0516/012728_nAh8_1168184.jpg" layer-pname="layer宣传图">
-        <img src="http://sentsin.qiniudn.com/sentsinmy5.jpg" layer-pname="我入互联网这五年">
-        <img src="http://sentsin.qiniudn.com/sentsin_39101a660cf4671b7ec297a74cc652c74152104f.jpg" layer-pname="微摄影">
-        <img src="http://sentsin.qiniudn.com/sentsinsan01.jpg" layer-pname="三清山">
+        <img src="http://static.oschina.net/uploads/space/2014/0516/012728_nAh8_1168184.jpg" alt="layer宣传图">
+        <img src="http://sentsin.qiniudn.com/sentsinmy5.jpg" alt="我入互联网这五年">
+        <img src="http://sentsin.qiniudn.com/sentsin_39101a660cf4671b7ec297a74cc652c74152104f.jpg" alt="微摄影">
+        <img src="http://sentsin.qiniudn.com/sentsinsan01.jpg" alt="三清山">
     </div>
 </div>
 
@@ -60,7 +58,18 @@ pre{font-family:'微软雅黑'}
 ;!function(){
 
 $(function(){
-    layer.msg('hello,亲爱的朋友，当你看到这个的时候，意味着你已将layer下载到你的本地，并正常地运行了它。layer是一款基于web的弹窗解决方案，旨在为你的产品增强体验。', 15, {
+    $.layer({
+        type: 2,
+        title: [
+            '官网', 
+            'background:#2B2E37; height:40px; color:#fff; border:none;' //自定义标题样式
+        ], 
+        border:[0],
+        area: ['90%', '90%'],
+        iframe: {src: 'http://sentsin.com/jquery/layer/?from=local'}
+    })
+    
+    layer.msg('hello，亲爱的朋友，当你看到这个的时候<br>意味着你已将layer下载到你的本地，并正常地运行了它。<br>layer是一款基于web的弹窗解决方案<br>旨在为你的产品增强体验。', 15, {
         rate: 'top',
         type: -1,
         shade: false
@@ -81,16 +90,16 @@ layer.use('extend/layer.ext.js', function(){
 });
 
 $('#suggest').on('click',function(event){
-    var height = $(window).height(), index = $.layer({
-        type : 2,
-        shade : [0.5 , '#000' , true],
-        shadeClose : true,
-        border : [!0],
-        title : false,
-        offset : ['25px',''],
-        area : ['90%', (height - 50)+'px'],
-        iframe : {src : $(this).attr('href')}
-    });
+	var height = $(window).height(), index = $.layer({
+		type : 2,
+		shade : [0.5 , '#000' , true],
+		shadeClose : true,
+		border : [!0],
+		title : false,
+		offset : ['25px',''],
+		area : ['90%', (height - 50)+'px'],
+		iframe : {src : $(this).attr('href')}
+	});
     event.preventDefault();
 });
 
