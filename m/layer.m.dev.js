@@ -1,6 +1,6 @@
-﻿/****************************************
+/****************************************
 
- @Name：layer v1.0 弹层组件移动版
+ @Name：layer v1.1 弹层组件移动版
  @Author：贤心
  @Date：2014-08-24
  @Copyright：Sentsin Xu(贤心)
@@ -27,9 +27,11 @@ document.head.appendChild((function(){
 }()));
 
 var config = {
+     type: 0,
      shade: true,
      shadeClose: true,
-     fixed: true
+     fixed: true,
+     anim: true
 };
 
 var ready = {
@@ -60,7 +62,7 @@ Layer.prototype.view = function(){
     var title = (function(){
         var titype = typeof config.title === 'object';
         return config.title
-        ? '<h3 style="'+ (titype ? config.title[1] : '') +'">'+ (titype ? config.title[0] : config.title)  +'</h3><button class="layermend">×</button>'
+        ? '<h3 style="'+ (titype ? config.title[1] : '') +'">'+ (titype ? config.title[0] : config.title)  +'</h3><button class="layermend">x</button>'
         : '';
     }());
     
@@ -82,19 +84,23 @@ Layer.prototype.view = function(){
         config.style += ' top:'+ ( doc.body.scrollTop + config.top) + 'px';
     }
     
+    if(config.type === 2){
+        config.content = '<i></i><i class="laymloadtwo"></i><i></i><div>' + (config.content||'') + '</div>';
+    }
+    
     layerbox.innerHTML = (config.shade ? '<div class="laymshade"></div>' : '')
     +'<div class="layermmain" '+ (!config.fixed ? 'style="position:static;"' : '') +'>'
         +'<section>'
-            +'<div class="layermchild" '+ ( config.style ? 'style="'+config.style+'"' : '' ) +'>'
+            +'<div class="layermchild '+ (config.anim ? 'layermanim' : '') +'" ' + ( config.style ? 'style="'+config.style+'"' : '' ) +'>'
                 + title
-                +'<div class="layermcont">'+ (config.content||'&nbsp;') +'</div>'
+                +'<div class="layermcont">'+ config.content +'</div>'
                 + button
             +'</div>'
         +'</section>'
     +'</div>';
     
-    if(!config.type){
-        var dialogs = doc[claname](classs[0]+'0'), dialen = dialogs.length;
+    if(!config.type || config.type === 2){
+        var dialogs = doc[claname](classs[0] + config.type), dialen = dialogs.length;
         if(dialen >= 1){
             layer.close(dialogs[0].getAttribute('index'))
         }
@@ -104,7 +110,7 @@ Layer.prototype.view = function(){
     
     setTimeout(function(){
         try{
-            doc[byid](that.id).classList.add('layermshow');
+            doc[byid](that.id).className = doc[byid](that.id).className + ' layermshow';
         }catch(e){
             return;
         }
@@ -159,7 +165,7 @@ Layer.prototype.action = function(config){
 };
 
 var layer = {
-    v: '1.0',
+    v: '1.1',
     index: index,
     
     //核心方法

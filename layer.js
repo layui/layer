@@ -12,13 +12,12 @@
 ;!function(window, undefined){        
 "use strict";
 
-var path = '', //组件存放目录，为空表示自动获取(不用填写host，相对站点的根目录即可)。
+var path = 'http://res.sentsin.com/lay/lib/layer/', //组件存放目录，为空表示自动获取(不用填写host，相对站点的根目录即可)。
 
 $, win, ready = {
-    host: 'http://' + location.host,
     getPath: function(){
         var js = document.scripts, jsPath = js[js.length - 1].src;
-        return path ? ready.host + path : jsPath.substring(0, jsPath.lastIndexOf("/") + 1);
+        return path ? path : jsPath.substring(0, jsPath.lastIndexOf("/") + 1);
     },
     
     //五种原始层模式
@@ -28,7 +27,7 @@ $, win, ready = {
 //默认内置方法。
 window.layer = {
     v: '1.8.5',
-    ie6: !-[1,] && !window.XMLHttpRequest,
+    ie6: !!window.ActiveXObject&&!window.XMLHttpRequest,
     index: 0,
     path: ready.getPath(),
     
@@ -158,7 +157,7 @@ Class.pt.config = {
     shade: [0.3, '#000'],
     fix: true,
     move: '.xubox_title',
-    title: '信息',
+    title: '&#x4FE1;&#x606F;',
     offset: ['', '50%'],
     area: ['310px', 'auto'],
     closeBtn: [0, true],
@@ -167,7 +166,7 @@ Class.pt.config = {
     border: [6, 0.3, '#000'],
     zIndex: 19891014, 
     maxWidth: 400,
-    dialog: {btns: 1, btn: ['确定','取消'], type : 8, msg: '', yes: function(index){layer.close(index);}, no: function(index){layer.close(index);}},
+    dialog: {btns: 1, btn: ['&#x786E;&#x5B9A;','&#x53D6;&#x6D88;'], type : 8, msg: '', yes: function(index){layer.close(index);}, no: function(index){layer.close(index);}},
     page: {dom: '#xulayer', html: '', url: ''},
     iframe: {src: 'http://sentsin.com', scrolling: 'auto'},
     loading: {type: 0},
@@ -957,11 +956,10 @@ ready.run = function(){
     (new Image()).src = layer.path + 'skin/default/xubox_ico0.png';
 };
 
-var require = '../../init/jquery'; //若采用seajs，需正确配置jquery的相对路径。未用可无视此处。
-if(window.seajs){
-    define([require], function(require, exports, module){
+if("function" === typeof define){
+    define(function(){
         ready.run();
-        module.exports = layer;
+        return layer;
     });
 }else{
     ready.run();
