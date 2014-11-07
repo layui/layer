@@ -548,6 +548,7 @@ Class.pt.autoArea = function(times){
     $('#xubox_border' + times).css({width: layerE.outerWidth() + 2*config.border[0] , height: layerE.outerHeight() + 2*config.border[0]});
     (layer.ie6 && config.area[0] !== 'auto') && layerMian.css({width : layerE.outerWidth()});
     (config.offset[1] === '50%' || config.offset[1] == '') && (config.type !== 4) ? layerE.css({marginLeft : -layerE.outerWidth()/2}) : layerE.css({marginLeft : 0});
+    config.offset[0] ? layerE.css({top: config.offset[0]}) : layerE.css({top: (win.height() - layerE.outerHeight())/2});
 };
 
 //拖拽层
