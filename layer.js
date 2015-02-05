@@ -820,7 +820,7 @@ layer.iframeSrc = function(index, url){
 layer.area = function(index, options){
     var layero = [$('#'+ doms[0] + index), $('#xubox_border'+ index)],
     type = layero[0].attr('type'), main = layero[0].find(doms[5]),
-    title = layero[0].find(doms[2]);
+    title = layero[0].find(doms[2]).length;
     
     if(type === ready.type[1] || type === ready.type[2]){
         layero[0].css(options);
