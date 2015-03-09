@@ -156,6 +156,7 @@ Class.pt.config = {
     type: 0,
     shade: [0.3, '#000'],
     fix: true,
+    full: true, //是否可全屏
     move: '.xubox_title',
     title: '&#x4FE1;&#x606F;',
     offset: ['', '50%'],
@@ -351,8 +352,14 @@ Class.pt.set = function(times){
         config.type !== 4 && layerE.find('.xubox_close').addClass('xubox_close1');
     };
 
-    layerE.attr({'type' :  ready.type[config.type]});
+    layerE.attr({ 'type': ready.type[config.type] });
+    layerE.attr({ 'full': config.full }); //qu将是否全屏参数加入到骨架，方便还原的时候取这个参数，否取不到这个参数
     that.offset();
+
+    //layerE.find('.xubox_title em').css('left', '20%'); //qu初始化时标题居中
+    if (!config.full) {//qu初始化时根据是否全屏参数决定是否显示最大化按钮
+        layerE.find('.xubox_max').hide();
+    }
     
     //判断是否动画弹出
     if(config.type !== 4){
@@ -849,6 +856,8 @@ layer.min = function(index, options){
     ready.isauto(layero, options, offset);
     layer.area(index, {width: 180, height: 35});
     layero.find('.xubox_min').hide();
+    layero.find('.xubox_max').show(); //qu最小化后显示还原按钮
+    // layero.find('.xubox_title em').css('left','1px');//qu最小化后标题在最左边
     layero.attr('type') === 'page' && layero.find(doms[4]).hide();
     ready.rescollbar(index);
 };
@@ -866,6 +875,14 @@ layer.restore = function(index){
     layero.find('.xubox_max').removeClass('xubox_maxmin');
     layero.find('.xubox_min').show();
     layero.attr('type') === 'page' && layero.find(doms[4]).show();
+    var full = layero.attr('full'); //qu还原后根据是否全屏参数决定是否显示最大化按钮
+    if (full == "false" || !full) {
+        layero.find('.xubox_max').hide();
+    }
+    else {
+        layero.find('.xubox_max').show();
+    }
+    // layero.find('.xubox_title em').css('left', '20%'); //qu还原后标题居中
     ready.rescollbar(index);
 };
 
