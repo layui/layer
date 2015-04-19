@@ -1,8 +1,8 @@
 /****************************************
 
- @Name：layer v1.1 弹层组件移动版
+ @Name：layer mobile v1.5 弹层组件移动版
  @Author：贤心
- @Date：2014-08-24
+ @Date：2014-09-24
  @Copyright：Sentsin Xu(贤心)
  @官网：http://sentsin.com/layui/layer
  @License：MIT
@@ -12,20 +12,24 @@
 ;!function(win){        
 "use strict";
 
-var path = '' //所在路径，如果非模块加载不用配置
-? path : document.scripts[document.scripts.length-1].src.match(/[\s\S]*\//)[0];
+var path = ''; //所在路径，如果非模块加载不用配置
+path = path ? path : document.scripts[document.scripts.length-1].src.match(/[\s\S]*\//)[0];
 
-var doc = document, elem = 'createElement', byid = 'getElementById', claname = 'getElementsByClassName';
+var doc = document, query = 'querySelectorAll', claname = 'getElementsByClassName', S = function(s){
+    return doc[query](s);
+};
 
+//插入css
 document.head.appendChild((function(){
-    var link = doc[elem]('link');
+    var link = doc.createElement('link');
     link.href = path + 'need/layer.css';
-    link.type="text/css";
-    link.rel="styleSheet"
+    link.type = 'text/css';
+    link.rel = 'styleSheet'
     link.id = 'layermcss';
     return link;
 }()));
 
+//默认配置
 var config = {
      type: 0,
      shade: true,
@@ -34,26 +38,26 @@ var config = {
      anim: true
 };
 
-var ready = {
+win.ready = {
     extend: function(obj){
         var newobj = JSON.parse(JSON.stringify(config));
         for(var i in obj){
             newobj[i] = obj[i];
         }
         return newobj;
-    }, timer: {}
+    }, 
+    timer: {},
+    end: {}
 };
 
-var index = 0, classs = ['layermbox'];
-
-function Layer(options){
+var index = 0, classs = ['layermbox'], Layer = function(options){
     var that = this;
     that.config = ready.extend(options);
     that.view();
 };
 
 Layer.prototype.view = function(){
-    var that = this, config = that.config, layerbox = doc[elem]('div');
+    var that = this, config = that.config, layerbox = doc.createElement('div');
 
     that.id = layerbox.id = classs[0] + index;
     layerbox.setAttribute('class', classs[0] + ' ' + classs[0]+(config.type || 0));
@@ -62,7 +66,7 @@ Layer.prototype.view = function(){
     var title = (function(){
         var titype = typeof config.title === 'object';
         return config.title
-        ? '<h3 style="'+ (titype ? config.title[1] : '') +'">'+ (titype ? config.title[0] : config.title)  +'</h3><button class="layermend">x</button>'
+        ? '<h3 style="'+ (titype ? config.title[1] : '') +'">'+ (titype ? config.title[0] : config.title)  +'</h3><button class="layermend"></button>'
         : '';
     }());
     
@@ -88,15 +92,15 @@ Layer.prototype.view = function(){
         config.content = '<i></i><i class="laymloadtwo"></i><i></i><div>' + (config.content||'') + '</div>';
     }
     
-    layerbox.innerHTML = (config.shade ? '<div class="laymshade"></div>' : '')
+    layerbox.innerHTML = (config.shade ? '<div '+ (typeof config.shade === 'string' ? 'style="'+ config.shade +'"' : '') +' class="laymshade"></div>' : '')
     +'<div class="layermmain" '+ (!config.fixed ? 'style="position:static;"' : '') +'>'
-        +'<section>'
-            +'<div class="layermchild '+ (config.anim ? 'layermanim' : '') +'" ' + ( config.style ? 'style="'+config.style+'"' : '' ) +'>'
+        +'<div class="section">'
+            +'<div class="layermchild '+ (config.className ? config.className : '') +' '+ ((!config.type && !config.shade) ? 'layermborder ' : '') + (config.anim ? 'layermanim' : '') +'" ' + ( config.style ? 'style="'+config.style+'"' : '' ) +'>'
                 + title
                 +'<div class="layermcont">'+ config.content +'</div>'
                 + button
             +'</div>'
-        +'</section>'
+        +'</div>'
     +'</div>';
     
     if(!config.type || config.type === 2){
@@ -107,21 +111,21 @@ Layer.prototype.view = function(){
     }
     
     document.body.appendChild(layerbox);
-    
+    var elem = that.elem = S('#'+that.id)[0];
     setTimeout(function(){
         try{
-            doc[byid](that.id).className = doc[byid](that.id).className + ' layermshow';
+            elem.className = elem.className + ' layermshow';
         }catch(e){
             return;
         }
-        config.success && config.success(doc[byid](that.id));
+        config.success && config.success(elem);
     }, 1);
     
     that.index = index++;
-    that.action(config);
+    that.action(config, elem);
 };
 
-Layer.prototype.action = function(config){
+Layer.prototype.action = function(config, elem){
     var that = this;
     
     //自动关闭
@@ -133,28 +137,31 @@ Layer.prototype.action = function(config){
     
     //关闭按钮
     if(config.title){
-        doc[byid](that.id)[claname]('layermend')[0].onclick = function(){
+        elem[claname]('layermend')[0].onclick = function(){
             config.cancel && config.cancel();
-            layer.close(that.index, config.end);
+            layer.close(that.index);
         };
     }
     
     //确认取消
     if(config.btn){
-        doc[byid](that.id)[claname]('layermbtn')[0].onclick = function(event){
-            var type = event.target.getAttribute('type');
-            if(type == 0){
-                config.no && config.no();
-                layer.close(that.index, config.end);
-            } else {
-                config.yes ? config.yes(that.index) : layer.close(that.index, config.end);
-            }
-        };
+        var btns = elem[claname]('layermbtn')[0].children, btnlen = btns.length;
+        for(var ii = 0; ii < btnlen; ii++){
+            btns[ii].onclick = function(){
+                var type = this.getAttribute('type');
+                if(type == 0){
+                    config.no && config.no();
+                    layer.close(that.index);
+                } else {
+                    config.yes ? config.yes(that.index) : layer.close(that.index);
+                }
+            };
+        }
     }
     
     //点遮罩关闭
     if(config.shade && config.shadeClose){
-        var shade = doc[byid](that.id)[claname]('laymshade')[0];
+        var shade = elem[claname]('laymshade')[0];
         shade.onclick = function(){
             layer.close(that.index, config.end);
         };
@@ -162,10 +169,12 @@ Layer.prototype.action = function(config){
             layer.close(that.index, config.end);
         };
     }
+    
+    config.end && (ready.end[that.index] = config.end);
 };
 
 var layer = {
-    v: '1.1',
+    v: '1.5',
     index: index,
     
     //核心方法
@@ -174,21 +183,22 @@ var layer = {
         return o.index;
     },
     
-    close: function(index, callback){
-        var ibox = doc[byid](classs[0]+index);
+    close: function(index){
+        var ibox = S('#'+classs[0]+index)[0];
         if(!ibox) return;
         ibox.innerHTML = '';
         doc.body.removeChild(ibox);
         clearTimeout(ready.timer[index]);
         delete ready.timer[index];
-        callback && callback();
+        typeof ready.end[index] === 'function' && ready.end[index]();
+        delete ready.end[index]; 
     },
     
     //关闭所有layer层
     closeAll: function(){
-        var boxs = document.getElementsByClassName(classs[0]);
+        var boxs = doc[claname](classs[0]);
         for(var i = 0, len = boxs.length; i < len; i++){
-            layer.close(boxs[i].getAttribute('index'));
+            layer.close((boxs[0].getAttribute('index')|0));
         }
     }
 };

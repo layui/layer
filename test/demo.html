@@ -2,8 +2,9 @@
 <html>
 <head>
 <title>layer-更懂你的web弹窗解决方案</title>
-<script src="http://res.xiami.net/pc/lay/lib.js"></script>
-<script src="../layer.min.js"></script>
+<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+<script src="../layer.js?v=1.9.0"></script>
+
 
 <style>
 html{background-color:#E3E3E3; font-size:14px; color:#000; font-family:'微软雅黑'}
@@ -15,7 +16,7 @@ pre{font-family:'微软雅黑'}
 .layer_text{background-color:#fff; padding:20px;}
 .layer_text p{margin-bottom: 10px; text-indent: 2em; line-height: 23px;}
 .button{display:inline-block; *display:inline; *zoom:1; line-height:30px; padding:0 20px; background-color:#56B4DC; color:#fff; font-size:14px; border-radius:3px; cursor:pointer; font-weight:normal;}
-.imgs img{width:300px;}
+.photos-demo img{width:200px;}
 </style>
 </head>
 <body>
@@ -24,83 +25,74 @@ pre{font-family:'微软雅黑'}
  @Name：layer-v<script>document.write(layer.v)</script> 弹层组件说明
  @Author：贤心
  @Blog：<a href="http://sentsin.com" target="_blank">http://sentsin.com</a>
- @官网：<a href="http://sentsin.com/jquery/layer"  target="_blank">http://sentsin.com/jquery/layer</a>
+ @Site：<a href="http://sentsin.com/jquery/layer/?form=local"  target="_blank">http://sentsin.com/jquery/layer</a>
 
 
 <strong>【注意事项】</strong>
-一、使用时，请把文件夹layer整个放置在您站点的任何一个目录，只需引入layer.min.js即可，除jQuery外，其它文件无需再引入。
-二、如果您的js引入是通过合并处理或者您不想采用layer自动获取的绝对路径，您需要打开layer.min.js 去配置相对路径url。（默认采用自动获取layer所在的路径）
-三、jquery必须为1.8或1.8以上版本（原因，更小，性能更好，且新版layer使用了部分jq1.8+的特性），下载包里doc文件里有jquery1.9下载地址
-四、更多使用说明与演示（demo），请参见layer官网。
+一、使用时，请把文件夹layer整个放置在您站点的任何一个目录，只需引入layer.js即可，除jQuery外，其它文件无需再引入。
+二、如果您的js引入是通过合并处理或者您不想采用layer自动获取的绝对路径，您可以通过layer.config()来配置（详见官网API页）
+三、jquery需1.8+
+四、更多使用说明与演示，请参见layer官网。
 五、使用时请务必保留来源，请勿用于违反我国法律的web平台。
 六、layer遵循LGPL协议，将永久性提供无偿服务。版权最终解释权：贤心。
 </pre>
 </div>
 
 <div class="box">
-    <h2 style="padding-bottom:20px;">layer1.8相册模块，点击下述图片试试</h2>
-    <div id="imgs" class="imgs">
-        <img src="http://static.oschina.net/uploads/space/2014/0516/012728_nAh8_1168184.jpg" alt="layer宣传图">
-        <img src="http://sentsin.qiniudn.com/sentsinmy5.jpg" alt="我入互联网这五年">
-        <img src="http://sentsin.qiniudn.com/sentsin_39101a660cf4671b7ec297a74cc652c74152104f.jpg" alt="微摄影">
-        <img src="http://sentsin.qiniudn.com/sentsinsan01.jpg" alt="三清山">
+    <h2 style="padding-bottom:20px;">扩展模块：图片查看器（相册层）</h2>
+    <div id="photosDemo" class="photos-demo">
+        <!-- layer-src表示大图  layer-pid表示图片id  src表示缩略图-->
+        
+        <img layer-src="http://static.oschina.net/uploads/space/2014/0516/012728_nAh8_1168184.jpg" layer-pid="" src="http://static.oschina.net/uploads/space/2014/0516/012728_nAh8_1168184.jpg" alt="layer宣传图">
+        <img layer-src="http://sentsin.qiniudn.com/sentsinmy5.jpg" layer-pid="" src="http://sentsin.qiniudn.com/sentsinmy5.jpg" alt="我入互联网这五年">
+        <img layer-src="" layer-pid="" src="http://sentsin.qiniudn.com/sentsin_39101a660cf4671b7ec297a74cc652c74152104f.jpg" alt="微摄影">
+        <img layer-src="http://sentsin.qiniudn.com/sentsinsan01.jpg" layer-pid="" src="http://sentsin.qiniudn.com/sentsinsan01.jpg" alt="三清山">
+        <img layer-src="http://ww2.sinaimg.cn/mw1024/5db11ff4jw1ehcyirr6quj20q00ex42w.jpg" layer-pid="" src="http://ww2.sinaimg.cn/mw1024/5db11ff4jw1ehcyirr6quj20q00ex42w.jpg" alt="国足">
     </div>
+
 </div>
 
 
 <div class="box" style="text-align:center">
-    <a href="http://sentsin.com/jquery/layer/api.html" target="_blank">使用文档</a>
-    <a href="http://say.sentsin.com/say-706.html" target="_blank">更新日志</a>
-    <a href="http://say.sentsin.com/home-48.html" id="suggest">交流反馈</a>
+    <a href="http://sentsin.com/jquery/layer/?form=local" target="_blank">更多示例</a>
+    <a href="http://sentsin.com/jquery/layer/api.html?form=local" target="_blank">使用文档</a>
+    <a href="http://say.sentsin.com/home-48.html?form=local" id="suggest">交流反馈</a>
+    <a href="javascript:;" id="about">关于</a>
 </div>
 
 <script>
 ;!function(){
 
-$(function(){
-    $.layer({
+//加载扩展模块
+layer.config({
+    extend: 'layer.ext.js'
+});
+
+//页面一打开就执行，放入ready是为了layer所需配件（css、扩展模块）加载完毕
+layer.ready(function(){ 
+    //官网欢迎页
+    layer.open({
         type: 2,
-        title: [
-            '官网', 
-            'background:#2B2E37; height:40px; color:#fff; border:none;' //自定义标题样式
-        ], 
-        border:[0],
+        //skin: 'layui-layer-lan',
+        title: 'layer弹层组件',
         area: ['90%', '90%'],
-        iframe: {src: 'http://sentsin.com/jquery/layer/?from=local'}
-    })
+        content: 'http://sentsin.com/jquery/layer/?form=local',
+        end: function(){
+            layer.tips('试试相册模块？', '#photosDemo', {tips: 1})
+        }
+    });
     
-    layer.msg('hello，亲爱的朋友，当你看到这个的时候<br>意味着你已将layer下载到你的本地，并正常地运行了它。<br>layer是一款基于web的弹窗解决方案<br>旨在为你的产品增强体验。', 15, {
-        rate: 'top',
-        type: -1,
-        shade: false
+    layer.msg('欢迎使用layer');
+    
+    //使用相册
+    layer.photos({
+        photos: '#photosDemo'
     });
 });
 
-
-layer.use('extend/layer.ext.js', function(){
-    //初始加载即调用，所以需放在ext回调里
-    layer.ext = function(){
-        layer.photosPage({
-            html: '<div style="padding:20px;">这里传入自定义的html<p>相册支持左右方向键，支持Esc关闭</p><p>另外还可以通过异步返回json实现相册。更多用法详见官网。</p><p>'+ unescape("%u8FD8%u6709%u5E0C%u671B%u5927%u5BB6%u5E73%u65F6%u6709%u7A7A%u70B9%u4E0B%u5B98%u7F51%u7684%u5E7F%u544A%u54C8%uFF0C%u4E00%u5929%u4E0D%u8981%u8D85%u8FC7%u4E00%u6B21%uFF0C%u8C22%u8C22%u62C9") +'</p><p id="change"></p></div>',
-            title: '快捷模式-获取页面元素包含的所有图片',
-            id: 112, //相册id，可选
-            parent: '#imgs'
-        });
-    };
-});
-
-$('#suggest').on('click',function(event){
-	var height = $(window).height(), index = $.layer({
-		type : 2,
-		shade : [0.5 , '#000' , true],
-		shadeClose : true,
-		border : [!0],
-		title : false,
-		offset : ['25px',''],
-		area : ['90%', (height - 50)+'px'],
-		iframe : {src : $(this).attr('href')}
-	});
-    event.preventDefault();
+//关于
+$('#about').on('click', function(){
+    layer.alert(layer.v + ' - 贤心出品 sentsin.com');
 });
 
 }();
