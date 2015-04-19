@@ -18,6 +18,5 @@ Thumbs.db
 node_modules/
 _site/
 .gitignore
-skin/seaning/
-src/skin/seaning/
+
 git/
