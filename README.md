@@ -19,8 +19,7 @@ layer历经三年考验，已经清楚地懂得了人们最需要的是什么，
 * [中国联通](http://app.10010.com/)
 * [蚂蚁短租](http://www.mayi.com/)
 * [phpyun](http://www.phpyun.com/)
-* [卡牌网](http://www.kapai.com/)
-* [八圆包](http://www.bayuanbao.com/)
+* [慕课网](http://www.imooc.com/)
 
 
 事实上我们无法获取到更多案例，所以如果您有大型项目也在使用layer，您可以联系作者，以便在layer官网展现，也为您的品牌推广尽一些绵薄之力。
