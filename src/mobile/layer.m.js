@@ -1,6 +1,10 @@
 /****************************************
 
+<<<<<<< HEAD:src/mobile/layer.m.js
  @Name：layer mobile v1.5 弹层组件移动版
+=======
+ @Name：layer mobile v1.2 弹层组件移动版
+>>>>>>> 73e245c0daeaee5e4459f0025c243b6708e5eac5:mobile/layer.m.dev.js
  @Author：贤心
  @Date：2014-09-24
  @Copyright：Sentsin Xu(贤心)
@@ -94,8 +98,13 @@ Layer.prototype.view = function(){
     
     layerbox.innerHTML = (config.shade ? '<div '+ (typeof config.shade === 'string' ? 'style="'+ config.shade +'"' : '') +' class="laymshade"></div>' : '')
     +'<div class="layermmain" '+ (!config.fixed ? 'style="position:static;"' : '') +'>'
+<<<<<<< HEAD:src/mobile/layer.m.js
         +'<div class="section">'
             +'<div class="layermchild '+ (config.className ? config.className : '') +' '+ ((!config.type && !config.shade) ? 'layermborder ' : '') + (config.anim ? 'layermanim' : '') +'" ' + ( config.style ? 'style="'+config.style+'"' : '' ) +'>'
+=======
+        +'<section>'
+            +'<div class="layermchild '+ ((!config.type && !config.shade) ? 'layermborder ' : '') + (config.anim ? 'layermanim' : '') +'" ' + ( config.style ? 'style="'+config.style+'"' : '' ) +'>'
+>>>>>>> 73e245c0daeaee5e4459f0025c243b6708e5eac5:mobile/layer.m.dev.js
                 + title
                 +'<div class="layermcont">'+ config.content +'</div>'
                 + button
@@ -174,7 +183,11 @@ Layer.prototype.action = function(config, elem){
 };
 
 var layer = {
+<<<<<<< HEAD:src/mobile/layer.m.js
     v: '1.5',
+=======
+    v: '1.2',
+>>>>>>> 73e245c0daeaee5e4459f0025c243b6708e5eac5:mobile/layer.m.dev.js
     index: index,
     
     //核心方法
