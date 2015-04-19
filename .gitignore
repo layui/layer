@@ -17,5 +17,6 @@ Thumbs.db
 .settings/
 node_modules/
 _site/
+.gitignore
 
 git/
