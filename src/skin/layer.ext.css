@@ -1,11 +1,11 @@
-/** 
+/*!
  
  @Name: layer拓展样式
  @Date: 2012.12.13
  @Author: 贤心
  @blog: sentsin.com
  
-**/
+ */
 
 .layui-layer-iconext{background:url(default/icon_ext.png) no-repeat;}
 html #layui_layer_skinlayerextcss{display:none; position: absolute; width:1989px;}

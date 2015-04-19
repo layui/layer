@@ -41,7 +41,7 @@ html #layui_layer_skinlayercss{display:none; position: absolute; width:1989px;}
 @-webkit-keyframes shake{0%,100%{-webkit-transform:translateX(0);transform:translateX(0)}10%,30%,50%,70%,90%{-webkit-transform:translateX(-10px);transform:translateX(-10px)}20%,40%,60%,80%{-webkit-transform:translateX(10px);transform:translateX(10px)}}@keyframes shake{0%,100%{-webkit-transform:translateX(0);-ms-transform:translateX(0);transform:translateX(0)}10%,30%,50%,70%,90%{-webkit-transform:translateX(-10px);-ms-transform:translateX(-10px);transform:translateX(-10px)}20%,40%,60%,80%{-webkit-transform:translateX(10px);-ms-transform:translateX(10px);transform:translateX(10px)}}.layui-anim-07{-webkit-animation-name:shake;animation-name:shake}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
 
 /* 标题栏 */
-.layui-layer-title{padding:0 80px 0 10px; height:35px; line-height:35px; border-bottom:1px solid #D5D5D5; font-size:14px; color:#333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; background:#E1E1E1;}
+.layui-layer-title{padding:0 80px 0 10px; height:35px; line-height:35px; border-bottom:1px solid #D5D5D5; font-size:14px; color:#333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; background-color:#EAEAEA;}
 .layui-layer-setwin{position:absolute; right:10px; *right:0; top:10px; font-size:0; line-height: initial;}
 .layui-layer-setwin a{position:relative; width: 14px; height:14px; margin-left:10px; font-size:12px; _overflow:hidden;}
 .layui-layer-setwin .layui-layer-min cite{position:absolute; width:14px; height:2px; left:0; top:50%; margin-top:-1px; background-color:#919191; cursor:pointer; _overflow:hidden;}

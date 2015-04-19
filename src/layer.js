@@ -36,7 +36,7 @@ window.layer = {
         typeof options.extend === 'string' && (options.extend = [options.extend]);
         layer.use('skin/layer.css', (options.extend && options.extend.length > 0) ? (function loop(){
             var ext = options.extend;
-            layer.use('extend/'+ext[ext[item] ? item : item-1], item < ext.length ? function(){
+            layer.use(ext[ext[item] ? item : item-1], item < ext.length ? function(){
                 ++item; 
                 return loop;
             }() : fn);
