@@ -3,8 +3,7 @@
 <head>
 <title>layer-更懂你的web弹窗解决方案</title>
 <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
-<script src="../layer.js?v=1.9.0"></script>
-
+<script src="../src/layer.js?v=1.9.0"></script>
 
 <style>
 html{background-color:#E3E3E3; font-size:14px; color:#000; font-family:'微软雅黑'}
@@ -75,14 +74,16 @@ layer.ready(function(){
         type: 2,
         //skin: 'layui-layer-lan',
         title: 'layer弹层组件',
-        area: ['90%', '90%'],
+        fix: false,
+        shadeClose: true,
+        area: ['1100px', '600px'],
         content: 'http://sentsin.com/jquery/layer/?form=local',
         end: function(){
             layer.tips('试试相册模块？', '#photosDemo', {tips: 1})
         }
     });
     
-    layer.msg('欢迎使用layer');
+    //layer.msg('欢迎使用layer');
     
     //使用相册
     layer.photos({

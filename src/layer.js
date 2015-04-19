@@ -439,7 +439,7 @@ Class.pt.move = function(){
                 $('body').append('<div id="layui-layer-moves" class="layui-layer-moves" style="left:'+ xx +'px; top:'+ yy +'px; width:'+ ww +'px; height:'+ hh +'px; z-index:2147483584"></div>');
             }
             conf.move = $('#layui-layer-moves');
-            config.moveType && conf.move.css({opacity: 0});
+            config.moveType && conf.move.css({visibility: 'hidden'});
            
             conf.moveX = M.pageX - conf.move.position().left;
             conf.moveY = M.pageY - conf.move.position().top;
