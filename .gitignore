@@ -1,5 +1,4 @@
 1.8.5/
-doc/
 *.iml
 .idea/
 .ipr
@@ -18,3 +17,5 @@ Thumbs.db
 .settings/
 node_modules/
 _site/
+*/seaning
+git/
