@@ -550,9 +550,10 @@ Class.pt.IE6 = function(layero){
     var that = this, _ieTop = layero.offset().top;
     
     //ie6的固定与相对定位
-    (function ie6Fix(){
+    function ie6Fix(){
         layero.css({top : _ieTop + (that.config.fix ? win.scrollTop() : 0)});
-    }());
+    };
+    ie6Fix();
     win.scroll(ie6Fix);
 
     //隐藏select
