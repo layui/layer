@@ -750,7 +750,7 @@ ready.run = function(){
     return layer;
 }) : function(){
    ready.run();
-   layer.use('/skin/layer.css');
+   layer.use('skin/layer.css');
 }();
 
 }(window);
