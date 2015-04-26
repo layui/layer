@@ -233,7 +233,7 @@ Class.pt.creat = function(){
         break;
         case 2:
             var content = config.content = conType ? config.content : [config.content||'http://sentsin.com?from=layer', 'auto'];
-            config.content = '<iframe scrolling="'+ (config.content[1]||'auto') +'" allowtransparency="true" id="'+ doms[5] +''+ times +'" name="'+ doms[5] +''+ times +'" onload="this.className=\'\';" class="layui-layer-load" frameborder="0" src="' + config.content[0] + '"></iframe>';
+            config.content = '<iframe scrolling="'+ (config.content[1]||'auto') +'" allowtransparency="true" id="'+ doms[4] +''+ times +'" name="'+ doms[4] +''+ times +'" onload="this.className=\'\';" class="layui-layer-load" frameborder="0" src="' + config.content[0] + '"></iframe>';
         break;
         case 3:
             config.title = false;
@@ -705,14 +705,23 @@ layer.title = function(name, index){
 //关闭layer总方法
 layer.close = function(index){
     var layero = $('#'+ doms[0] + index), type = layero.attr('type');
-    if(!layero) return;
-    if(type == ready.type[1] && layero.attr('conType') === 'object'){
+    if(!layero[0]) return;
+    if(type === ready.type[1] && layero.attr('conType') === 'object'){
         layero.children(':not(.'+ doms[5] +')').remove();
         for(var i = 0; i < 2; i++){
             layero.find('.layui-layer-wrap').unwrap().hide();
         }
     } else {
-        layero.innerHTML = '';
+        //低版本IE 回收 iframe
+        if(type === ready.type[2]){
+            try {
+                var iframe = $('#'+doms[4]+index)[0];
+                iframe.contentWindow.document.write('');
+                iframe.contentWindow.close();
+                layero.find('.'+doms[5])[0].removeChild(iframe);
+            } catch(e){}
+        }
+        layero[0].innerHTML = '';
         layero.remove();
     }
     $('#layui-layer-moves, #layui-layer-shade' + index).remove();
