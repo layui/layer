@@ -57,8 +57,8 @@ html #layui_layer_skinlayercss{display:none; position: absolute; width:1989px;}
 
 /* 按钮栏 */
 .layui-layer-btn{text-align:center; padding:10px 30px; pointer-events: auto;}
-.layui-layer-btn a{height:30px; line-height:30px; margin:0 8px; padding:0 20px; background:#5FBFE7; color:#fff; font-size:14px; font-weight:bold; cursor:pointer;}
-.layui-layer-btn a:hover{opacity:0.9;}
+.layui-layer-btn a{height:30px; line-height:30px; margin:0 8px; padding:0 20px; background:#5FBFE7; color:#fff; font-size:14px; font-weight:bold; cursor:pointer; text-decoration: none;}
+.layui-layer-btn a:hover{opacity:0.9; text-decoration: none;}
 .layui-layer-btn a:active{opacity:0.7;}
 .layui-layer-btn .layui-layer-btn1{background:#A6BBCE;}
 
@@ -112,8 +112,8 @@ html #layui_layer_skinlayercss{display:none; position: absolute; width:1989px;}
 .layui-layer-lan .layui-layer-btn{border-top:1px solid #E9E7E7}
 .layui-layer-lan .layui-layer-btn a{background:#BBB5B5;}
 .layui-layer-lan .layui-layer-btn .layui-layer-btn1{background:#C9C5C5;}
-.layui-layer-molv .layui-layer-title{background:#60B979; color:#fff; border: none;}
-.layui-layer-molv .layui-layer-btn a{background:#659D94;}
+.layui-layer-molv .layui-layer-title{background:#009f95; color:#fff; border: none;}
+.layui-layer-molv .layui-layer-btn a{background:#009f95;}
 .layui-layer-molv .layui-layer-btn .layui-layer-btn1{background:#92B8B1;}
 
 

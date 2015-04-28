@@ -1,6 +1,6 @@
 ﻿/*!
 
- @Name：layer v1.9.0 弹层组件
+ @Name：layer v1.9.1 弹层组件
  @Author：贤心
  @Site：http://sentsin.com/jquery/layer
  @License：LGPL
@@ -12,7 +12,8 @@
 
 var $, win, ready = {
     getPath: function(){
-        var js = document.scripts, jsPath = js[js.length - 1].src;
+        var js = document.scripts, script = js[js.length - 1], jsPath = script.src;
+        if(script.getAttribute('merge')) return;
         return jsPath.substring(0, jsPath.lastIndexOf("/") + 1);
     }(), 
     config: {}, end: {},
@@ -24,7 +25,7 @@ var $, win, ready = {
 
 //默认内置方法。
 window.layer = {
-    v: '1.9.0',
+    v: '1.9.1',
     ie6: !!window.ActiveXObject&&!window.XMLHttpRequest,
     index: 0,
     path: ready.getPath,
@@ -51,6 +52,7 @@ window.layer = {
         var iscss = /\.css$/.test(module);
         var node = document.createElement(iscss ? 'link' : 'script');
         var id = 'layui_layer_' + module.replace(/\.|\//g, '');
+        if(!layer.path) return;
         if(iscss){
             node.rel = 'stylesheet';
         }
@@ -149,7 +151,7 @@ window.layer = {
 var Class = function(setings){    
     var that = this;
     that.index = ++layer.index;
-    that.config = $.extend({}, that.config, setings, ready.config);
+    that.config = $.extend({}, that.config, ready.config, setings);
     that.creat();
 };
 
@@ -182,7 +184,7 @@ Class.pt.config = {
 Class.pt.vessel = function(conType, callback){
     var that = this, times = that.index, config = that.config;
     var zIndex = config.zIndex + times, titype = typeof config.title === 'object';
-    var ismax = config.maxmin && (config.type === 1 || config.type === 2) && (!/^\d+%$/.test(config.area[0]) || !/^\d+%$/.test(config.area[1]));
+    var ismax = config.maxmin && (config.type === 1 || config.type === 2);
     var titleHTML = (config.title ? '<div class="layui-layer-title" style="'+ (titype ? config.title[1] : '') +'">' 
         + (titype ? config.title[0] : config.title) 
     + '</div>' : '');
@@ -332,7 +334,7 @@ Class.pt.offset = function(){
     that.offsetLeft = (win.width() - area[0])/2;
     if(type){
         that.offsetTop = config.offset[0];
-        that.offsetLeft = config.offset[1];
+        that.offsetLeft = config.offset[1]||that.offsetLeft;
     } else if(config.offset !== 'auto'){
         that.offsetTop = config.offset;
         if(config.offset === 'rb'){ //右下角
@@ -341,6 +343,12 @@ Class.pt.offset = function(){
         }
     }
     if(!config.fix){
+        that.offsetTop = /%$/.test(that.offsetTop) ? 
+            win.height()*parseFloat(that.offsetTop)/100
+        : parseFloat(that.offsetTop);
+        that.offsetLeft = /%$/.test(that.offsetLeft) ? 
+            win.width()*parseFloat(that.offsetLeft)/100
+        : parseFloat(that.offsetLeft);
         that.offsetTop += win.scrollTop();
         that.offsetLeft += win.scrollLeft();
     }
@@ -497,16 +505,26 @@ Class.pt.callback = function(){
     }
     layer.ie6 && that.IE6(layero);
     
-    //确认
-    layero.find('.'+ doms[6] +'0').on('click',function(){
-        config.yes ? config.yes(that.index) : layer.close(that.index);
+    //按钮
+    layero.find('.'+ doms[6]).children('a').on('click', function(){
+        var index = $(this).index();
+        if(index === 0){
+            config.yes ? config.yes(that.index, layero) : layer.close(that.index);
+        } else if(index === 1){
+            cancel();
+        } else {
+            config['btn'+(index+1)] ? config['btn'+(index+1)](that.index, layero) : layer.close(that.index);
+        }
     });
     
     //取消
-    layero.find('.'+ doms[7] +',.'+ doms[6] +'1').on('click', function(){
-        config.cancel && config.cancel(that.index);
-        layer.close(that.index);
-    });
+    function cancel(){
+        var close = config.cancel && config.cancel(that.index);
+        close === false || layer.close(that.index);
+    }
+    
+    //右上角关闭回调
+    layero.find('.'+ doms[7]).on('click', cancel);
     
     //点遮罩关闭
     if(config.shadeClose){
@@ -654,7 +672,7 @@ layer.min = function(index, options){
     var layero = $('#'+ doms[0] + index);
     var titHeight = layero.find(doms[1]).outerHeight() || 0;
     ready.record(layero);
-    layer.style(index, {width: 180, height: titHeight});
+    layer.style(index, {width: 180, height: titHeight, overflow: 'hidden'});
     layero.find('.layui-layer-min').hide();
     layero.attr('type') === 'page' && layero.find(doms[4]).hide();
     ready.rescollbar(index);
@@ -668,7 +686,8 @@ layer.restore = function(index){
         width: parseFloat(area[0]), 
         height: parseFloat(area[1]), 
         top: parseFloat(area[2]), 
-        left: parseFloat(area[3])
+        left: parseFloat(area[3]),
+        overflow: 'visible'
     });
     layero.find('.layui-layer-max').removeClass('layui-layer-maxmin');
     layero.find('.layui-layer-min').show();
@@ -736,9 +755,7 @@ layer.closeAll = function(type){
     $.each($('.'+doms[0]), function(){
         var othis = $(this);
         var is = type ? (othis.attr('type') === type) : 1;
-        if(is){
-            layer.close(othis.attr('times'));
-        }
+        is && layer.close(othis.attr('times'));
         is = null;
     });
 };
