@@ -2,7 +2,7 @@
 
  @Name：layer v1.9.1 弹层组件
  @Author：贤心
- @Site：http://sentsin.com/jquery/layer
+ @Site：http://layer.layui.com
  @License：LGPL
         
  */
@@ -159,7 +159,7 @@ Class.pt = Class.prototype;
 
 //缓存常用字符
 var doms = ['layui-layer', '.layui-layer-title', '.layui-layer-main', '.layui-layer-dialog', 'layui-layer-iframe', 'layui-layer-content', 'layui-layer-btn', 'layui-layer-close'];
-doms.anim = ['layui-anim-01', 'layui-anim-02', 'layui-anim-03', 'layui-anim-04', 'layui-anim-05', 'layui-anim-06', 'layui-anim-07'];
+doms.anim = ['layui-anim', 'layui-anim-01', 'layui-anim-02', 'layui-anim-03', 'layui-anim-04', 'layui-anim-05', 'layui-anim-06'];
 
 //默认配置
 Class.pt.config = {
@@ -231,7 +231,7 @@ Class.pt.creat = function(){
     switch(config.type){
         case 0:
             config.btn = ('btn' in config) ? config.btn : ready.btn[0];
-            layer.close($('div.'+doms[0]+'[type=dialog]').attr('times'));
+            layer.closeAll('dialog');
         break;
         case 2:
             var content = config.content = conType ? config.content : [config.content||'http://sentsin.com?from=layer', 'auto'];
