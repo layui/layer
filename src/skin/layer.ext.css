@@ -7,11 +7,11 @@
  
  */
 
-.layui-layer-iconext{background:url(default/icon_ext.png) no-repeat;}
+.layui-layer-iconext{background:url(default/icon-ext.png) no-repeat;}
 html #layui_layer_skinlayerextcss{display:none; position: absolute; width:1989px;}
 
 /* prompt模式 */
-.layui-layer-prompt .layui-layer-input{display:block; width:220px; height:30px; margin:0 auto; line-height:30px; padding: 0 5px; border: 1px solid #ccc; background: url(default/textbg.png) #fff repeat-x; color:#333;}
+.layui-layer-prompt .layui-layer-input{display:block; width:220px; height:30px; margin:0 auto; line-height:30px; padding: 0 5px; border: 1px solid #ccc; box-shadow: 1px 1px 5px rgba(0,0,0,.1) inset; color:#333;}
 .layui-layer-prompt textarea.layui-layer-input{width:300px; height:100px; line-height:20px;}
 
 /* tab模式 */

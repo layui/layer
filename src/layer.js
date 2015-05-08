@@ -1,6 +1,6 @@
 ﻿/*!
 
- @Name：layer v1.9.1 弹层组件
+ @Name：layer v1.9.2 弹层组件
  @Author：贤心
  @Site：http://layer.layui.com
  @License：LGPL
@@ -25,7 +25,7 @@ var $, win, ready = {
 
 //默认内置方法。
 window.layer = {
-    v: '1.9.1',
+    v: '1.9.2',
     ie6: !!window.ActiveXObject&&!window.XMLHttpRequest,
     index: 0,
     path: ready.getPath,
@@ -197,7 +197,7 @@ Class.pt.vessel = function(conType, callback){
         //主体
         '<div class="'+ doms[0] +' '+ (doms.anim[config.shift]||'') + (' layui-layer-'+ready.type[config.type]) + (((config.type == 0 || config.type == 2) && !config.shade) ? ' layui-layer-border' : '') + ' ' + (config.skin||'') +'" id="'+ doms[0] + times +'" type="'+ ready.type[config.type] +'" times="'+ times +'" showtime="'+ config.time +'" conType="'+ (conType ? 'object' : 'string') +'" style="z-index: '+ zIndex +'; width:'+ config.area[0] + ';height:' + config.area[1] + (config.fix ? '' : ';position:absolute;') +'">'
             + (conType && config.type != 2 ? '' : titleHTML)
-            +'<div class="layui-layer-content'+ ((config.type == 0 && config.icon !== -1) ? ' layui-layer-padding' :'') + (config.type == 3 ? ' xubox_loading_'+config.icon : '') +'">'
+            +'<div class="layui-layer-content'+ ((config.type == 0 && config.icon !== -1) ? ' layui-layer-padding' :'') + (config.type == 3 ? ' layui-layer-loading'+config.icon : '') +'">'
                 + (config.type == 0 && config.icon !== -1 ? '<i class="layui-layer-ico layui-layer-ico'+ config.icon +'"></i>' : '')
                 + (config.type == 1 && conType ? '' : (config.content||''))
             +'</div>'
