@@ -1,6 +1,6 @@
 ﻿/*!
 
- @Name：layer v1.9.2 弹层组件
+ @Name：layer v1.9.3 弹层组件
  @Author：贤心
  @Site：http://layer.layui.com
  @License：LGPL
@@ -25,14 +25,14 @@ var $, win, ready = {
 
 //默认内置方法。
 window.layer = {
-    v: '1.9.2',
+    v: '1.9.3',
     ie6: !!window.ActiveXObject&&!window.XMLHttpRequest,
     index: 0,
     path: ready.getPath,
     config: function(options, fn){
         var item = 0;
         options = options || {};
-        ready.config = $.extend(ready.config, options);
+        layer.cache = ready.config = $.extend(ready.config, options);
         layer.path = ready.config.path || layer.path;
         typeof options.extend === 'string' && (options.extend = [options.extend]);
         layer.use('skin/layer.css', (options.extend && options.extend.length > 0) ? (function loop(){
@@ -105,7 +105,8 @@ window.layer = {
     },
     
     msg: function(content, options, end){ //最常用提示层
-        var type = typeof options === 'function', skin = 'layui-layer-msg';
+        var type = typeof options === 'function', rskin = ready.config.skin;
+        var skin = (rskin ? rskin + ' ' + rskin + '-msg' : '')||'layui-layer-msg';
         var shift = doms.anim.length - 1;
         if(type) end = options;
         return layer.open($.extend({
@@ -117,12 +118,12 @@ window.layer = {
             closeBtn: false,
             btn: false,
             end: end
-        }, type ? {
+        }, (type && !ready.config.skin) ? {
             skin: skin + ' layui-layer-hui',
             shift: shift
         } : function(){
            options = options || {};
-           if(options.icon === -1 || options.icon === undefined){
+           if(options.icon === -1 || options.icon === undefined && !ready.config.skin){
                options.skin = skin + ' ' + (options.skin||'layui-layer-hui');
            }
            return options;
@@ -442,7 +443,8 @@ Class.pt.move = function(){
         if($(this).attr('move') === 'ok'){
             conf.ismove = true;
             conf.layero = $(this).parents('.'+ doms[0]);
-            var xx = conf.layero.offset().left, yy = conf.layero.offset().top, ww = conf.layero.width() - 6, hh = conf.layero.height() - 6;
+            var border = parseFloat(conf.layero.css('border-width'))*2;
+            var xx = conf.layero.offset().left, yy = conf.layero.offset().top, ww = conf.layero.width() - 6 + border, hh = conf.layero.height() - 6 + border;
             if(!$('#layui-layer-moves')[0]){
                 $('body').append('<div id="layui-layer-moves" class="layui-layer-moves" style="left:'+ xx +'px; top:'+ yy +'px; width:'+ ww +'px; height:'+ hh +'px; z-index:2147483584"></div>');
             }

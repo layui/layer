@@ -1,5 +1,33 @@
 ﻿
-【1.9.0】
+【1.9.3】2015.05.23
+> 修复全局设置皮肤时，部分类型层未起作用的bug。
+> 增加skin值：layui-layer-rim，用于给层加边框（类似1.85的风格）
+> 样式微调
+
+== 拓展模块 ==
+> 修复相册层设定基础参数时，只有首次有效的bug。
+
+
+【1.9.2】2015.05.08
+> 增加关闭动画样式：layui-layer-close
+> 优化默认弹出动画
+> 优化默认图标，默认的icon支持缩减到0-6（拓展皮肤可自己任意设定支持的数目）
+> 优化部分样式
+> 机智地修复了一个隐藏得非常深的但是不是太重要的bug。
+> 剔除了一些图片。
+
+【1.9.1】2015.04.29
+> btn设定多个按钮时，新增对应的回调（支持只有yes和cancel回调）,如btn: ['按钮一','按钮二','按钮三']，按钮一和按钮二还是之前的yes和cancel，按钮三，则回调为 btn3: function(){}，以此类推。
+> 对cancel回调进行了微完善，如果不想关闭，return false即可，如cancel: function(){return false}，取消则不会关闭。
+> 修复当设置了fix:false时,offset的设置无效的bug
+> 为低版本IE回收iframe占用的内存，从而修复偶尔无法获焦的bug
+> 修复当设置了btn时，最小化不能愉快地呈现的bug。
+> 修复全局设置skin时，某些层类型出现样式异常的bug。
+> 修复area设置了百分比时，maxmin参数无效的bug。
+> 完善当采用<script>合并路径的方式引入layer，加载了错误的css路径的问题。这种情况需在script标签上加一个自定义属性merge="true",然后通过layer.config({path: 'layer所在目录'})来完成初始化的配置
+> 样式微调
+
+【1.9.0】2015.04.19
 
 > 新增laye.open(options)，抛弃了之前的$.layer(options)调用方法，目的是与layer mobile保持统一。
 > 新增layer.config(options)方法，用于进行全局化配置。除了用于展现弹层的基础参数外，还支持path，用于模块化加载layer时设定目录以便加载所需配件，如layer.config({path: '所在路径', extend: ''});

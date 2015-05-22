@@ -116,7 +116,7 @@ html #layui_layer_skinlayercss{display:none; position: absolute; width:1989px;}
 .layui-layer-setwin .layui-layer-close2:hover{ background-position:-180px -44px; _background-position:-25px -55px;}
 
 /* 按钮栏 */
-.layui-layer-btn{text-align:center; padding:10px 30px; pointer-events: auto;}
+.layui-layer-btn{text-align:center; padding:0 30px 10px; pointer-events: auto;}
 .layui-layer-btn a{height:30px; line-height:30px; margin:0 8px; padding:0 20px; background:#5FBFE7; color:#fff; font-size:14px; font-weight:bold; cursor:pointer; text-decoration: none;}
 .layui-layer-btn a:hover{opacity:0.9; text-decoration: none;}
 .layui-layer-btn a:active{opacity:0.7;}
@@ -132,16 +132,18 @@ html #layui_layer_skinlayercss{display:none; position: absolute; width:1989px;}
 .layui-layer-ico4{background-position:-191px 0;}
 .layui-layer-ico5{background-position:-239px 0;}
 .layui-layer-ico6{background-position:-287px 0;}
+.layui-layer-rim{border:6px solid #8D8D8D; border:6px solid rgba(0,0,0,.3); border-radius:5px; box-shadow: none;}
 .layui-layer-msg{min-width:170px; border-radius:3px; border:5px solid #8D8D8D; border:5px solid rgba(0,0,0,.4);}
 .layui-layer-msg .layui-layer-content .layui-layer-ico{top:10px}
-.layui-layer-hui{min-width:100px;  background-color:#000; filter:alpha(opacity=60); background-color: rgba(0,0,0,0.6); color: #fff; border:none; }
+.layui-layer-hui{min-width:100px;  background-color:#000; filter:alpha(opacity=60); background-color: rgba(0,0,0,0.6); color: #fff; border:none;}
 .layui-layer-hui .layui-layer-content{padding:12px 25px; text-align:center;}
 .layui-layer-dialog .layui-layer-padding{padding: 22px 20px 22px 65px; text-align: left;}
 .layui-layer-msg .layui-layer-padding{padding:17px 20px 17px 65px;}
 .layui-layer-page .layui-layer-content{position:relative; overflow:auto;}
+.layui-layer-page .layui-layer-btn,.layui-layer-iframe .layui-layer-btn{padding-top:10px;}
 .layui-layer-nobg{background:none;}
 .layui-layer-iframe .layui-layer-content{overflow:hidden;}
-.layui-layer-iframe iframe{width:100%;}
+.layui-layer-iframe iframe{display:block; width:100%;}
 .layui-layer-loading{border-radius:100%; background:none;  box-shadow:none;}
 .layui-layer-loading .layui-layer-content{width:60px; height:24px; background:url(default/loading-0.gif) no-repeat;}
 .layui-layer-loading .layui-layer-loading1{width:37px; height:37px; background:url(default/loading-1.gif) no-repeat;}
@@ -158,12 +160,11 @@ html #layui_layer_skinlayercss{display:none; position: absolute; width:1989px;}
 .layui-layer-tips i.layui-layer-TipsL{right:-8px;}
 
 /* skin */
+.layui-layer-lan[type="dialog"]{min-width:280px;}
 .layui-layer-lan .layui-layer-title{background:#4476A7; color:#fff; border: none;}
-.layui-layer-lan .layui-layer-btn{border-top:1px solid #E9E7E7}
+.layui-layer-lan .layui-layer-btn{padding:10px; text-align: right; border-top:1px solid #E9E7E7}
 .layui-layer-lan .layui-layer-btn a{background:#BBB5B5;}
 .layui-layer-lan .layui-layer-btn .layui-layer-btn1{background:#C9C5C5;}
 .layui-layer-molv .layui-layer-title{background:#009f95; color:#fff; border: none;}
 .layui-layer-molv .layui-layer-btn a{background:#009f95;}
 .layui-layer-molv .layui-layer-btn .layui-layer-btn1{background:#92B8B1;}
-
-
