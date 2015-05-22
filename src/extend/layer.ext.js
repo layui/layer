@@ -6,9 +6,15 @@
 
  */
  
+;!function(){
+ 
 layer.use('skin/layer.ext.css', function(){
     layer.layui_layer_extendlayerextjs = true;
 });
+
+var cache = layer.cache, skin = function(type){
+    return (cache.skin ? (' ' + cache.skin + ' ' + cache.skin + '-'+type) : '');
+}
 
 //仿系统prompt
 layer.prompt = function(options, yes){
@@ -20,7 +26,7 @@ layer.prompt = function(options, yes){
     return layer.open($.extend({
         btn: ['&#x786E;&#x5B9A;','&#x53D6;&#x6D88;'],
         content: content,
-        skin: 'layui-layer-prompt',
+        skin: 'layui-layer-prompt' + skin('prompt'),
         success: function(layero){
             prompt = layero.find('.layui-layer-input');
             prompt.focus();
@@ -43,7 +49,7 @@ layer.tab = function(options){
     var tab = options.tab || {};
     return layer.open($.extend({
         type: 1,
-        skin: 'layui-layer-tab',
+        skin: 'layui-layer-tab' + skin('tab'),
         title: function(){
             var len = tab.length, ii = 1, str = '';
             if(len > 0){
@@ -117,8 +123,6 @@ layer.photos = function(options, loop, key){
         layer.msg('&#x6CA1;&#x6709;&#x56FE;&#x7247;');
         return;
     }
-
-    
     
     //上一张
     dict.imgprev = function(key){
@@ -157,11 +161,7 @@ layer.photos = function(options, loop, key){
     dict.tabimg = function(key){
         photos.start = dict.imgIndex - 1;
         layer.close(dict.index);
-        layer.photos({
-            photos: photos,
-            full: options.full,
-            tab: options.tab
-        }, true, key);
+        layer.photos(options, true, key);
     }
     
     //一些动作
@@ -200,7 +200,7 @@ layer.photos = function(options, loop, key){
     };
     
     dict.loadi = layer.load(1, {
-        shade: 0.9,
+        shade: 'shade' in options ? false : 0.9,
         scrollbar: false
     });
     
@@ -226,7 +226,7 @@ layer.photos = function(options, loop, key){
             scrollbar: false,
             moveOut: true,
             shift: Math.random()*5|0,
-            skin: 'layui-layer-photos',
+            skin: 'layui-layer-photos' + skin('photos'),
             content: '<div class="layui-layer-phimg">'
                 +'<img src="'+ data[start].src +'" alt="'+ (data[start].alt||'') +'" layer-pid="'+ data[start].pid +'">'
                 +'<div class="layui-layer-imgsee"><span class="layui-layer-imguide"><a href="javascript:;" class="layui-layer-iconext layui-layer-imgprev"></a><a href="javascript:;" class="layui-layer-iconext layui-layer-imgnext"></a></span><div class="layui-layer-imgbar" style="display:'+ (key ? 'block' : '') +'"><span class="layui-layer-imgtit"><a href="javascript:;">'+ (data[start].alt||'') +'</a><em>'+ dict.imgIndex +'/'+ data.length +'</em></span></div></div>'
@@ -243,8 +243,10 @@ layer.photos = function(options, loop, key){
         }, options));
     }, function(){
         layer.close(dict.loadi);
-        layer.msg('&#x5F53;&#x524D;&#x56FE;&#x7247;&#x5730;&#x5740;&#x5F02;&#x5E38;', function(){
+        layer.msg('&#x5F53;&#x524D;&#x56FE;&#x7247;&#x5730;&#x5740;&#x5F02;&#x5E38;', {time: 2000}, function(){
             data.length > 1 && dict.imgnext(true);
         });
     });
 };
+
+}();
