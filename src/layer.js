@@ -601,6 +601,9 @@ Class.pt.openLayer = function(){
         layero.on('mousedown', setZindex);
         return layer.zIndex;
     };
+    layer.autoOffset = function (index) {
+        return that.offset($('#' + doms[0] + index));
+    };
 };
 
 ready.record = function(layero){
