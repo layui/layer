@@ -330,8 +330,8 @@ Class.pt.auto = function(index){
 };
 
 //计算坐标
-Class.pt.offset = function(){
-    var that = this, config = that.config, layero = that.layero;
+Class.pt.offset = function (times) {
+    var that = this, times = times || that.index, config = that.config, layero = $('#' + doms[0] + times);
     var area = [layero.outerWidth(), layero.outerHeight()];
     var type = typeof config.offset === 'object';
     that.offsetTop = (win.height() - area[1])/2;
