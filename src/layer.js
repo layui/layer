@@ -605,7 +605,7 @@ Class.pt.openLayer = function(){
         return layer.zIndex;
     };
     layer.autoOffset = function (index) {
-        return that.offset($('#' + doms[0] + index));
+        return that.offset(index);
     };
 };
 
