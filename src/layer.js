@@ -185,7 +185,8 @@ Class.pt.config = {
 Class.pt.vessel = function(conType, callback){
     var that = this, times = that.index, config = that.config;
     var zIndex = config.zIndex + times, titype = typeof config.title === 'object';
-    var ismax = config.maxmin && (config.type === 1 || config.type === 2);
+    var ismax = (config.maxmin || config.max) && (config.type === 1 || config.type === 2);
+    var ismin = (config.maxmin || config.min) && (config.type === 1 || config.type === 2);
     var titleHTML = (config.title ? '<div class="layui-layer-title" style="'+ (titype ? config.title[1] : '') +'">' 
         + (titype ? config.title[0] : config.title) 
     + '</div>' : '');
@@ -203,7 +204,9 @@ Class.pt.vessel = function(conType, callback){
                 + (config.type == 1 && conType ? '' : (config.content||''))
             +'</div>'
             + '<span class="layui-layer-setwin">'+ function(){
-                var closebtn = ismax ? '<a class="layui-layer-min" href="javascript:;"><cite></cite></a><a class="layui-layer-ico layui-layer-max" href="javascript:;"></a>' : '';
+                var closebtn = '';
+                closebtn += ismin ? '<a class="layui-layer-min" href="javascript:;"><cite></cite></a>' : '';
+                closebtn += ismax ? '<a class="layui-layer-ico layui-layer-max" href="javascript:;"></a>' : '';
                 config.closeBtn && (closebtn += '<a class="layui-layer-ico '+ doms[7] +' '+ doms[7] + (config.title ? config.closeBtn : (config.type == 4 ? '1' : '2')) +'" href="javascript:;"></a>');
                 return closebtn;
             }() + '</span>'
@@ -327,8 +330,8 @@ Class.pt.auto = function(index){
 };
 
 //计算坐标
-Class.pt.offset = function(){
-    var that = this, config = that.config, layero = that.layero;
+Class.pt.offset = function (times) {
+    var that = this, times = times || that.index, config = that.config, layero = $('#' + doms[0] + times);
     var area = [layero.outerWidth(), layero.outerHeight()];
     var type = typeof config.offset === 'object';
     that.offsetTop = (win.height() - area[1])/2;
@@ -600,6 +603,9 @@ Class.pt.openLayer = function(){
         layer.zIndex = parseInt(layero[0].style.zIndex);
         layero.on('mousedown', setZindex);
         return layer.zIndex;
+    };
+    layer.autoOffset = function (index) {
+        return that.offset(index);
     };
 };
 
