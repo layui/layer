@@ -1,0 +1,23 @@
+﻿{
+    "name": "layer",
+    "version": "1.9.3",
+    "mobile": "1.6",
+    "description": "弹层组件",
+    "main": "",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "",
+        "url": ""
+    },
+    "author": "贤心",
+    "homepage": "http://layer.layui.com/",
+    "devDependencies": {
+        "grunt": "*",
+        "grunt-contrib-uglify": "*",
+        "grunt-contrib-cssmin": "*",
+        "grunt-css": "*"
+        
+    }
+}

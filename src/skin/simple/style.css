@@ -1,0 +1,18 @@
+/*! layer官方扩展皮肤: simple */
+
+/* 定义唯一标识，非常重要，选择器格式为：html #layui_layer_skin文件夹名stylecss */
+html #layui_layer_skinsimplestylecss{display:none; position: absolute; width:1989px;}
+
+/* 重置父容器 */
+body .layer-ext-simple{border-radius: 2px;}
+
+/* 重置dialog */
+body .layer-ext-simple[type="dialog"]{min-width: 260px;}
+
+/* 重置标题 */
+body .layer-ext-simple .layui-layer-title{height: 42px; line-height: 42px; padding-left:20px; background:none; border-bottom: 1px #eee solid;}
+
+/* 重置按钮 */
+body .layer-ext-simple .layui-layer-btn{text-align: right; padding:0 10px 15px;}
+body .layer-ext-simple .layui-layer-btn a{height: 28px; line-height: 28px; margin: 0 6px; padding: 0 15px; border:1px #dedede solid; background-color:#f1f1f1; color: #333; border-radius: 2px; font-weight:400;}
+body .layer-ext-simple .layui-layer-btn .layui-layer-btn0{border-color: #4898d5; background-color: #2e8ded; color:#fff;}
