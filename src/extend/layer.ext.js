@@ -92,6 +92,11 @@ layer.photos = function(options, loop, key){
     var photos = type ? options.photos : {}, data = photos.data || [];
     var start = photos.start || 0;
     dict.imgIndex = start + 1;
+    //从1.9开始，layer的出场动画全部采用CSS3。
+    //这意味着除了ie6-9，其它所有浏览器都是支持的。目前shift可支持的动画类型有0-6
+    //0：从小平滑到大；1：从小跳到大；2：从下平滑到中间；3：动画轨迹中左中，从小到大
+    //4：从左翻转到中；5：没有动画，直接出现；6： 发抖;
+    dict.shift = options.shift || Math.random()*5|0;
 
     if(!type){ //页面直接获取
         var parent = $(options.photos), img = parent.find(options.img||'img');
@@ -203,9 +208,10 @@ layer.photos = function(options, loop, key){
         shade: 'shade' in options ? false : 0.9,
         scrollbar: false
     });
-    
+
     loadImage(data[start].src, function(img){
         layer.close(dict.loadi);
+        var shift = dict.shift;
         dict.index = layer.open($.extend({
             type: 1,
             area: function(){
@@ -225,7 +231,7 @@ layer.photos = function(options, loop, key){
             moveType: 1,
             scrollbar: false,
             moveOut: true,
-            shift: Math.random()*5|0,
+            shift: shift,
             skin: 'layui-layer-photos' + skin('photos'),
             content: '<div class="layui-layer-phimg">'
                 +'<img src="'+ data[start].src +'" alt="'+ (data[start].alt||'') +'" layer-pid="'+ data[start].pid +'">'
