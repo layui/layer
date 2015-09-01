@@ -18,7 +18,7 @@ html #layui_layer_skinlayerextcss{display:none; position: absolute; width:1989px
 .layui-layer-tab{box-shadow:1px 1px 50px rgba(0,0,0,.4);}
 .layui-layer-tab .layui-layer-title{padding-left:0; border-bottom:1px solid #ccc; background-color:#eee; overflow: visible;}
 .layui-layer-tab .layui-layer-title span{position:relative; float:left; min-width:80px; max-width:260px; padding:0 20px; text-align:center; cursor:default; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
-.layui-layer-tab .layui-layer-title span.layui-layer-tabnow{height:36px; border-left:1px solid #ccc; border-right:1px solid #ccc; background-color:#fff; z-index:10;}
+.layui-layer-tab .layui-layer-title span.layui-layer-tabnow{height:43px; border-left:1px solid #ccc; border-right:1px solid #ccc; background-color:#fff; z-index:10;}
 .layui-layer-tab .layui-layer-title span:first-child{border-left:none;}
 .layui-layer-tabmain{line-height:24px; clear:both;}
 .layui-layer-tabmain .layui-layer-tabli{display:none;}

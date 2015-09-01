@@ -1,6 +1,6 @@
 ﻿/*!
 
- @Name：layer v1.9.3 弹层组件
+ @Name：layer v2.0 弹层组件
  @Author：贤心
  @Site：http://layer.layui.com
  @License：LGPL
@@ -15,7 +15,12 @@ var $, win, ready = {
         var js = document.scripts, script = js[js.length - 1], jsPath = script.src;
         if(script.getAttribute('merge')) return;
         return jsPath.substring(0, jsPath.lastIndexOf("/") + 1);
-    }(), 
+    }(),
+    
+    //屏蔽Enter触发弹层
+    enter: function(e){
+        if(e.keyCode === 13) e.preventDefault();
+    },
     config: {}, end: {},
     btn: ['&#x786E;&#x5B9A;','&#x53D6;&#x6D88;'],
     
@@ -24,8 +29,8 @@ var $, win, ready = {
 };
 
 //默认内置方法。
-window.layer = {
-    v: '1.9.3',
+var layer = {
+    v: '2.0',
     ie6: !!window.ActiveXObject&&!window.XMLHttpRequest,
     index: 0,
     path: ready.getPath,
@@ -274,6 +279,7 @@ Class.pt.creat = function(){
     }).auto(times);
 
     config.type == 2 && layer.ie6 && that.layero.find('iframe').attr('src', content[0]);
+    $(document).off('keydown', ready.enter).on('keydown', ready.enter);
 
     //坐标自适应浏览器窗口尺寸
     config.type == 4 ? that.tips() : that.offset();
@@ -481,12 +487,12 @@ Class.pt.move = function(){
             if(conf.ismove){
                 conf.moveLayer();
                 conf.move.remove();
+                config.moveEnd && config.moveEnd();
             }
             conf.ismove = false;
         }catch(e){
             conf.ismove = false;
         }
-        config.moveEnd && config.moveEnd();
     });
     return that;
 };
@@ -513,9 +519,8 @@ Class.pt.callback = function(){
             config.yes ? config.yes(that.index, layero) : layer.close(that.index);
         } else if(index === 1){
             cancel();
-        } else {
-            config['btn'+(index+1)] ? config['btn'+(index+1)](that.index, layero) : layer.close(that.index);
         }
+        config['btn'+(index+1)] ? config['btn'+(index+1)](that.index, layero) : layer.close(that.index);
     });
     
     //取消
@@ -747,6 +752,7 @@ layer.close = function(index){
     $('#layui-layer-moves, #layui-layer-shade' + index).remove();
     layer.ie6 && ready.reselect();
     ready.rescollbar(index);
+    $(document).off('keydown', ready.enter);
     typeof ready.end[index] === 'function' && ready.end[index]();
     delete ready.end[index]; 
 };
@@ -776,6 +782,7 @@ ready.run = function(){
     ready.run();
     return layer;
 }) : function(){
+   window.layer = layer;
    ready.run();
    layer.use('skin/layer.css');
 }();

@@ -12,7 +12,7 @@ layer.use('skin/layer.ext.css', function(){
     layer.layui_layer_extendlayerextjs = true;
 });
 
-var cache = layer.cache, skin = function(type){
+var cache = layer.cache||{}, skin = function(type){
     return (cache.skin ? (' ' + cache.skin + ' ' + cache.skin + '-'+type) : '');
 }
 
@@ -159,6 +159,7 @@ layer.photos = function(options, loop, key){
     
     //切换
     dict.tabimg = function(key){
+        if(data.length <= 1) return;
         photos.start = dict.imgIndex - 1;
         layer.close(dict.index);
         layer.photos(options, true, key);
@@ -203,7 +204,6 @@ layer.photos = function(options, loop, key){
         shade: 'shade' in options ? false : 0.9,
         scrollbar: false
     });
-    
     loadImage(data[start].src, function(img){
         layer.close(dict.loadi);
         dict.index = layer.open($.extend({
@@ -229,7 +229,10 @@ layer.photos = function(options, loop, key){
             skin: 'layui-layer-photos' + skin('photos'),
             content: '<div class="layui-layer-phimg">'
                 +'<img src="'+ data[start].src +'" alt="'+ (data[start].alt||'') +'" layer-pid="'+ data[start].pid +'">'
-                +'<div class="layui-layer-imgsee"><span class="layui-layer-imguide"><a href="javascript:;" class="layui-layer-iconext layui-layer-imgprev"></a><a href="javascript:;" class="layui-layer-iconext layui-layer-imgnext"></a></span><div class="layui-layer-imgbar" style="display:'+ (key ? 'block' : '') +'"><span class="layui-layer-imgtit"><a href="javascript:;">'+ (data[start].alt||'') +'</a><em>'+ dict.imgIndex +'/'+ data.length +'</em></span></div></div>'
+                +'<div class="layui-layer-imgsee">'
+                    +(data.length > 1 ? '<span class="layui-layer-imguide"><a href="javascript:;" class="layui-layer-iconext layui-layer-imgprev"></a><a href="javascript:;" class="layui-layer-iconext layui-layer-imgnext"></a></span>' : '')
+                    +'<div class="layui-layer-imgbar" style="display:'+ (key ? 'block' : '') +'"><span class="layui-layer-imgtit"><a href="javascript:;">'+ (data[start].alt||'') +'</a><em>'+ dict.imgIndex +'/'+ data.length +'</em></span></div>'
+                +'</div>'
             +'</div>',
             success: function(layero, index){
                 dict.bigimg = layero.find('.layui-layer-phimg');
