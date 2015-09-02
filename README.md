@@ -19,4 +19,4 @@ layer将不再独立战斗，她已经找到了她的国：含苞待放的layui�
 
 
 ## 备注
-[官网](http://layer.layui.com/)、[更新日志](https://github.com/sentsin/layer/blob/master/Update%20Notes.txt)、[社区交流](http://fly.layui.com)
+[官网](http://layer.layui.com/)、[更新日志](https://github.com/sentsin/layer/blob/2.0/CHANGELOG.md)、[社区交流](http://fly.layui.com)

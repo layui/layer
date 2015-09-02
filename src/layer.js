@@ -515,12 +515,14 @@ Class.pt.callback = function(){
     //按钮
     layero.find('.'+ doms[6]).children('a').on('click', function(){
         var index = $(this).index();
+        config['btn'+(index+1)] && config['btn'+(index+1)](that.index, layero);
         if(index === 0){
             config.yes ? config.yes(that.index, layero) : layer.close(that.index);
         } else if(index === 1){
             cancel();
+        } else {
+            config['btn'+(index+1)] || layer.close(that.index);
         }
-        config['btn'+(index+1)] ? config['btn'+(index+1)](that.index, layero) : layer.close(that.index);
     });
     
     //取消

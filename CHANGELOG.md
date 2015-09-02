@@ -6,7 +6,7 @@
 > 确认和取消的回调除了yes和cancel外，还可用btn1/btn2。 btn2可解决取消遇右上角关闭共用cancel回调的问题。即如果你只需要接受取消的回调，可以使用 btn2: function(){}
 
 == 拓展模块 ==
-> 修复通过<script>标签引入layer.ext.js时，出现Cannot read property 'skin' of undefined的报错问题。（虽然我们更推荐用layer.config()方式加载layer.ext.js）。
+> 修复通过script标签引入layer.ext.js时，出现Cannot read property 'skin' of undefined的报错问题。（虽然我们更推荐用layer.config()方式加载layer.ext.js）。
 > 如果相册只有一张图片，则不触发上/下一张。
 
 
