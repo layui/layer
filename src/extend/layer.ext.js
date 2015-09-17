@@ -134,10 +134,11 @@ layer.photos = function(options, loop, key){
     };
     
     //下一张
-    dict.imgnext = function(key){
+    dict.imgnext = function(key,errorMsg){
         dict.imgIndex++;
         if(dict.imgIndex > data.length){
             dict.imgIndex = 1;
+            if (errorMsg) {return};
         }
         dict.tabimg(key)
     };
@@ -193,7 +194,7 @@ layer.photos = function(options, loop, key){
             callback(img);
         };
         img.onerror = function(e){
-            img.onload = null;
+            img.onerror = null;
             error(e);
         };
         img.src = url; 
@@ -244,7 +245,7 @@ layer.photos = function(options, loop, key){
     }, function(){
         layer.close(dict.loadi);
         layer.msg('&#x5F53;&#x524D;&#x56FE;&#x7247;&#x5730;&#x5740;&#x5F02;&#x5E38;', {time: 2000}, function(){
-            data.length > 1 && dict.imgnext(true);
+            data.length > 1 && dict.imgnext(true,true);
         });
     });
 };
