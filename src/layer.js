@@ -250,7 +250,7 @@ Class.pt.creat = function(){
             layer.closeAll('loading');
         break;
         case 4:
-            conType || (config.content = [config.content, 'body']);
+            conType || (config.content = [config.content, config.follow || 'body']);
             config.follow = config.content[1];
             config.content = config.content[0] + '<i class="layui-layer-TipsG"></i>';
             config.title = false;
