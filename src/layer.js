@@ -172,7 +172,7 @@ Class.pt.config = {
     type: 0,
     shade: 0.3,
     fix: true,
-    move: doms[1],
+    move: '.' + doms[1],
     title: '&#x4FE1;&#x606F;',
     offset: 'auto',
     area: 'auto',
@@ -441,59 +441,62 @@ Class.pt.move = function(){
     };
     
     var movedom = that.layero.find(config.move);
-    config.move && movedom.attr('move', 'ok');
-    movedom.css({cursor: config.move ? 'move' : 'auto'});
-    
-    $(config.move).on('mousedown', function(M){    
-        M.preventDefault();
-        if($(this).attr('move') === 'ok'){
-            conf.ismove = true;
-            conf.layero = $(this).parents('.'+ doms[0]);
-            var xx = conf.layero.offset().left, yy = conf.layero.offset().top, ww = conf.layero.outerWidth() - 6, hh = conf.layero.outerHeight() - 6;
-            if(!$('#layui-layer-moves')[0]){
-                $('body').append('<div id="layui-layer-moves" class="layui-layer-moves" style="left:'+ xx +'px; top:'+ yy +'px; width:'+ ww +'px; height:'+ hh +'px; z-index:2147483584"></div>');
-            }
-            conf.move = $('#layui-layer-moves');
-            config.moveType && conf.move.css({visibility: 'hidden'});
-           
-            conf.moveX = M.pageX - conf.move.position().left;
-            conf.moveY = M.pageY - conf.move.position().top;
-            conf.layero.css('position') !== 'fixed' || (conf.setY = win.scrollTop());
-        }
-    });
-    
-    $(document).mousemove(function(M){
-        if(conf.ismove){
-            var offsetX = M.pageX - conf.moveX, offsetY = M.pageY - conf.moveY;
-            M.preventDefault();
 
-            //控制元素不被拖出窗口外
-            if(!config.moveOut){
-                conf.setY = win.scrollTop();
-                var setRig = win.width() - conf.move.outerWidth(), setTop = conf.setY;               
-                offsetX < 0 && (offsetX = 0);
-                offsetX > setRig && (offsetX = setRig); 
-                offsetY < setTop && (offsetY = setTop);
-                offsetY > win.height() - conf.move.outerHeight() + conf.setY && (offsetY = win.height() - conf.move.outerHeight() + conf.setY);
+    if(movedom.length) {
+        movedom.attr('move', 'ok');
+        movedom.css({cursor: config.move ? 'move' : 'auto'});
+        
+        movedom.on('mousedown', function(M){    
+            M.preventDefault();
+            if($(this).attr('move') === 'ok'){
+                conf.ismove = true;
+                conf.layero = $(this).parents('.'+ doms[0]);
+                var xx = conf.layero.offset().left, yy = conf.layero.offset().top, ww = conf.layero.outerWidth() - 6, hh = conf.layero.outerHeight() - 6;
+                if(!$('#layui-layer-moves')[0]){
+                    $('body').append('<div id="layui-layer-moves" class="layui-layer-moves" style="left:'+ xx +'px; top:'+ yy +'px; width:'+ ww +'px; height:'+ hh +'px; z-index:2147483584"></div>');
+                }
+                conf.move = $('#layui-layer-moves');
+                config.moveType && conf.move.css({visibility: 'hidden'});
+               
+                conf.moveX = M.pageX - conf.move.position().left;
+                conf.moveY = M.pageY - conf.move.position().top;
+                conf.layero.css('position') !== 'fixed' || (conf.setY = win.scrollTop());
             }
-            
-            conf.move.css({left: offsetX, top: offsetY});    
-            config.moveType && conf.moveLayer();
-            
-            offsetX = offsetY = setRig = setTop = null;
-        }                                                 
-    }).mouseup(function(){
-        try{
+        });
+        
+        $(document).mousemove(function(M){
             if(conf.ismove){
-                conf.moveLayer();
-                conf.move.remove();
-                config.moveEnd && config.moveEnd();
+                var offsetX = M.pageX - conf.moveX, offsetY = M.pageY - conf.moveY;
+                M.preventDefault();
+
+                //控制元素不被拖出窗口外
+                if(!config.moveOut){
+                    conf.setY = win.scrollTop();
+                    var setRig = win.width() - conf.move.outerWidth(), setTop = conf.setY;               
+                    offsetX < 0 && (offsetX = 0);
+                    offsetX > setRig && (offsetX = setRig); 
+                    offsetY < setTop && (offsetY = setTop);
+                    offsetY > win.height() - conf.move.outerHeight() + conf.setY && (offsetY = win.height() - conf.move.outerHeight() + conf.setY);
+                }
+                
+                conf.move.css({left: offsetX, top: offsetY});    
+                config.moveType && conf.moveLayer();
+                
+                offsetX = offsetY = setRig = setTop = null;
+            }                                                 
+        }).mouseup(function(){
+            try{
+                if(conf.ismove){
+                    conf.moveLayer();
+                    conf.move.remove();
+                    config.moveEnd && config.moveEnd();
+                }
+                conf.ismove = false;
+            }catch(e){
+                conf.ismove = false;
             }
-            conf.ismove = false;
-        }catch(e){
-            conf.ismove = false;
-        }
-    });
+        });
+    }
     return that;
 };
 
