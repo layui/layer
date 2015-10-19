@@ -213,9 +213,14 @@ layer.photos = function(options, loop, key){
                var imgarea = [img.width, img.height];
                var winarea = [$(window).width() - 100, $(window).height() - 100];
                if(!options.full && imgarea[0] > winarea[0]){
+                   imgarea[1] = imgarea[1]*winarea[0]/imgarea[0];
                    imgarea[0] = winarea[0];
-                   imgarea[1] = imgarea[0]*winarea[1]/imgarea[0];
                }
+               
+               if (!options.full && imgarea[1] > winarea[1]) {
+                    imgarea[0] = imgarea[0]*winarea[1]/imgarea[1];
+                    imgarea[1] = winarea[1];
+               };
                return [imgarea[0]+'px', imgarea[1]+'px']; 
             }(),
             title: false,
