@@ -1,6 +1,6 @@
 ﻿/*!
 
- @Name：layer v2.0 弹层组件
+ @Name：layer v2.1 弹层组件
  @Author：贤心
  @Site：http://layer.layui.com
  @License：LGPL
@@ -30,7 +30,7 @@ var $, win, ready = {
 
 //默认内置方法。
 var layer = {
-    v: '2.0',
+    v: '2.1',
     ie6: !!window.ActiveXObject&&!window.XMLHttpRequest,
     index: 0,
     path: ready.getPath,
@@ -240,7 +240,7 @@ Class.pt.creat = function(){
             layer.closeAll('dialog');
         break;
         case 2:
-            var content = config.content = conType ? config.content : [config.content||'http://sentsin.com?from=layer', 'auto'];
+            var content = config.content = conType ? config.content : [config.content||'http://layer.layui.com', 'auto'];
             config.content = '<iframe scrolling="'+ (config.content[1]||'auto') +'" allowtransparency="true" id="'+ doms[4] +''+ times +'" name="'+ doms[4] +''+ times +'" onload="this.className=\'\';" class="layui-layer-load" frameborder="0" src="' + config.content[0] + '"></iframe>';
         break;
         case 3:
@@ -280,6 +280,9 @@ Class.pt.creat = function(){
 
     config.type == 2 && layer.ie6 && that.layero.find('iframe').attr('src', content[0]);
     $(document).off('keydown', ready.enter).on('keydown', ready.enter);
+    that.layero.on('keydown', function(e){
+        $(document).off('keydown', ready.enter);
+    });
 
     //坐标自适应浏览器窗口尺寸
     config.type == 4 ? that.tips() : that.offset();
@@ -502,10 +505,9 @@ Class.pt.callback = function(){
     that.openLayer();
     if(config.success){
         if(config.type == 2){
-            layero.find('iframe')[0].onload = function(){
-                this.className = '';
+            layero.find('iframe').on('load', function(){
                 config.success(layero, that.index);
-            };
+            });
         } else {
             config.success(layero, that.index);
         }
@@ -631,7 +633,9 @@ ready.rescollbar = function(index){
     }
 };
 
-/*! 内置成员 */
+/** 内置成员 */
+
+window.layer = layer;
 
 //获取子iframe的DOM
 layer.getChildFrame = function(selector, index){
@@ -647,7 +651,7 @@ layer.getFrameIndex = function(name){
 //iframe层自适应宽高
 layer.iframeAuto = function(index){
     if(!index) return;
-    var heg = layer.getChildFrame('body', index).outerHeight();
+    var heg = layer.getChildFrame('html', index).outerHeight();
     var layero = $('#'+ doms[0] + index);
     var titHeight = layero.find(doms[1]).outerHeight() || 0;
     var btnHeight = layero.find('.'+doms[6]).outerHeight() || 0;
@@ -784,7 +788,6 @@ ready.run = function(){
     ready.run();
     return layer;
 }) : function(){
-   window.layer = layer;
    ready.run();
    layer.use('skin/layer.css');
 }();

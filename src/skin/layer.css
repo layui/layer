@@ -101,7 +101,7 @@ html #layui_layer_skinlayercss{display:none; position: absolute; width:1989px;}
 @-webkit-keyframes shake{0%,100%{-webkit-transform:translateX(0);transform:translateX(0)}10%,30%,50%,70%,90%{-webkit-transform:translateX(-10px);transform:translateX(-10px)}20%,40%,60%,80%{-webkit-transform:translateX(10px);transform:translateX(10px)}}@keyframes shake{0%,100%{-webkit-transform:translateX(0);-ms-transform:translateX(0);transform:translateX(0)}10%,30%,50%,70%,90%{-webkit-transform:translateX(-10px);-ms-transform:translateX(-10px);transform:translateX(-10px)}20%,40%,60%,80%{-webkit-transform:translateX(10px);-ms-transform:translateX(10px);transform:translateX(10px)}}.layui-anim-06{-webkit-animation-name:shake;animation-name:shake}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
 
 /* 标题栏 */
-.layui-layer-title{padding:0 80px 0 20px; height:42px; line-height:42px; border-bottom:1px solid #eee; font-size:14px; color:#333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; background-color: #F8F8F8;}
+.layui-layer-title{padding:0 80px 0 20px; height:42px; line-height:42px; border-bottom:1px solid #eee; font-size:14px; color:#333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; background-color: #F8F8F8; border-radius: 2px 2px 0 0;}
 .layui-layer-setwin{position:absolute; right:15px; *right:0; top:15px; font-size:0; line-height: initial;}
 .layui-layer-setwin a{position:relative; width: 16px; height:16px; margin-left:10px; font-size:12px; _overflow:hidden;}
 .layui-layer-setwin .layui-layer-min cite{position:absolute; width:14px; height:2px; left:0; top:50%; margin-top:-1px; background-color:#2E2D3C; cursor:pointer; _overflow:hidden;}
@@ -112,8 +112,8 @@ html #layui_layer_skinlayercss{display:none; position: absolute; width:1989px;}
 .layui-layer-setwin .layui-layer-maxmin:hover{background-position:-49px -40px;}
 .layui-layer-setwin .layui-layer-close1{background-position:0 -40px; cursor:pointer;}
 .layui-layer-setwin .layui-layer-close1:hover{opacity:0.7;}
-.layui-layer-setwin .layui-layer-close2{position:absolute; right:-28px; top:-28px; width:30px; height:30px;  margin-left:0; background-position:-150px -31px; *right:-18px; _display:none;}
-.layui-layer-setwin .layui-layer-close2:hover{ background-position:-181px -31px;}
+.layui-layer-setwin .layui-layer-close2{position:absolute; right:-28px; top:-28px; width:30px; height:30px;  margin-left:0; background-position:-149px -31px; *right:-18px; _display:none;}
+.layui-layer-setwin .layui-layer-close2:hover{ background-position:-180px -31px;}
 
 /* 按钮栏 */
 .layui-layer-btn{text-align: right; padding:0 10px 12px; pointer-events: auto;}
