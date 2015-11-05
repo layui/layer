@@ -2,7 +2,7 @@
 
  @Name：layer mobile v1.6 弹层组件移动版
  @Author：贤心
- @Date：2015-07-08
+ @Date：2015-11-06
  @Copyright：Sentsin Xu(贤心)
  @官网：http://layer.layui.com/mobile/
  @License：MIT
@@ -53,6 +53,12 @@ win.ready = {
 //点触事件
 ready.touch = function(elem, fn){
     var move;
+    if(!/Android|iPhone|SymbianOS|Windows Phone|iPad|iPod/.test(navigator.userAgent)){
+        elem.addEventListener('click', function(e){
+            fn.call(this, e);
+        }, false);
+        return;
+    }
     elem.addEventListener('touchmove', function(){
         move = true;
     }, false);
@@ -148,7 +154,6 @@ Layer.prototype.action = function(config, elem){
             layer.close(that.index);
         };
         ready.touch(end, endfn);
-        end.onclick = endfn;
     }
     
     //确认取消
@@ -165,7 +170,6 @@ Layer.prototype.action = function(config, elem){
         var btns = elem[claname]('layermbtn')[0].children, btnlen = btns.length;
         for(var ii = 0; ii < btnlen; ii++){
             ready.touch(btns[ii], btn);
-            btns[ii].onclick = btn;
         }
     }
     
@@ -175,9 +179,6 @@ Layer.prototype.action = function(config, elem){
         ready.touch(shade, function(){
             layer.close(that.index, config.end);
         });
-        shade.onclick = function(){
-            layer.close(that.index, config.end);
-        };
     }
 
     config.end && (ready.end[that.index] = config.end);
