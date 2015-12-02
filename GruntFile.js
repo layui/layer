@@ -27,8 +27,8 @@
                 options: {
                      banner: '/*! layer mobile-v<%= pkg.mobile %> <%= pkg.description %>移动版 License LGPL <%= pkg.homepage %>mobile By <%= pkg.author %> */\n;'
                 },
-                src: './src/mobile/layer.m.js',  
-                dest: './mobile/layer.m.js'
+                src: './src/mobile/layer.js',  
+                dest: './mobile/layer.js'
             }
         },
 

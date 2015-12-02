@@ -1,8 +1,8 @@
 /*!
 
- @Name：layer mobile v1.6 弹层组件移动版
+ @Name：layer mobile v1.7 弹层组件移动版
  @Author：贤心
- @Date：2015-11-06
+ @Date：2015-11-25
  @Copyright：Sentsin Xu(贤心)
  @官网：http://layer.layui.com/mobile/
  @License：MIT
@@ -12,22 +12,9 @@
 ;!function(win){        
 "use strict";
 
-var path = ''; //所在路径，如果非模块加载不用配置
-path = path ? path : document.scripts[document.scripts.length-1].src.match(/[\s\S]*\//)[0];
-
 var doc = document, query = 'querySelectorAll', claname = 'getElementsByClassName', S = function(s){
     return doc[query](s);
 };
-
-//插入css
-document.head.appendChild((function(){
-    var link = doc.createElement('link');
-    link.href = path + 'need/layer.css';
-    link.type = 'text/css';
-    link.rel = 'styleSheet'
-    link.id = 'layermcss';
-    return link;
-}()));
 
 //默认配置
 var config = {
@@ -38,7 +25,7 @@ var config = {
      anim: true
 };
 
-win.ready = {
+var ready = {
     extend: function(obj){
         var newobj = JSON.parse(JSON.stringify(config));
         for(var i in obj){
@@ -46,18 +33,16 @@ win.ready = {
         }
         return newobj;
     }, 
-    timer: {},
-    end: {}
+    timer: {}, end: {}
 };
 
 //点触事件
 ready.touch = function(elem, fn){
     var move;
     if(!/Android|iPhone|SymbianOS|Windows Phone|iPad|iPod/.test(navigator.userAgent)){
-        elem.addEventListener('click', function(e){
+        return elem.addEventListener('click', function(e){
             fn.call(this, e);
         }, false);
-        return;
     }
     elem.addEventListener('touchmove', function(){
         move = true;
@@ -108,7 +93,7 @@ Layer.prototype.view = function(){
     }
     
     if(config.type === 2){
-        config.content = '<i></i><i class="laymloadtwo"></i><i></i><div>' + (config.content||'') + '</div>';
+        config.content = '<i></i><i class="laymloadtwo"></i><i></i>';
     }
     
     layerbox.innerHTML = (config.shade ? '<div '+ (typeof config.shade === 'string' ? 'style="'+ config.shade +'"' : '') +' class="laymshade"></div>' : '')
@@ -184,8 +169,8 @@ Layer.prototype.action = function(config, elem){
     config.end && (ready.end[that.index] = config.end);
 };
 
-var layer = {
-    v: '1.6',
+win.layer = {
+    v: '1.7',
     index: index,
     
     //核心方法
@@ -214,8 +199,25 @@ var layer = {
     }
 };
 
-'function' === typeof define ? define(function() {
+'function' == typeof define ? define(function() {
     return layer;
-}) : win.layer = layer;
+}) : function(){
+    
+    var js = document.scripts, script = js[js.length - 1], jsPath = script.src;
+    var path = jsPath.substring(0, jsPath.lastIndexOf("/") + 1);
+    
+    //如果合并方式，则需要单独引入layer.css
+    if(script.getAttribute('merge')) return; 
+    
+    document.head.appendChild(function(){
+        var link = doc.createElement('link');
+        link.href = path + 'need/layer.css';
+        link.type = 'text/css';
+        link.rel = 'styleSheet'
+        link.id = 'layermcss';
+        return link;
+    }());
+    
+}();
 
 }(window);

@@ -1,7 +1,7 @@
 ﻿{
     "name": "layer",
     "version": "2.1",
-    "mobile": "1.6",
+    "mobile": "1.7",
     "description": "弹层组件",
     "main": "",
     "scripts": {
