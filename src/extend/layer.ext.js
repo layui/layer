@@ -104,16 +104,21 @@ layer.photos = function(options, loop, key){
                 src: othis.attr('layer-src') || othis.attr('src'),
                 thumb: othis.attr('src')
             });
-            othis.on('click', function(){
-                layer.photos($.extend(options, {
-                    photos: {
-                        start: index,
-                        data: data,
-                        tab: options.tab
-                    },
-                    full: options.full
-                }), true);
-            });
+            var e = $._data(this, "events");//是this 而不是 $(this)
+            if (e && e["click"]) {
+
+            } else {
+                othis.on('click', function () {
+                    layer.photos($.extend(options, {
+                        photos: {
+                            start: index,
+                            data: data,
+                            tab: options.tab
+                        },
+                        full: options.full
+                    }), true);
+                });
+            };
         });
         
         //不直接弹出
