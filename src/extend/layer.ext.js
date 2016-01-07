@@ -96,7 +96,7 @@ layer.photos = function(options, loop, key){
     if(!type){ //页面直接获取
         var parent = $(options.photos), img = parent.find(options.img||'img');
         if (img.length === 0) return;
-        loop || parent.find(photos.img||'img').each(function(index){
+        loop || img.each(function(index){
             var othis = $(this);
             data.push({
                 alt: othis.attr('alt'),
