@@ -98,13 +98,9 @@ layer.photos = function(options, loop, key){
         if (img.length === 0) return;
         loop || img.each(function(index){
             var othis = $(this);
-            data.push({
-                alt: othis.attr('alt'),
-                pid: othis.attr('layer-pid'),
-                src: othis.attr('layer-src') || othis.attr('src'),
-                thumb: othis.attr('src')
-            });
-            othis.on('click', function(){
+            data.push(othis);
+            othis.on('click', function(e){
+                e.preventDefault();
                 layer.photos($.extend(options, {
                     photos: {
                         start: index,
@@ -188,7 +184,7 @@ layer.photos = function(options, loop, key){
     };
     
     //图片预加载
-    function loadImage(url, callback, error) {     
+    function loadImage(element, callback, error) {
         var img = new Image();    
         img.onload = function(){
             img.onload = null;
@@ -198,14 +194,15 @@ layer.photos = function(options, loop, key){
             img.onerror = null;
             error(e);
         };
-        img.src = url; 
+        img.src = element.attr('layer-src') || element.attr('src') || element.attr('href');
+        img.alt = element.attr('alt') || element.attr('title') || '';
     };
     
     dict.loadi = layer.load(1, {
         shade: 'shade' in options ? false : 0.9,
         scrollbar: false
     });
-    loadImage(data[start].src, function(img){
+    loadImage(data[start], function(img){
         layer.close(dict.loadi);
         dict.index = layer.open($.extend({
             type: 1,
@@ -229,10 +226,10 @@ layer.photos = function(options, loop, key){
             shift: Math.random()*5|0,
             skin: 'layui-layer-photos' + skin('photos'),
             content: '<div class="layui-layer-phimg">'
-                +'<img src="'+ data[start].src +'" alt="'+ (data[start].alt||'') +'" layer-pid="'+ data[start].pid +'">'
+                +'<img src="'+ img.src +'" alt="'+ (img.alt) +'" layer-pid="'+ (data[start].attr('layer-pid') || '') +'">'
                 +'<div class="layui-layer-imgsee">'
                     +(data.length > 1 ? '<span class="layui-layer-imguide"><a href="javascript:;" class="layui-layer-iconext layui-layer-imgprev"></a><a href="javascript:;" class="layui-layer-iconext layui-layer-imgnext"></a></span>' : '')
-                    +'<div class="layui-layer-imgbar" style="display:'+ (key ? 'block' : '') +'"><span class="layui-layer-imgtit"><a href="javascript:;">'+ (data[start].alt||'') +'</a><em>'+ dict.imgIndex +'/'+ data.length +'</em></span></div>'
+                    +'<div class="layui-layer-imgbar" style="display:'+ (key ? 'block' : '') +'"><span class="layui-layer-imgtit"><a href="javascript:;">'+ (img.alt) +'</a><em>'+ dict.imgIndex +'/'+ data.length +'</em></span></div>'
                 +'</div>'
             +'</div>',
             success: function(layero, index){
