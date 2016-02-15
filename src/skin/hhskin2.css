@@ -109,7 +109,7 @@ html #layui_layer_skinlayercss { display:none; position: absolute; width:1989px;
 @keyframes shake{0%,100%{-webkit-transform:translateX(0);-ms-transform:translateX(0);transform:translateX(0)}10%,30%,50%,70%,90%{-webkit-transform:translateX(-10px);-ms-transform:translateX(-10px);transform:translateX(-10px)}20%,40%,60%,80%{-webkit-transform:translateX(10px);-ms-transform:translateX(10px);transform:translateX(10px)}}.layui-anim-06{-webkit-animation-name:shake;animation-name:shake}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
 
 /* 标题栏 */
-.layui-layer-title { position:relative; margin:0 15px; padding:0px 0 0 5px; height:55px; font:17px/55px "微软雅黑"; color:#444; text-align:center; background:#fff; border-radius: 5px 5px 0 0; border:none; }
+.layui-layer-title { position:relative; padding:0 80px 0 20px; height:50px; font:15px/50px "微软雅黑"; border:none; color:#333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; background:#fff; border-radius: 5px 5px 0 0; }
 .layui-layer-title:after { display:block; content:""; width:100%; position:absolute; left:0; bottom:0px; height:1px; background:#ddd; -webkit-transform:scale(1,0.5); }
 .layui-layer-setwin{position:absolute; right:15px; *right:0; top:15px; font-size:0; line-height: initial; }
 .layui-layer-setwin a{position:relative; width: 16px; height:16px; margin-left:10px; font-size:12px; _overflow:hidden; }
@@ -131,40 +131,33 @@ body .layer-ext-hhskin .layui-layer-btn {
 	display:box;
 	display:-webkit-flex;
 	display:flex;
-	-webkit-box-pack:justify;
-	-webkit-justify-content:space-around;
 	position:relative;
-	margin:0 15px;
 	padding:0;
 	pointer-events: auto;
 	border-top:0px solid #eee; }
-body .layer-ext-hhskin .layui-layer-btn:before { display:block; content:""; width:100%; position:absolute; left:0; top:-1px; height:1px; background:#ddd; -webkit-transform:scale(1,0.5); }
+body .layer-ext-hhskin .layui-layer-btn:before { display:block; content:""; width:100%; position:absolute; left:0; top:0px; height:1px; background:#ddd; -webkit-transform:scale(1,0.5); }
 body .layer-ext-hhskin .layui-layer-btn a {
-	-webkit-box-flex:1;
-	box-flex:1;
 	flex:1;
-	display:block;
-	width:100%; height:45px; margin:5px 0; padding: 0;
-	font:16px/45px "微软雅黑"; color:#777;
+	width:100%; height:50px; margin:0; padding: 0;
+	font:15px/50px "微软雅黑"; color:#777;
 	text-align: center;
 	text-decoration: none;
 	border:0px #dedede solid;
-	border-right:0px #eee solid;
-	border-radius: 3px;
+	border-right:1px #eee solid;
+	border-radius: 0px;
 	background:#fff;
-	cursor:pointer;
-	-webkit-tap-highlight-color:rgba(0,0,0,0); }
-body .layer-ext-hhskin .layui-layer-btn a:first-child { border-bottom-left-radius:3px; }
-body .layer-ext-hhskin .layui-layer-btn a:last-child  { border-bottom-right-radius:3px; border:none; color:#06C1AE; }
-body .layer-ext-hhskin .layui-layer-btn a:active { opacity:1; background:#F8F8F8; }
-body .layer-ext-hhskin .layui-layer-btn .layui-layer-btn0 { border-color: none; background-color: none; color:#999; }
+	cursor:pointer; }
+body .layer-ext-hhskin .layui-layer-btn a:first-child { border-bottom-left-radius:5px; }
+body .layer-ext-hhskin .layui-layer-btn a:last-child  { border-bottom-right-radius:5px; border:none; }
+body .layer-ext-hhskin .layui-layer-btn a:hover  { opacity:0.9; background:#fafafa; color:#555; }
+body .layer-ext-hhskin .layui-layer-btn a:active { opacity:1; background:#F8F8F8; color:#333; }
+body .layer-ext-hhskin .layui-layer-btn .layui-layer-btn0 { border-color: none; background-color: none; color:#777; }
 
 /* 定制化 */
-.layui-layer-dialog { min-width:inherit; }
-.layui-layer-dialog .layui-layer-content { position: relative; padding:20px; font:16px/1.5em "微软雅黑"; color:#666; word-break:break-all; overflow:hidden; overflow:auto; min-height:70px; }
+.layui-layer-dialog{ min-width:260px; max-width: 250px; }
+.layui-layer-dialog .layui-layer-content { position: relative; padding:20px; font:16px/1.5em "微软雅黑"; color:#555; word-break:break-all; overflow:hidden; overflow:auto; min-height:60px; }
 .layui-layer-dialog .layui-layer-content .layui-layer-ico{position:absolute; top:16px; left:15px; _left:-40px; width:30px; height:30px; }
-.layui-layer-dialog .layui-layer-content input   { display:block; width:100%; padding:15px; font:18px/20px "微软雅黑"; color:#555; text-align:center; border:1px solid #e5e5e5; border-radius:5px; box-sizing:border-box; -webkit-appearance:none; }
-.layui-layer-dialog .layui-layer-content textarea { display:block; width:100%; min-height:80px; padding:15px; font:18px/25px "微软雅黑"; color:#555; border:1px solid #e5e5e5; border-radius:5px; box-sizing:border-box; -webkit-appearance:none; }
+.layui-layer-dialog .layui-layer-content input { display:block; width:100%; padding:12px; font:16px/20px "微软雅黑"; color:#555; border:1px solid #eee; box-sizing:border-box; -webkit-appearance:none; }
 
 .layui-layer-ico1{background-position:-30px 0 }
 .layui-layer-ico2{background-position:-60px 0; }
@@ -182,15 +175,10 @@ body .layer-ext-hhskin .layui-layer-btn .layui-layer-btn0 { border-color: none; 
 .layui-layer-nobg{background:none; }
 .layui-layer-iframe .layui-layer-content{overflow:hidden; }
 .layui-layer-iframe iframe{display:block; width:100%; }
-
-
-
-/* 加载框 */
-.layui-layer-loading { width:120px; height:120px; background-color: rgba(0,0,0,.6);  box-shadow:none;  border:none; }
-.layui-layer-loading .layui-layer-content { width:80%; margin:auto; padding-top:75px; font:15px/25px "微软雅黑"; color:#fff; text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; background:url(default/loading-1.gif) no-repeat center 28px; background-size:35px 35px; }
-
-.layui-layer-ico16 { width:32px; height:32px; background:url(default/loading-1.gif) no-repeat; background-size:32px 32px; }
-
+.layui-layer-loading{border-radius:100%; background:none;  box-shadow:none;  border:none; }
+.layui-layer-loading .layui-layer-content{width:60px; height:24px; background:url(default/loading-0.gif) no-repeat; }
+.layui-layer-loading .layui-layer-loading1{width:37px; height:37px; background:url(default/loading-1.gif) no-repeat; }
+.layui-layer-loading .layui-layer-loading2, .layui-layer-ico16{width:32px; height:32px; background:url(default/loading-2.gif) no-repeat; }
 .layui-layer-tips{background:none; box-shadow:none; border:none; }
 .layui-layer-tips .layui-layer-content{position:relative; line-height:22px; min-width: 12px; padding:5px 10px; font-size:12px; _float:left; border-radius:3px; box-shadow: none; background-color:#FF9900; color:#fff; }
 .layui-layer-tips .layui-layer-close{right:-2px; top:-1px; }
@@ -215,13 +203,10 @@ body .layer-ext-hhskin .layui-layer-btn .layui-layer-btn0 { border-color: none; 
 
 
 
-.layer-ext-hhskin-alert   { min-width:300px; max-width: 300px; }
-.layer-ext-hhskin-prompt  { min-width:300px; max-width: 300px; }
-.layer-ext-hhskin-confirm { min-width:300px; max-width: 300px; }
+
 
 body .layer-ext-hhskin-msg {
-    min-width2: 100px;
-	max-width2: 250px;
+    min-width: 100px;
     background-color: #000;
     filter: alpha(opacity=60);
     background-color: rgba(0,0,0,.6);
@@ -230,8 +215,7 @@ body .layer-ext-hhskin-msg {
 }
 
 body .layer-ext-hhskin-msg .layui-layer-content {
-    padding2: 20px 25px;
+    padding: 20px 25px;
     text-align: center;
 	min-height:inherit;
-	color:#fff;
 }

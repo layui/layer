@@ -88,22 +88,30 @@ var layer = {
     //各种快捷引用
     alert: function(content, options, yes){
         var type = typeof options === 'function';
+		var rskin = ready.config.skin;
+        var skin = rskin ? rskin + ' ' + rskin + '-alert' : '';
         if(type) yes = options;
         return layer.open($.extend({
+			title:"信息提示",
             content: content,
+			skin:skin,
             yes: yes
         }, type ? {} : options));
     }, 
     
     confirm: function(content, options, yes, cancel){ 
         var type = typeof options === 'function';
+		var rskin = ready.config.skin;
+        var skin = rskin ? rskin + ' ' + rskin + '-confirm' : '';
         if(type){
             cancel = yes;
             yes = options;
         }
         return layer.open($.extend({
+			title:"信息确认",
             content: content,
-            btn: ready.btn,
+            btn: ["取消","确定"],
+			skin:skin,
             yes: yes,
             cancel: cancel
         }, type ? {} : options));
@@ -116,7 +124,7 @@ var layer = {
         if(type) end = options;
         return layer.open($.extend({
             content: content,
-            time: 3000,
+            time: 2000,
             shade: false,
             skin: skin,
             title: false,
@@ -135,11 +143,12 @@ var layer = {
         }()));  
     },
     
-    load: function(icon, options){
+    load: function(content, options){
         return layer.open($.extend({
             type: 3,
-            icon: icon || 0,
-            shade: 0.01
+            icon: 0,
+            shade: 0.01,
+			content: content || "加载中"
         }, options));
     }, 
     
@@ -151,7 +160,51 @@ var layer = {
             time: 3000,
             maxWidth: 210
         }, options));
-    }
+    },
+	
+	prompt: function(options, yes){
+		options = options || {};
+		if(typeof options === 'function') yes = options;
+		var rskin = ready.config.skin;
+        var skin = rskin ? rskin + ' ' + rskin + '-prompt' : '';
+//		var prompt, content = options.formType == 2 ? '<textarea class="layui-layer-input">'+ (options.value||'') +'</textarea>' : function(){
+//			return '<input type="'+ (options.formType == 1 ? 'password' : 'text') +'" class="layui-layer-input" value="'+ (options.value||'') +'" maxlength="'+options.maxlength+'" />';
+//		}();
+		var prompt, content;
+		switch(options.formType)
+		{
+			case 1: content = '<input type="password" class="layui-layer-input" value="'+ (options.value||'') +'" maxlength="'+(options.maxlength||500)+'" />'; break;
+			case 2: content = '<textarea class="layui-layer-input">'+ (options.value||'') +'</textarea>'; break;
+			case 3: content = '<input type="tel" class="layui-layer-input" value="'+ (options.value||'') +'" maxlength="'+(options.maxlength||500)+'" />'; break;
+			default: content = '<input type="text" class="layui-layer-input" value="'+ (options.value||'') +'" maxlength="'+(options.maxlength||500)+'" />';
+		}
+		return layer.open($.extend({
+			title:"信息输入",
+			btn: ['&#x53D6;&#x6D88;','&#x786E;&#x5B9A;'],
+			content: content,
+			skin:skin,
+			success: function(layero){
+				prompt = layero.find('.layui-layer-input');
+				prompt.focus();
+			},
+			yes: function(index){
+				var value = prompt.val();
+				if(value === '')
+				{
+					prompt.css({border:"1px solid #f66"});
+					setTimeout(function(){ prompt.focus().css({border:"1px solid #e5e5e5"}); },1000);
+				}
+				else if(value.length > (options.maxlength||500))
+				{
+					layer.tips('&#x6700;&#x591A;&#x8F93;&#x5165;'+ (options.maxlength || 500) +'&#x4E2A;&#x5B57;&#x6570;', prompt, {tips: 1});
+				}
+				else
+				{
+					yes && yes(value, index, prompt);
+				}
+			}
+		}, options));
+	}
 };
 
 var Class = function(setings){    
@@ -170,19 +223,19 @@ doms.anim = ['layui-anim', 'layui-anim-01', 'layui-anim-02', 'layui-anim-03', 'l
 //默认配置
 Class.pt.config = {
     type: 0,
-    shade: 0.3,
+    shade: 0.5,
     fix: true,
     move: doms[1],
     title: '&#x4FE1;&#x606F;',
     offset: 'auto',
     area: 'auto',
-    closeBtn: 1,
+    closeBtn: 0,
     time: 0, //0表示不自动关闭
     zIndex: 19891014, 
     maxWidth: 360,
     shift: 0,
     icon: -1,
-    scrollbar: true, //是否允许浏览器滚动条
+    scrollbar: false, //是否允许浏览器滚动条
     tips: 2
 };
 
@@ -515,16 +568,31 @@ Class.pt.callback = function(){
     layer.ie6 && that.IE6(layero);
     
     //按钮
+	var btn_length = $('.'+ doms[6]+' a').length;
     layero.find('.'+ doms[6]).children('a').on('click', function(){
         var index = $(this).index();
         config['btn'+(index+1)] && config['btn'+(index+1)](that.index, layero);
-        if(index === 0){
-            config.yes ? config.yes(that.index, layero) : layer.close(that.index);
-        } else if(index === 1){
-            cancel();
-        } else {
-            config['btn'+(index+1)] || layer.close(that.index);
-        }
+		switch(btn_length)
+		{
+			case 1:
+				config.yes ? config.yes(that.index, layero) : layer.close(that.index);
+				break;
+			case 2:
+				if( index==0 )
+					cancel();
+				else
+					config.yes ? config.yes(that.index, layero) : layer.close(that.index);
+				break;
+			default:
+				config['btn'+(index+1)] || layer.close(that.index);
+		}
+//        if(index === 0){
+//            config.yes ? config.yes(that.index, layero) : layer.close(that.index);
+//        } else if(index === 1){
+//            cancel();
+//        } else {
+//            config['btn'+(index+1)] || layer.close(that.index);
+//        }
     });
     
     //取消
@@ -793,3 +861,36 @@ ready.run = function(){
 }();
 
 }(window);
+
+
+layer.config({
+	extend: 'skin/hhskin.css', //加载您的扩展样式
+	skin: 'layer-ext-hhskin'
+});
+
+
+
+// 插件改动
+
+// alert
+// 1. title:"信息提示"
+// 2. skin （layer-ext-hhskin-alert，便于样式控制）
+
+// confirm
+// 1. title:"信息确认",
+// 2. btn: ["取消","确定"],
+// 3. skin （layer-ext-hhskin-confirm，便于样式控制）
+
+// prompt
+// 1. 将其从拓展功能变为内置功能
+// 2. 对默认功能进行了个性化定制
+// 3. 未输入的情况下，点击确定，输入框变红，一秒后恢复
+// 4. 文字长度，在 input 中添加了 maxlength 属性
+// 5. 添加了一个出数字类型的输入框，formType:3
+// 6. title:"信息输入"
+
+// msg
+// 1. time:2000
+
+// load
+// 1. 大换血，目前只提供一种效果
