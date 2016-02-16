@@ -1,0 +1,166 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=no" />
+    <title>layer</title>
+    
+    <style>
+    
+		* { margin:0; padding:0; }
+		a { text-decoration:none; color:#000; }
+		
+		body {background-color:#E3E3E3; }
+		header { background:#393D49; padding:20px; }
+		header h1 { font:30px/1.5em "微软雅黑"; color:#fff; }
+		h2 { font:20px/1.5em "微软雅黑"; color:#555; margin:20px; }
+		
+		.btn { display:block; margin:20px; font:16px/50px "微软雅黑"; color:#fff; text-align:center; background:#54c7fc; border-radius:5px; }
+		.btn:active { background-color:#4bb6e7; }
+		
+		.btn_open { display:none; }
+    
+    </style>
+    
+	<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+    <script src="layer/layer.hhdev.js"></script>
+    <script>
+	
+		$(document).ready(function(e) {
+			
+			document.body.addEventListener('touchstart',function(){ });
+			
+			$(".btn_alert1").click(function(){
+				layer.alert("真的很短！");
+			});
+			
+			$(".btn_alert2").click(function(){
+				layer.alert("这个提示至少有这么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么长！");
+			});
+			
+			$(".btn_confirm").click(function(){
+				layer.confirm("这里人这么多，你真的要装逼吗？",{
+					yes:function(){ layer.alert("你还真点了,好久没有见过如此厚颜无耻之人！"); },
+					cancel:function(){ layer.alert("来呀来呀，不要害羞嘛！"); }
+				});
+			});
+			
+			$(".btn_prompt1").click(function(){
+				layer.prompt(function(val,idx){
+					layer.msg(val);
+				});
+			});
+			
+			$(".btn_prompt2").click(function(){
+				layer.prompt({formType:2},function(val,idx){
+					layer.msg(val);
+				});
+			});
+			
+			$(".btn_prompt3").click(function(){
+				layer.prompt({formType:1},function(val,idx){
+					layer.msg(val);
+				});
+			});
+			
+			$(".btn_prompt4").click(function(){
+				layer.prompt({formType:3},function(val,idx){
+					layer.msg(val);
+				});
+			});
+			
+			$(".btn_prompt5").click(function(){
+				layer.prompt({maxlength:5},function(val,idx){
+					layer.msg(val);
+				});
+			});
+			
+			$(".btn_prompt6").click(function(){
+				layer.prompt({value:"有值能上天啊？！"},function(val,idx){
+					layer.msg(val);
+				});
+			});
+			
+			$(".btn_toast1").click(function(){
+				layer.msg("默认的提示效果");
+			});
+			
+			$(".btn_toast2").click(function(){
+				layer.msg("再来一发？",function(){ layer.msg("第二发"); });
+			});
+			
+			$(".btn_toast3").click(function(){
+				layer.msg("这个提示至少有这么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么么长！");
+			});
+			
+			$(".btn_toast4").click(function(){
+				layer.msg("5 秒后消失",{time:5000});
+			});
+			
+			$(".btn_toast5").click(function(){
+				layer.msg("明人不发暗骚",{shift:6});
+			});
+			
+			$(".btn_toast6").click(function(){
+				layer.msg("加载中",{icon:16,time:100000});
+			});
+			
+			$(".btn_load1").click(function(){
+				layer.load();
+				setTimeout(function(){ layer.closeAll(); },3000);
+			});
+			
+			$(".btn_load2").click(function(){
+				layer.load("正在下载");
+				setTimeout(function(){ layer.closeAll(); },3000);
+			});
+			
+			$(".btn_open").click(function(){
+				layer.open({
+					title:"提示",
+					content:"layer是一款近年来备受青睐的web弹层组件，她具备全方位的解决方案，致力于服务各水平段的开发人员，您的页面会轻松地拥有丰富友好的操作体验。",
+					btn:["取消","确定"],
+					yes:function(val,idx,elm){
+						alert(val);
+					}
+				});
+			});
+			
+		});
+		
+	</script>
+</head>
+<body>
+
+	<header>
+      <h1>Layer</h1>
+    </header>
+    
+    <h2>常用提示框</h2>
+    <a href="javascript:;" class="btn btn_alert1">alert（简短提示）</a>
+    <a href="javascript:;" class="btn btn_alert2">alert（啰嗦提示）</a>
+    <a href="javascript:;" class="btn btn_confirm">confirm（信息确认）</a>
+    <h2>输入框</h2>
+    <a href="javascript:;" class="btn btn_prompt1">prompt（单行文本）</a>
+    <a href="javascript:;" class="btn btn_prompt2">prompt（多行文本）</a>
+    <a href="javascript:;" class="btn btn_prompt3">prompt（密码输入）</a>
+    <a href="javascript:;" class="btn btn_prompt4">prompt（数字输入）</a>
+    <a href="javascript:;" class="btn btn_prompt5">prompt（限定长度）</a>
+    <a href="javascript:;" class="btn btn_prompt6">prompt（赋值）</a>
+    <h2>简易提示框</h2>
+    <a href="javascript:;" class="btn btn_toast1">toast（默认）</a>
+    <a href="javascript:;" class="btn btn_toast2">toast（回调）</a>
+    <a href="javascript:;" class="btn btn_toast3">toast（大段文字）</a>
+    <a href="javascript:;" class="btn btn_toast4">toast（指定时间）</a>
+    <a href="javascript:;" class="btn btn_toast5">toast（显示效果）</a>
+    <a href="javascript:;" class="btn btn_toast6">toast（图标效果）</a>
+    <h2>加载</h2>
+    <a href="javascript:;" class="btn btn_load1">load（默认）</a>
+    <a href="javascript:;" class="btn btn_load2">load（提示）</a>
+    <a href="javascript:;" class="btn btn_open">open</a>
+    
+</body>
+</html>

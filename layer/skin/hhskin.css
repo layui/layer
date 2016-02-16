@@ -160,7 +160,7 @@ body .layer-ext-hhskin .layui-layer-btn a:active { opacity:1; background:#F8F8F8
 body .layer-ext-hhskin .layui-layer-btn .layui-layer-btn0 { border-color: none; background-color: none; color:#999; }
 
 /* 定制化 */
-.layui-layer-dialog { min-width:inherit; }
+.layui-layer-dialog { min-width:inherit; min-width:auto; }
 .layui-layer-dialog .layui-layer-content { position: relative; padding:20px; font:16px/1.5em "微软雅黑"; color:#666; word-break:break-all; overflow:hidden; overflow:auto; min-height:70px; }
 .layui-layer-dialog .layui-layer-content .layui-layer-ico{position:absolute; top:16px; left:15px; _left:-40px; width:30px; height:30px; }
 .layui-layer-dialog .layui-layer-content input   { display:block; width:100%; padding:15px; font:18px/20px "微软雅黑"; color:#555; text-align:center; border:1px solid #e5e5e5; border-radius:5px; box-sizing:border-box; -webkit-appearance:none; }
@@ -220,8 +220,7 @@ body .layer-ext-hhskin .layui-layer-btn .layui-layer-btn0 { border-color: none; 
 .layer-ext-hhskin-confirm { min-width:300px; max-width: 300px; }
 
 body .layer-ext-hhskin-msg {
-    min-width2: 100px;
-	max-width2: 250px;
+	left:0;
     background-color: #000;
     filter: alpha(opacity=60);
     background-color: rgba(0,0,0,.6);

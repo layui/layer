@@ -415,6 +415,12 @@ Class.pt.offset = function(){
         that.offsetTop += win.scrollTop();
         that.offsetLeft += win.scrollLeft();
     }
+	if( layero.is(".layer-ext-hhskin-msg") && layero.outerWidth()>250 )
+	{
+		layero.width(250);
+		that.offsetTop  = (win.height()-layero.outerHeight())/2
+		that.offsetLeft = (win.width()-250)/2;
+	}
     layero.css({top: that.offsetTop, left: that.offsetLeft});
 };
 
@@ -888,9 +894,18 @@ layer.config({
 // 4. 文字长度，在 input 中添加了 maxlength 属性
 // 5. 添加了一个出数字类型的输入框，formType:3
 // 6. title:"信息输入"
+// 7. skin （layer-ext-hhskin-prompt，便于样式控制）
 
 // msg
 // 1. time:2000
+// 2. 解决了 msg 中文字太长无法垂直水平居中的 bug
+//
+//	  if( layero.is(".layer-ext-hhskin-msg") && layero.outerWidth()>250 )
+//	  {
+//		  layero.width(250);
+//		  that.offsetTop  = (win.height()-layero.outerHeight())/2
+//		  that.offsetLeft = (win.width()-250)/2;
+//	  }
 
 // load
 // 1. 大换血，目前只提供一种效果
