@@ -92,7 +92,7 @@ var layer = {
         var skin = rskin ? rskin + ' ' + rskin + '-alert' : '';
         if(type) yes = options;
         return layer.open($.extend({
-			title:"信息提示",
+			title:"&#x4FE1;&#x606F;&#x63D0;&#x793A;",
             content: content,
 			skin:skin,
             yes: yes
@@ -108,9 +108,9 @@ var layer = {
             yes = options;
         }
         return layer.open($.extend({
-			title:"信息确认",
+			title:"&#x4FE1;&#x606F;&#x786E;&#x8BA4;",
             content: content,
-            btn: ["取消","确定"],
+            btn: ["&#x53D6;&#x6D88;","&#x786E;&#x5B9A;"],
 			skin:skin,
             yes: yes,
             cancel: cancel
@@ -179,7 +179,7 @@ var layer = {
 			default: content = '<input type="text" class="layui-layer-input" value="'+ (options.value||'') +'" maxlength="'+(options.maxlength||500)+'" />';
 		}
 		return layer.open($.extend({
-			title:"信息输入",
+			title:"&#x4FE1;&#x606F;输入",
 			btn: ['&#x53D6;&#x6D88;','&#x786E;&#x5B9A;'],
 			content: content,
 			skin:skin,
@@ -418,7 +418,7 @@ Class.pt.offset = function(){
 	if( layero.is(".layer-ext-hhskin-msg") && layero.outerWidth()>250 )
 	{
 		layero.width(250);
-		that.offsetTop  = (win.height()-layero.outerHeight())/2
+		that.offsetTop  = (win.height()-layero.outerHeight())/2;
 		that.offsetLeft = (win.width()-250)/2;
 	}
     layero.css({top: that.offsetTop, left: that.offsetLeft});
