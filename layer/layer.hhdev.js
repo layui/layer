@@ -178,8 +178,6 @@ var layer = {
 			case 3: content = '<input type="tel" class="layui-layer-input" value="'+ (options.value||'') +'" maxlength="'+(options.maxlength||500)+'" />'; break;
 			default: content = '<input type="text" class="layui-layer-input" value="'+ (options.value||'') +'" maxlength="'+(options.maxlength||500)+'" />';
 		}
-		alert(options.formType);
-		alert(content);
 		return layer.open($.extend({
 			title:"&#x4FE1;&#x606F;&#x8F93;&#x5165;",
 			btn: ['&#x53D6;&#x6D88;','&#x786E;&#x5B9A;'],
