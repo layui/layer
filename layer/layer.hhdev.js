@@ -148,7 +148,7 @@ var layer = {
             type: 3,
             icon: 0,
             shade: 0.01,
-			content: content || "加载中"
+			content: content || "&#x52A0;&#x8F7D;&#x4E2D;"
         }, options));
     }, 
     
@@ -178,8 +178,10 @@ var layer = {
 			case 3: content = '<input type="tel" class="layui-layer-input" value="'+ (options.value||'') +'" maxlength="'+(options.maxlength||500)+'" />'; break;
 			default: content = '<input type="text" class="layui-layer-input" value="'+ (options.value||'') +'" maxlength="'+(options.maxlength||500)+'" />';
 		}
+		alert(options.formType);
+		alert(content);
 		return layer.open($.extend({
-			title:"&#x4FE1;&#x606F;输入",
+			title:"&#x4FE1;&#x606F;&#x8F93;&#x5165;",
 			btn: ['&#x53D6;&#x6D88;','&#x786E;&#x5B9A;'],
 			content: content,
 			skin:skin,
