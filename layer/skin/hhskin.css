@@ -90,9 +90,34 @@ html #layui_layer_skinlayercss { display:none; position: absolute; width:1989px;
 }
 .layui-anim-close{-webkit-animation-name: bounceOut;animation-name: bounceOut; -webkit-animation-duration:.2s; animation-duration:.2s; }
 
-@-webkit-keyframes zoomInDown{0%{opacity:0;-webkit-transform:scale(.1) translateY(-2000px);transform:scale(.1) translateY(-2000px);-webkit-animation-timing-function:ease-in-out;animation-timing-function:ease-in-out}60%{opacity:1;-webkit-transform:scale(.475) translateY(60px);transform:scale(.475) translateY(60px);-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out}}@keyframes zoomInDown{0%{opacity:0;-webkit-transform:scale(.1) translateY(-2000px);-ms-transform:scale(.1) translateY(-2000px);transform:scale(.1) translateY(-2000px);-webkit-animation-timing-function:ease-in-out;animation-timing-function:ease-in-out}60%{opacity:1;-webkit-transform:scale(.475) translateY(60px);-ms-transform:scale(.475) translateY(60px);transform:scale(.475) translateY(60px);-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out}}.layui-anim-01{-webkit-animation-name:zoomInDown;animation-name:zoomInDown}
+@-webkit-keyframes zoomInDown{
+	0%{opacity:0;-webkit-transform:scale(.1) translateY(-2000px);transform:scale(.1) translateY(-2000px);-webkit-animation-timing-function:ease-in-out;animation-timing-function:ease-in-out}
+	60%{opacity:1;-webkit-transform:scale(.475) translateY(60px);transform:scale(.475) translateY(60px);-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out}
+}
+@keyframes zoomInDown{
+	0%{opacity:0;-webkit-transform:scale(.1) translateY(-2000px);-ms-transform:scale(.1) translateY(-2000px);transform:scale(.1) translateY(-2000px);-webkit-animation-timing-function:ease-in-out;animation-timing-function:ease-in-out}
+	60%{opacity:1;-webkit-transform:scale(.475) translateY(60px);-ms-transform:scale(.475) translateY(60px);transform:scale(.475) translateY(60px);-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out}
+}
+.layui-anim-01{-webkit-animation-name:zoomInDown;animation-name:zoomInDown}
 
-@-webkit-keyframes fadeInUpBig{0%{opacity:0;-webkit-transform:translateY(2000px);transform:translateY(2000px)}100%{opacity:1;-webkit-transform:translateY(0);transform:translateY(0)}}@keyframes fadeInUpBig{0%{opacity:0;-webkit-transform:translateY(2000px);-ms-transform:translateY(2000px);transform:translateY(2000px)}100%{opacity:1;-webkit-transform:translateY(0);-ms-transform:translateY(0);transform:translateY(0)}}.layui-anim-02{-webkit-animation-name:fadeInUpBig;animation-name:fadeInUpBig}
+@-webkit-keyframes fadeInUpBig{
+	0%{opacity:0;-webkit-transform:translateY(2000px);transform:translateY(2000px)}
+	100%{opacity:1;-webkit-transform:translateY(0);transform:translateY(0)}
+}
+@keyframes fadeInUpBig{
+	0%{opacity:0;-webkit-transform:translateY(2000px);-ms-transform:translateY(2000px);transform:translateY(2000px)}
+	100%{opacity:1;-webkit-transform:translateY(0);-ms-transform:translateY(0);transform:translateY(0)}
+}
+@-webkit-keyframes fadeOutDownSmall{
+	0%{opacity:1;-webkit-transform:translateY(0);transform:translateY(0)}
+	100%{opacity:0;-webkit-transform:translateY(2000px);transform:translateY(2000px)}
+}
+@keyframes fadeOutDownSmall{
+	0%{opacity:1;-webkit-transform:translateY(0);-ms-transform:translateY(0);transform:translateY(0)}
+	100%{opacity:0;-webkit-transform:translateY(2000px);-ms-transform:translateY(2000px);transform:translateY(2000px)}
+}
+.layui-anim-02 {-webkit-animation-name:fadeInUpBig;animation-name:fadeInUpBig}
+.layui-anim-02.exit {-webkit-animation-name:fadeOutDownSmall;animation-name:fadeOutDownSmall;}
 
 @-webkit-keyframes zoomInLeft{0%{opacity:0;-webkit-transform:scale(.1) translateX(-2000px);transform:scale(.1) translateX(-2000px);-webkit-animation-timing-function:ease-in-out;animation-timing-function:ease-in-out}60%{opacity:1;-webkit-transform:scale(.475) translateX(48px);transform:scale(.475) translateX(48px);-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out}}@keyframes zoomInLeft{0%{opacity:0;-webkit-transform:scale(.1) translateX(-2000px);-ms-transform:scale(.1) translateX(-2000px);transform:scale(.1) translateX(-2000px);-webkit-animation-timing-function:ease-in-out;animation-timing-function:ease-in-out}60%{opacity:1;-webkit-transform:scale(.475) translateX(48px);-ms-transform:scale(.475) translateX(48px);transform:scale(.475) translateX(48px);-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out}}.layui-anim-03{-webkit-animation-name:zoomInLeft;animation-name:zoomInLeft}
 
@@ -160,7 +185,7 @@ body .layer-ext-hhskin .layui-layer-btn a:active { opacity:1; background:#F8F8F8
 body .layer-ext-hhskin .layui-layer-btn .layui-layer-btn0 { border-color: none; background-color: none; color:#999; }
 
 /* 定制化 */
-.layui-layer-dialog { min-width:inherit; min-width:auto; }
+.layui-layer-dialog { min-width:300px; max-width: 300px; }
 .layui-layer-dialog .layui-layer-content { position: relative; padding:20px; font:16px/1.5em "微软雅黑"; color:#666; word-break:break-all; overflow:hidden; overflow:auto; min-height:70px; }
 .layui-layer-dialog .layui-layer-content .layui-layer-ico{position:absolute; top:16px; left:15px; _left:-40px; width:30px; height:30px; }
 .layui-layer-dialog .layui-layer-content input   { display:block; width:100%; padding:15px; font:18px/20px "微软雅黑"; color:#555; text-align:center; border:1px solid #e5e5e5; border-radius:5px; box-sizing:border-box; -webkit-appearance:none; }
@@ -219,7 +244,9 @@ body .layer-ext-hhskin .layui-layer-btn .layui-layer-btn0 { border-color: none; 
 .layer-ext-hhskin-prompt  { min-width:300px; max-width: 300px; }
 .layer-ext-hhskin-confirm { min-width:300px; max-width: 300px; }
 
-body .layer-ext-hhskin-msg {
+.layer-ext-hhskin-msg {
+	min-width:auto;
+	max-width:auto;
 	left:0;
     background-color: #000;
     filter: alpha(opacity=60);
@@ -228,9 +255,20 @@ body .layer-ext-hhskin-msg {
     border: none;
 }
 
-body .layer-ext-hhskin-msg .layui-layer-content {
-    padding2: 20px 25px;
+.layer-ext-hhskin-msg .layui-layer-content {
     text-align: center;
 	min-height:inherit;
 	color:#fff;
 }
+
+
+
+
+
+/* panel */
+
+.layer-ext-hhskin-panel { border-radius:0; }
+.layer-ext-hhskin-panel .layui-layer-content { padding:20px; }
+
+
+
