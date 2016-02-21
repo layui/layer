@@ -222,84 +222,83 @@ var layer = {
 	},
 	
 	// 面板功能 （ Eric 开发 ）
-	panel: function(options, yes){
+	panel : function(options){
 		
 		options = options || {};
-		if(typeof options === 'function') yes = options;
 		var rskin = ready.config.skin;
-        var skin = rskin ? rskin + ' ' + rskin + '-panel' : '';
+		var Class = options.skin || " ";
+        var skin = rskin ? rskin + ' ' + rskin + '-panel ' + Class : '';
 		
-		var panel_w=0,panel_h=0,panel_l=0,panel_t=0;
-		var gap = options.gap || "40%";
+		var anim = 2;
+		var panel_w = 0,panel_h = 0,panel_l = 0,panel_t = 0;
+		var size = options.size || "40%";
 		var pos = options.pos || "bottom";
 		
 		switch(true)
 		{
+			case pos == "bottom":
+				anim = 7;
+				panel_w = win.width();
+				panel_h = typeof size == "string" ? parseInt(win.height()*parseFloat(size)/100):size;
+				panel_l = 0;
+				panel_t = win.height()-panel_h;
+				break;
 			case pos == "top":
+				anim = 8;
+				panel_w = win.width();
+				panel_h = (typeof size == "string" ? parseInt(win.height()*parseFloat(size)/100):size);
 				panel_l = 0;
 				panel_t = 0;
-				panel_w = win.width();
-				panel_h = win.height()-(typeof gap == "string" ? parseInt(win.height()*parseFloat(gap)/100):gap);
-				break;
-			case pos == "bottom":
-				panel_l = 0;
-				panel_t = typeof gap == "string" ? parseInt(win.height()*parseFloat(gap)/100):gap;
-				panel_w = win.width();
-				panel_h = win.height()-panel_t;
 				break;
 			case pos == "left":
+				anim = 9;
+				panel_w = (typeof size == "string" ? parseInt(win.width()*parseFloat(size)/100):size);
+				panel_h = win.height();
 				panel_l = 0;
 				panel_t = 0;
-				panel_w = win.width()-(typeof gap == "string" ? parseInt(win.width()*parseFloat(gap)/100):gap);
-				panel_h = win.height();
 				break;
 			case pos == "right":
-				panel_l = typeof gap == "string" ? parseInt(win.width()*parseFloat(gap)/100):gap;
-				panel_t = 0;
-				panel_w = win.width()-panel_l;
+				anim = 10;
+				panel_w = typeof size == "string" ? parseInt(win.width()*parseFloat(size)/100):size;
 				panel_h = win.height();
+				panel_l = win.width()-panel_w;
+				panel_t = 0;
 				break;
 			default:
-				panel_l = 0;
-				panel_t = typeof gap == "string" ? parseInt(win.height()*parseFloat(gap)/100):gap;
+				anim = 7;
 				panel_w = win.width();
-				panel_h = win.height()-panel_t;
+				panel_h = typeof size == "string" ? parseInt(win.height()*parseFloat(size)/100):size;
+				panel_l = 0;
+				panel_t = win.height()-panel_h;
 				break;
 		}
 		
-		var prompt, content;
-		return layer.open($.extend({
-			type:1,
-			title:"&#x4FE1;&#x606F;&#x8F93;&#x5165;",
-			btn: ['&#x53D6;&#x6D88;','&#x786E;&#x5B9A;'],
-			closeBtn:1,
-			content: "layer是一款近年来备受青睐的web弹层组件，她具备全方位的解决方案，致力于服务各水平段的开发人员，您的页面会轻松地拥有丰富友好的操作体验。layer是一款近年来备受青睐的web弹层组件，她具备全方位的解决方案，致力于服务各水平段的开发人员，您的页面会轻松地拥有丰富友好的操作体验。layer是一款近年来备受青睐的web弹层组件，她具备全方位的解决方案，致力于服务各水平段的开发人员，您的页面会轻松地拥有丰富友好的操作体验。layer是一款近年来备受青睐的web弹层组件，她具备全方位的解决方案，致力于服务各水平段的开发人员，您的页面会轻松地拥有丰富友好的操作体验。layer是一款近年来备受青睐的web弹层组件，她具备全方位的解决方案，致力于服务各水平段的开发人员，您的页面会轻松地拥有丰富友好的操作体验。layer是一款近年来备受青睐的web弹层组件，她具备全方位的解决方案，致力于服务各水平段的开发人员，您的页面会轻松地拥有丰富友好的操作体验。<input type='tel' />",
-			shift:2,
+		return layer.open({
+			type  : 1,
+			title : options.title || "&#x4FE1;&#x606F;&#x63D0;&#x793A;",
+			content:options.content,
+			closeBtn:options.closeBtn,
+			btn   : options.btn || ['&#x5173;&#x95ED;'],
+			skin  : skin,
+			area  : [panel_w+"px",panel_h+"px"],
+			offset: [panel_t+"px",panel_l+"px"],
+			move  : false,
+			shift : anim,
+			shade : 0.001,
 			shadeClose:true,
-			skin:skin,
-			area:[panel_w+"px",panel_h+"px"],
-			offset:[panel_t+"px",panel_l+"px"],
-			move:false,
-			success: function(layero){
-				prompt = layero.find('.layui-layer-input');
-				prompt.focus();
-			},
-			yes: function(index){
-				var value = prompt.val();
-				switch(true)
+			success:function(layero){
+				if( options.btn==false )
 				{
-					case value === '':
-						prompt.css({border:"1px solid #f66"});
-						setTimeout(function(){ prompt.focus().css({border:"1px solid #e5e5e5"}); },1000);
-						break;
-					case value.length > (options.maxlength||500):
-						layer.tips('&#x6700;&#x591A;&#x8F93;&#x5165;'+ (options.maxlength || 500) +'&#x4E2A;&#x5B57;&#x6570;', prompt, {tips: 1});
-						break;
-					default:
-						yes && yes(value, index, prompt);
+					layero.find(".layui-layer-btn").remove();
+					layero.find(".layui-layer-content").height(layero.height());
 				}
+				$(".layui-layer-shade").animate({opacity:0.3},300);
+				!options.success || options.success(layero);
+			},
+			yes : function(index){
+				options.yes ? options.yes() : layer.close(index);
 			}
-		}, options));
+		});
 	}
 };
 
@@ -314,7 +313,9 @@ Class.pt = Class.prototype;
 
 //缓存常用字符
 var doms = ['layui-layer', '.layui-layer-title', '.layui-layer-main', '.layui-layer-dialog', 'layui-layer-iframe', 'layui-layer-content', 'layui-layer-btn', 'layui-layer-close'];
-doms.anim = ['layui-anim', 'layui-anim-01', 'layui-anim-02', 'layui-anim-03', 'layui-anim-04', 'layui-anim-05', 'layui-anim-06'];
+doms.anim = [
+	'layui-anim', 'layui-anim-01', 'layui-anim-02', 'layui-anim-03', 'layui-anim-04', 'layui-anim-05', 'layui-anim-06',
+	'layui-anim-fadeInUp', 'layui-anim-fadeInDown', 'layui-anim-fadeInRight', 'layui-anim-fadeInLeft'];
 
 //默认配置
 Class.pt.config = {
@@ -929,7 +930,7 @@ layer.close = function(index){
 		// hhcode
 		if( type===ready.type[1] )
 		{
-			CloseTime = 200;
+			CloseTime = 400;
 			layero.addClass("exit");
 			setTimeout(function(){
 				layero[0].innerHTML = '';
@@ -943,7 +944,7 @@ layer.close = function(index){
 		}
     }
 	// hhcode
-	if( type===ready.type[1] ) $('#layui-layer-moves, #layui-layer-shade' + index).fadeOut(300);
+	if( type===ready.type[1] ) $('#layui-layer-moves, #layui-layer-shade' + index).animate({opacity:0},300);
 	setTimeout(function(){ $('#layui-layer-moves, #layui-layer-shade' + index).remove(); },CloseTime);
 //    $('#layui-layer-moves, #layui-layer-shade' + index).remove();
     layer.ie6 && ready.reselect();
@@ -1025,3 +1026,8 @@ layer.config({
 
 // load
 // 1. 大换血，目前只提供一种效果
+
+// panel
+// 1. 新增功能：封装了面板
+// 2. 添加了四种出场动画和关闭动画（修改了 close 方法）
+// 3. 当面板中含有表单时，要保证表单的高度小于面板的高度，否则会出现错位
