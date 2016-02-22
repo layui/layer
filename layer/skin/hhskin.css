@@ -89,7 +89,7 @@ html #layui_layer_skinlayercss { display:none; position: absolute; width:1989px;
 
 
 /* 定制化 */
-.layui-layer-dialog { min-width:300px; max-width: 300px; }
+.layui-layer-dialog { min-width:inherit; }
 .layui-layer-dialog .layui-layer-content { position: relative; padding:20px; font:16px/1.5em "微软雅黑"; color:#666; word-break:break-all; overflow:auto; min-height:70px; }
 .layui-layer-dialog .layui-layer-content .layui-layer-ico{position:absolute; top:16px; left:15px; _left:-40px; width:30px; height:30px; }
 .layui-layer-dialog .layui-layer-content input   { display:block; width:100%; padding:15px; font:18px/20px "微软雅黑"; color:#555; text-align:center; border:1px solid #e5e5e5; border-radius:5px; box-sizing:border-box; -webkit-appearance:none; }
@@ -152,8 +152,6 @@ html #layui_layer_skinlayercss { display:none; position: absolute; width:1989px;
 .layer-ext-hhskin-confirm { min-width:300px; max-width: 300px; }
 
 .layer-ext-hhskin-msg {
-	min-width:auto;
-	max-width:auto;
 	left:0;
     background-color: #000;
     filter: alpha(opacity=60);
