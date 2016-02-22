@@ -290,7 +290,7 @@ var layer = {
 				if( options.btn==false )
 				{
 					layero.find(".layui-layer-btn").remove();
-					layero.find(".layui-layer-content").height(layero.height());
+					layero.find(".layui-layer-content").height(layero.height()-55);
 				}
 				$(".layui-layer-shade").animate({opacity:0.3},300);
 				!options.success || options.success(layero);
