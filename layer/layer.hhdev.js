@@ -4,7 +4,7 @@
  @Author：贤心
  @Site：http://layer.layui.com
  @License：LGPL
-        
+ 
  */
 
 ;!function(window, undefined){
@@ -227,12 +227,13 @@ var layer = {
 		options = options || {};
 		var rskin = ready.config.skin;
 		var Class = options.skin || " ";
-        var skin = rskin ? rskin + ' ' + rskin + '-panel ' + Class : '';
+		var skin = rskin ? rskin + ' ' + rskin + '-panel ' + Class : '';
 		
 		var anim = 2;
 		var panel_w = 0,panel_h = 0,panel_l = 0,panel_t = 0;
 		var size = options.size || "40%";
-		var pos = options.pos || "bottom";
+		var pos  = options.pos  || "bottom";
+		var wrap = options.wrap || "body";
 		
 		switch(true)
 		{
@@ -293,11 +294,32 @@ var layer = {
 					layero.find(".layui-layer-content").height(layero.height()-55);
 				}
 				$(".layui-layer-shade").animate({opacity:0.3},300);
+				
+				// 表单处理
+				if( layero.find("form,input,textarea").length>0 )
+				{
+					if( !/(iphone|ipad|ios)/i.test(navigator.userAgent) )
+					{
+						layero.css({position:"absolute"});
+					}
+					$(wrap).css({overflow:"hidden"});
+					
+					// 注意 ！！！！
+					// 为了解决 panel 中表单错位问题，页面加载的时候，
+					// 需要为页面容器（ 默认为 body ）的高度设置为窗口高度
+					// $(wrapper).css({height:$(window).height()});
+					
+					// 补救措施，用户体验会差一点
+					if( $(wrap).outerHeight()!=$(window).height() )
+					{
+						$(wrap).css({height:$(window).height()});
+					}
+				}
+				
 				!options.success || options.success(layero);
 			},
-			yes : function(index){
-				options.yes ? options.yes() : layer.close(index);
-			}
+			yes : function(index){ options.yes ? options.yes() : layer.close(index); },
+			end : function(){ $(wrap).css({overflow:"auto"}); }
 		});
 	}
 };
@@ -512,7 +534,7 @@ Class.pt.offset = function(){
         that.offsetTop += win.scrollTop();
         that.offsetLeft += win.scrollLeft();
     }
-	if( layero.is(".layer-ext-hhskin-msg") && layero.outerWidth()>250 )
+	if( layero.is("."+ready.config.skin+"-msg") && layero.outerWidth()>250 )
 	{
 		layero.width(250);
 		that.offsetTop  = (win.height()-layero.outerHeight())/2;

@@ -14,7 +14,8 @@
 		a { text-decoration:none; color:#000; }
 		::-webkit-scrollbar { display:none; }
 		
-		body {background-color:#E3E3E3; }
+		.framepage { box-sizing:border-box; border:0px solid #390; }
+		body { background-color:#E3E3E3; }
 		header { background:#393D49; padding:20px; }
 		header h1 { font:30px/1.5em "微软雅黑"; color:#fff; }
 		h2 { font:20px/1.5em "微软雅黑"; color:#555; margin:20px; }
@@ -42,6 +43,7 @@
 		$(document).ready(function(e) {
 			
 			document.body.addEventListener('touchstart',function(){ });
+			$(".framepage").css({height:$(window).height(),overflow:"auto"});
 			
 			$(".btn_alert1").click(function(){
 				layer.alert("真的很短！");
@@ -136,6 +138,7 @@
 					content:$(".fm1").html(),
 					skin:"set_info",
 					size:300,
+					wrap:".framepage",
 					yes:function(){ layer.closeAll(); },
 					success:function(){  }
 				});
@@ -169,6 +172,7 @@
 					title:"信息录入",
 					btn:["保存"],
 					content:$(".fm1").html(),
+					wrap:".framepage",
 					skin:"set_info",
 					size:300
 				});
@@ -179,6 +183,7 @@
 					title:"信息录入",
 					btn:["保存"],
 					content:$(".fm1").html(),
+					wrap:".framepage",
 					skin:"set_info PanelSty01",
 					size:300
 				});
@@ -189,6 +194,7 @@
 					title:"信息录入",
 					btn:["保存"],
 					content:$(".fm1").html(),
+					wrap:".framepage",
 					skin:"set_info PanelSty02",
 					size:300,
 					yes:function(){
@@ -203,6 +209,7 @@
 					title:"信息录入",
 					btn:false,
 					content:$(".fm2").html(),
+					wrap:".framepage",
 					skin:"set_info",
 					size:350,
 					success:function(elm){
@@ -235,54 +242,58 @@
 	</script>
 </head>
 <body>
-
-	<header>
-      <h1>Layer</h1>
-    </header>
+	
+    <div class="framepage">
     
-    <h2>常用提示框</h2>
-    <a href="javascript:;" class="btn btn_alert1">alert（简短提示）</a>
-    <a href="javascript:;" class="btn btn_alert2">alert（啰嗦提示）</a>
-    <a href="javascript:;" class="btn btn_confirm">confirm（信息确认）</a>
-    <h2>输入框</h2>
-    <a href="javascript:;" class="btn btn_prompt1">prompt（单行文本）</a>
-    <a href="javascript:;" class="btn btn_prompt2">prompt（多行文本）</a>
-    <a href="javascript:;" class="btn btn_prompt3">prompt（密码输入）</a>
-    <a href="javascript:;" class="btn btn_prompt4">prompt（数字输入）</a>
-    <a href="javascript:;" class="btn btn_prompt5">prompt（限定长度）</a>
-    <a href="javascript:;" class="btn btn_prompt6">prompt（赋值）</a>
-    <h2>简易提示框</h2>
-    <a href="javascript:;" class="btn btn_toast1">toast（默认）</a>
-    <a href="javascript:;" class="btn btn_toast2">toast（回调）</a>
-    <a href="javascript:;" class="btn btn_toast3">toast（大段文字）</a>
-    <a href="javascript:;" class="btn btn_toast4">toast（指定时间）</a>
-    <a href="javascript:;" class="btn btn_toast5">toast（显示效果）</a>
-    <a href="javascript:;" class="btn btn_toast6">toast（图标效果）</a>
-    <h2>加载</h2>
-    <a href="javascript:;" class="btn btn_load1">load（默认）</a>
-    <a href="javascript:;" class="btn btn_load2">load（提示）</a>
-    <h2>面板（非官方）</h2>
-    <div class="fm fm1">
-    <p><span>用户昵称</span><input type="text" maxlength="4" placeholder="请输入" /></p>
-    <p><span>手机号码</span><input type="tel" maxlength="11" placeholder="请输入" /></p>
-    <p><span>邮箱地址</span><input type="text" maxlength="40" placeholder="请输入" /></p>
+      <header>
+        <h1>Layer</h1>
+      </header>
+      
+      <h2>常用提示框</h2>
+      <a href="javascript:;" class="btn btn_alert1">alert（简短提示）</a>
+      <a href="javascript:;" class="btn btn_alert2">alert（啰嗦提示）</a>
+      <a href="javascript:;" class="btn btn_confirm">confirm（信息确认）</a>
+      <h2>输入框</h2>
+      <a href="javascript:;" class="btn btn_prompt1">prompt（单行文本）</a>
+      <a href="javascript:;" class="btn btn_prompt2">prompt（多行文本）</a>
+      <a href="javascript:;" class="btn btn_prompt3">prompt（密码输入）</a>
+      <a href="javascript:;" class="btn btn_prompt4">prompt（数字输入）</a>
+      <a href="javascript:;" class="btn btn_prompt5">prompt（限定长度）</a>
+      <a href="javascript:;" class="btn btn_prompt6">prompt（赋值）</a>
+      <h2>简易提示框</h2>
+      <a href="javascript:;" class="btn btn_toast1">toast（默认）</a>
+      <a href="javascript:;" class="btn btn_toast2">toast（回调）</a>
+      <a href="javascript:;" class="btn btn_toast3">toast（大段文字）</a>
+      <a href="javascript:;" class="btn btn_toast4">toast（指定时间）</a>
+      <a href="javascript:;" class="btn btn_toast5">toast（显示效果）</a>
+      <a href="javascript:;" class="btn btn_toast6">toast（图标效果）</a>
+      <h2>加载</h2>
+      <a href="javascript:;" class="btn btn_load1">load（默认）</a>
+      <a href="javascript:;" class="btn btn_load2">load（提示）</a>
+      <h2>面板（非官方）</h2>
+      <div class="fm fm1">
+      <p><span>用户昵称</span><input type="text" maxlength="4" placeholder="请输入" /></p>
+      <p><span>手机号码</span><input type="tel" maxlength="11" placeholder="请输入" /></p>
+      <p><span>邮箱地址</span><input type="text" maxlength="40" placeholder="请输入" /></p>
+      </div>
+      <div class="fm fm2">
+      <p><span>用户昵称</span><input type="text" maxlength="4" placeholder="请输入" /></p>
+      <p><span>手机号码</span><input type="tel" maxlength="11" placeholder="请输入" /></p>
+      <p><span>邮箱地址</span><input type="text" maxlength="40" placeholder="请输入" /></p>
+      <a href="javascript:;" class="btn btn_save">保存</a>
+      <a href="javascript:;" class="btn btn_cancel">取消</a>
+      </div>
+      <a href="javascript:;" class="btn btn_panel1">panel（底部）</a>
+      <a href="javascript:;" class="btn btn_panel2">panel（顶部）</a>
+      <a href="javascript:;" class="btn btn_panel3">panel（左侧）</a>
+      <a href="javascript:;" class="btn btn_panel4">panel（右侧）</a>
+      <a href="javascript:;" class="btn btn_panel5">panel（样式一）</a>
+      <a href="javascript:;" class="btn btn_panel6">panel（样式二）</a>
+      <a href="javascript:;" class="btn btn_panel7">panel（样式三）</a>
+      <a href="javascript:;" class="btn btn_panel8">panel（样式四）</a>
+      <a href="javascript:;" class="btn btn_open">open</a>
+    
     </div>
-    <div class="fm fm2">
-    <p><span>用户昵称</span><input type="text" maxlength="4" placeholder="请输入" /></p>
-    <p><span>手机号码</span><input type="tel" maxlength="11" placeholder="请输入" /></p>
-    <p><span>邮箱地址</span><input type="text" maxlength="40" placeholder="请输入" /></p>
-    <a href="javascript:;" class="btn btn_save">保存</a>
-    <a href="javascript:;" class="btn btn_cancel">取消</a>
-    </div>
-    <a href="javascript:;" class="btn btn_panel1">panel（底部）</a>
-    <a href="javascript:;" class="btn btn_panel2">panel（顶部）</a>
-    <a href="javascript:;" class="btn btn_panel3">panel（左侧）</a>
-    <a href="javascript:;" class="btn btn_panel4">panel（右侧）</a>
-    <a href="javascript:;" class="btn btn_panel5">panel（样式一）</a>
-    <a href="javascript:;" class="btn btn_panel6">panel（样式二）</a>
-    <a href="javascript:;" class="btn btn_panel7">panel（样式三）</a>
-    <a href="javascript:;" class="btn btn_panel8">panel（样式四）</a>
-    <a href="javascript:;" class="btn btn_open">open</a>
     
 </body>
 </html>
