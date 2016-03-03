@@ -12,7 +12,13 @@
 
 var $, win, ready = {
     getPath: function(){
-        var js = document.scripts, script = js[js.length - 1], jsPath = script.src;
+        var js = document.scripts;
+        for(var i = 0; i < js.length; i++){
+          if(js[i].src.indexOf("layer")!=-1){
+    	    		jsPath = js[i].src;
+    	    		break;
+    	    	}	
+        }
         if(script.getAttribute('merge')) return;
         return jsPath.substring(0, jsPath.lastIndexOf("/") + 1);
     }(),
