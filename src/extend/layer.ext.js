@@ -94,19 +94,34 @@ layer.photos = function(options, loop, key){
     dict.imgIndex = start + 1;
 
     if(!type){ //页面直接获取
-        var parent = $(options.photos), img = parent.find(options.img||'img');
-        if (img.length === 0) return;
-        loop || img.each(function(index){
-            var othis = $(this);
-            data.push({
-                alt: othis.attr('alt') || othis.attr('title') || '',
-                pid: othis.attr('layer-pid') || '',
-                src: othis.attr('layer-src') || othis.attr('src') || othis.attr('href'),
-                thumb: othis.attr('src')
+        var parent = $(options.photos);
+        //不直接弹出
+        if(!loop){
+            function push_data(othis){
+                data.push({
+                    alt: othis.attr('alt') || othis.attr('title') || '',
+                    pid: othis.attr('layer-pid') || '',
+                    src: othis.attr('layer-src') || othis.attr('src') || othis.attr('href'),
+                    thumb: othis.attr('src')
+                });
+                return data.length;
+            }
+            parent.find(options.img||'img').each(function(index){
+                var othis = $(this);
+                othis.data('_index',index);
+                push_data(othis);
             });
-            othis.on('click', function(e){
+
+            parent.on('click',options.img,function(e){
                 e.preventDefault();
-                data[index].src = othis.attr('layer-src') || othis.attr('src') || othis.attr('href');
+                var othis = $(this);
+                var index = othis.data('_index');
+                if(data[index] == null){
+                    index = push_data(othis)-1;
+                    othis.data('_index',index);
+                }else{
+                    data[index].src = othis.attr('layer-src') || othis.attr('src') || othis.attr('href');
+                }
                 layer.photos($.extend(options, {
                     photos: {
                         start: index,
@@ -116,10 +131,8 @@ layer.photos = function(options, loop, key){
                     full: options.full
                 }), true);
             });
-        });
-        
-        //不直接弹出
-        if(!loop) return;
+            return;
+        };
         
     } else if (data.length === 0){
         layer.msg('&#x6CA1;&#x6709;&#x56FE;&#x7247;');
