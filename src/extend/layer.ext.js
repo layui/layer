@@ -112,7 +112,7 @@ layer.photos = function(options, loop, key){
                 push_data(othis);
             });
 
-            parent.on('click',options.img,function(e){
+            parent.on('click',options.img||'img',function(e){
                 e.preventDefault();
                 var othis = $(this);
                 var index = othis.data('_index');
