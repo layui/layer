@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  
  @Name: layer拓展样式
  @Date: 2012.12.13
@@ -26,7 +26,7 @@ html #layui_layer_skinlayerextcss{display:none; position: absolute; width:1989px
 .xubox_tabclose{position:absolute; right:10px; top:5px; cursor:pointer;}
 
 /* photo模式 */
-.layui-layer-photos{-webkit-animation-duration:1s; animation-duration:1s; background: url(default/xubox_loading1.gif) center center no-repeat #000;}
+.layui-layer-photos{-webkit-animation-duration:1s; animation-duration:1s;}
 .layui-layer-photos .layui-layer-content{overflow:hidden; text-align: center;}
 .layui-layer-photos .layui-layer-phimg img{position: relative; width:100%; display: inline-block; *display:inline; *zoom:1; vertical-align:top;}
 .layui-layer-imguide,.layui-layer-imgbar{display:none;}

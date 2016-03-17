@@ -1,23 +1,23 @@
 ﻿{
-    "name": "layer",
-    "version": "2.1",
-    "mobile": "1.7",
-    "description": "弹层组件",
-    "main": "",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "",
-        "url": ""
-    },
-    "author": "贤心",
-    "homepage": "http://layer.layui.com/",
-    "devDependencies": {
-        "grunt": "*",
-        "grunt-contrib-uglify": "*",
-        "grunt-contrib-cssmin": "*",
-        "grunt-css": "*"
-        
-    }
+  "name": "layer",
+  "version": "2.2",
+  "mobile": "1.7",
+  "description": "弹层组件",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "",
+    "url": ""
+  },
+  "author": "贤心",
+  "homepage": "http://layer.layui.com/",
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-cssmin": "*",
+    "grunt-css": "*"
+    
+  }
 }

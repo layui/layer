@@ -160,7 +160,6 @@ html #layui_layer_skinlayercss{display:none; position: absolute; width:1989px;}
 /* skin */
 .layui-layer-lan[type="dialog"]{min-width:280px;}
 .layui-layer-lan .layui-layer-title{background:#4476A7; color:#fff; border: none;}
-.layui-layer-lan
 .layui-layer-lan .layui-layer-btn{padding:10px; text-align: right; border-top:1px solid #E9E7E7}
 .layui-layer-lan .layui-layer-btn a{background:#BBB5B5; border:none;}
 .layui-layer-lan .layui-layer-btn .layui-layer-btn1{background:#C9C5C5;}
