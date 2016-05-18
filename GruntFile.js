@@ -16,13 +16,6 @@
         src: './src/layer.js',  
         dest: './layer.js'
       },
-      'layer.ext.js': {
-        options: {
-           banner: '/*! layer<%= pkg.description %>拓展类 */\n;'
-        },
-        src: './src/extend/layer.ext.js',  
-        dest: './extend/layer.ext.js'
-      },
       'layer.mobile.js': {
         options: {
            banner: '/*! layer mobile-v<%= pkg.mobile %> <%= pkg.description %>移动版 License LGPL <%= pkg.homepage %>mobile By <%= pkg.author %> */\n;'
