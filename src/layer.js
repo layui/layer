@@ -865,7 +865,7 @@ layer.photos = function(options, loop, key){
   var type = options.photos.constructor === Object;
   var photos = type ? options.photos : {}, data = photos.data || [];
   var start = photos.start || 0;
-  dict.imgIndex = start + 1;
+  dict.imgIndex = (start|0) + 1;
   
   options.img = options.img || 'img';
 
