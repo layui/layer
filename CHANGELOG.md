@@ -69,7 +69,7 @@
 * 修复当设置了btn时，最小化不能愉快地呈现的bug。
 * 修复全局设置skin时，某些层类型出现样式异常的bug。
 * 修复area设置了百分比时，maxmin参数无效的bug。
-* 完善当采用<script>合并路径的方式引入layer，加载了错误的css路径的问题。这种情况需在script标签上加一个自定义属性merge="true",然后通过layer.config({path: 'layer所在目录'})来完成初始化的配置
+* 完善当采用script标签合并路径的方式引入layer，加载了错误的css路径的问题。这种情况需在script标签上加一个自定义属性merge="true",然后通过layer.config({path: 'layer所在目录'})来完成初始化的配置
 * 样式微调
 
 # 【1.9.0】2015.04.19
