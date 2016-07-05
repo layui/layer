@@ -6,7 +6,7 @@
 .laymshade{background-color:rgba(0,0,0, .5); pointer-events:auto;}
 .layermmain{display:table; font-family: Helvetica, arial, sans-serif; pointer-events: none;}
 .layermmain .section{display:table-cell; vertical-align:middle; text-align:center;}
-.layermchild{position:relative; display:inline-block; text-align:left; background-color:#fff; font-size:14px; border-radius:3px; box-shadow:0 0 8px rgba(0, 0, 0, 0.1);  pointer-events:auto;}
+.layermchild{position:relative; display:inline-block; text-align:left; background-color:#fff; font-size:14px; border-radius:3px; box-shadow:0 0 8px rgba(0, 0, 0, 0.1);  pointer-events:auto;  -webkit-overflow-scrolling: touch;}
 .layermchild{-webkit-animation-fill-mode: both; animation-fill-mode: both; -webkit-animation-duration: .18s; animation-duration: .18s;}
 .layermborder{border:1px solid #999;}
 @-webkit-keyframes bounceIn { /* 默认 */
