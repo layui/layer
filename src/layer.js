@@ -1,6 +1,6 @@
 ﻿/*!
 
- @Name：layer v2.3 弹层组件
+ @Name：layer v2.4 弹层组件
  @Author：贤心
  @Site：http://layer.layui.com
  @License：LGPL
@@ -30,7 +30,7 @@ var $, win, ready = {
 
 //默认内置方法。
 var layer = {
-  v: '2.3',
+  v: '2.4',
   ie6: !!window.ActiveXObject&&!window.XMLHttpRequest,
   index: 0,
   path: ready.getPath,
@@ -150,6 +150,7 @@ var layer = {
       closeBtn: false,
       time: 3000,
       shade: false,
+      fix: false,
       maxWidth: 210
     }, options));
   }
@@ -202,7 +203,7 @@ Class.pt.vessel = function(conType, callback){
     config.shade ? ('<div class="layui-layer-shade" id="layui-layer-shade'+ times +'" times="'+ times +'" style="'+ ('z-index:'+ (zIndex-1) +'; background-color:'+ (config.shade[1]||'#000') +'; opacity:'+ (config.shade[0]||config.shade) +'; filter:alpha(opacity='+ (config.shade[0]*100||config.shade*100) +');') +'"></div>') : '',
     
     //主体
-    '<div class="'+ doms[0] +' '+ (doms.anim[config.shift]||'') + (' layui-layer-'+ready.type[config.type]) + (((config.type == 0 || config.type == 2) && !config.shade) ? ' layui-layer-border' : '') + ' ' + (config.skin||'') +'" id="'+ doms[0] + times +'" type="'+ ready.type[config.type] +'" times="'+ times +'" showtime="'+ config.time +'" conType="'+ (conType ? 'object' : 'string') +'" style="z-index: '+ zIndex +'; width:'+ config.area[0] + ';height:' + config.area[1] + (config.fix ? '' : ';position:absolute;') +'">'
+    '<div class="'+ doms[0] + (' layui-layer-'+ready.type[config.type]) + (((config.type == 0 || config.type == 2) && !config.shade) ? ' layui-layer-border' : '') + ' ' + (config.skin||'') +'" id="'+ doms[0] + times +'" type="'+ ready.type[config.type] +'" times="'+ times +'" showtime="'+ config.time +'" conType="'+ (conType ? 'object' : 'string') +'" style="z-index: '+ zIndex +'; width:'+ config.area[0] + ';height:' + config.area[1] + (config.fix ? '' : ';position:absolute;') +'">'
       + (conType && config.type != 2 ? '' : titleHTML)
       +'<div id="'+ (config.id||'') +'" class="layui-layer-content'+ ((config.type == 0 && config.icon !== -1) ? ' layui-layer-padding' :'') + (config.type == 3 ? ' layui-layer-loading'+config.icon : '') +'">'
         + (config.type == 0 && config.icon !== -1 ? '<i class="layui-layer-ico layui-layer-ico'+ config.icon +'"></i>' : '')
@@ -257,7 +258,6 @@ Class.pt.creat = function(){
       config.follow = config.content[1];
       config.content = config.content[0] + '<i class="layui-layer-TipsG"></i>';
       config.title = false;
-      config.fix = false;
       config.tips = typeof config.tips === 'object' ? config.tips : [config.tips, true];
       config.tipsMore || layer.closeAll('tips');
     break;
@@ -300,6 +300,12 @@ Class.pt.creat = function(){
     layer.close(that.index)
   }, config.time);
   that.move().callback();
+  
+  //为兼容jQuery3.0的css动画影响元素尺寸计算
+  if(doms.anim[config.shift]){
+    that.layero.addClass(doms.anim[config.shift]);
+  };
+  
 };
 
 //自适应
@@ -426,7 +432,10 @@ Class.pt.tips = function(){
     'background-color': config.tips[1], 
     'padding-right': (config.closeBtn ? '30px' : '')
   });
-  layero.css({left: goal.tipLeft, top: goal.tipTop});
+  layero.css({
+    left: goal.tipLeft - (config.fix ? win.scrollLeft() : 0), 
+    top: goal.tipTop  - (config.fix ? win.scrollTop() : 0)
+  });
 }
 
 //拖拽层
@@ -551,8 +560,8 @@ Class.pt.callback = function(){
   
   //最小化
   layero.find('.layui-layer-min').on('click', function(){
-    layer.min(that.index, config);
-    config.min && config.min(layero);
+    var min = config.min && config.min(layero);
+    min === false || layer.min(that.index, config); 
   });
   
   //全屏/还原
@@ -562,7 +571,9 @@ Class.pt.callback = function(){
       config.restore && config.restore(layero);
     } else {
       layer.full(that.index, config);
-      config.full && config.full(layero);
+      setTimeout(function(){
+        config.full && config.full(layero);
+      }, 100);
     }
   });
 
@@ -619,8 +630,8 @@ Class.pt.openLayer = function(){
 
 ready.record = function(layero){
   var area = [
-    layero.outerWidth(),
-    layero.outerHeight(),
+    layero.width(),
+    layero.height(),
     layero.position().top, 
     layero.position().left + parseFloat(layero.css('margin-left'))
   ];
