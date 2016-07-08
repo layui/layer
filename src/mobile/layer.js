@@ -14,6 +14,10 @@ var doc = document, query = 'querySelectorAll', claname = 'getElementsByClassNam
   return doc[query](s);
 };
 
+// 判断应尽量避免UA检测，这里手机判断使用功能检测（下行为UA检测）
+// var isMobile = /android|webos|ip(hone|ad|od)|opera (mini|mobi|tablet)|iemobile|windows.+(phone|touch)|mobile|fennec|kindle (Fire)|Silk|maemo|blackberry|playbook|bb10\; (touch|kbd)|Symbian(OS)|Ubuntu Touch/i.test(navigator.userAgent);
+var isMobile = 'ontouchstart' in win;
+
 //默认配置
 var config = {
    type: 0,
@@ -35,19 +39,42 @@ var ready = {
 };
 
 //点触事件
+//判断是否是tap
+//当手指按下时，记录 x、y坐标
+//当手指移动时，跟踪x、y的偏移量(大于某个值判断为非tap)
+//当手指抬起时，比较x、y与按下时的偏移量(小于某个值判断为tap)
+
 ready.touch = function(elem, fn){
-  var move;
-  if(!/Android|iPhone|SymbianOS|Windows Phone|iPad|iPod/.test(navigator.userAgent)){
+  var startX,startY,move;
+  if(!isMobile){
     return elem.addEventListener('click', function(e){
       fn.call(this, e);
     }, false);
   }
-  elem.addEventListener('touchmove', function(){
-    move = true;
+  elem.addEventListener('touchstart', function(e){
+    e.preventDefault();
+    move = false;
+    if (e.targetTouches.length > 1) {
+      return true;
+    }
+    startX = e.targetTouches[0].pageX,
+    startY = e.targetTouches[0].pageY;
+  },false);
+  elem.addEventListener('touchmove', function(e){
+    e.preventDefault();
+    var touch = e.targetTouches[0], boundary = 10;
+    if ( Math.abs(touch.pageX - startX) > boundary ||
+         Math.abs(touch.pageY - startY) > boundary ) {
+      move = true;
+    };
   }, false);
   elem.addEventListener('touchend', function(e){
     e.preventDefault();
-    move || fn.call(this, e);
+    var touch = e.changedTouches[0], boundary = 10;
+    if (!move && Math.abs(touch.pageX - startX) < boundary &&
+         Math.abs(touch.pageY - startY) < boundary ) {
+      fn.call(this, e);
+    };
     move = false;
   }, false); 
 };
