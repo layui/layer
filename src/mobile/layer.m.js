@@ -160,6 +160,9 @@ Layer.prototype.action = function(config, elem){
     }
     
     //点遮罩关闭
+    //在安卓三星中，型号Grand2（未测试其他，不过不支持多点触控的手机 这个问题应该普遍存在）；初始化时设置config中type:1 并且style中width小于clientWidth
+    //该情况下 安卓三星touch点击 会导致同页面其他layer无法显示 原因就是遮罩层的影响。
+    //解决方式 或者验证Android处理ShadeClose:false (或者提示用户自己处理); 
     if(config.shade && config.shadeClose){
         var shade = elem[claname]('laymshade')[0];
         shade.onclick = function(){
