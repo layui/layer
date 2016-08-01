@@ -218,9 +218,9 @@ Class.pt.vessel = function(conType, callback){
         var button = '';
         typeof config.btn === 'string' && (config.btn = [config.btn]);
         for(var i = 0, len = config.btn.length; i < len; i++){
-          button += '<a class="'+ doms[6] +''+ i +'">'+ config.btn[i] +'</a>'
+          button += '<a class="'+ doms[6] +''+ i +'" href="javascript:void(0);">'+ config.btn[i] +'</a>'
         }
-        return '<div class="'+ doms[6] +'">'+ button +'</div>'
+        return '<div class="'+ doms[6] +'" href="javascript:void(0);">'+ button +'</div>'
       }() : '')
     +'</div>'
   ], titleHTML);
@@ -540,7 +540,7 @@ Class.pt.callback = function(){
       var close = config['btn'+(index+1)] && config['btn'+(index+1)](that.index, layero);
       close === false || layer.close(that.index);
     }
-  });
+  }).focus();
   
   //取消
   function cancel(){
