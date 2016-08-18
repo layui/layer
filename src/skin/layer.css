@@ -138,7 +138,7 @@ html #layui_layer_skinlayercss{display:none; position: absolute; width:1989px;}
 .layui-layer-hui{min-width:100px;  background-color:#000; filter:alpha(opacity=60); background-color: rgba(0,0,0,0.6); color: #fff; border:none;}
 .layui-layer-hui .layui-layer-content{padding:12px 25px; text-align:center;}
 .layui-layer-dialog .layui-layer-padding{padding: 20px 20px 20px 55px; text-align: left;}
-.layui-layer-page .layui-layer-content{position:relative; overflow:auto;}
+.layui-layer-page .layui-layer-content{position:relative; overflow:auto; clear:both;}
 .layui-layer-page .layui-layer-btn,.layui-layer-iframe .layui-layer-btn{padding-top:10px;}
 .layui-layer-nobg{background:none;}
 .layui-layer-iframe .layui-layer-content{overflow:hidden;}
@@ -184,7 +184,7 @@ html #layui_layer_skinlayercss{display:none; position: absolute; width:1989px;}
 
 /* tab模式 */
 .layui-layer-tab{box-shadow:1px 1px 50px rgba(0,0,0,.4);}
-.layui-layer-tab .layui-layer-title{padding-left:0; border-bottom:1px solid #ccc; background-color:#eee;}
+.layui-layer-tab .layui-layer-title{padding-left:0; border-bottom:1px solid #ccc; background-color:#eee; overflow: visible;}
 .layui-layer-tab .layui-layer-title span{position:relative; float:left; min-width:80px; max-width:260px; padding:0 20px; text-align:center; cursor:default; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
 .layui-layer-tab .layui-layer-title span.layui-layer-tabnow{height:43px; border-left:1px solid #ccc; border-right:1px solid #ccc; background-color:#fff; z-index:10;}
 .layui-layer-tab .layui-layer-title span:first-child{border-left:none;}
