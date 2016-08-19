@@ -91,10 +91,27 @@ Layer.prototype.view = function(){
   }
   
   if(config.type === 2){
-    config.content = '<i></i><i class="laymloadtwo"></i><i></i>';
+    //config.content = '<i></i><i class="laymloadtwo"></i><i></i>';
+    config.content = '<div class="loadctx">' +
+                        (config.tip ? '<div class="loadbg"></div>' : '') + 
+                        '<div class="loading">' +
+                            '<div class="loading-leaf loading-leaf-0"></div>' +
+                            '<div class="loading-leaf loading-leaf-1"></div>' +
+                            '<div class="loading-leaf loading-leaf-2"></div>' +
+                            '<div class="loading-leaf loading-leaf-3"></div>' +
+                            '<div class="loading-leaf loading-leaf-4"></div>' +
+                            '<div class="loading-leaf loading-leaf-5"></div>' +
+                            '<div class="loading-leaf loading-leaf-6"></div>' +
+                            '<div class="loading-leaf loading-leaf-7"></div>' +
+                            '<div class="loading-leaf loading-leaf-8"></div>' +
+                            '<div class="loading-leaf loading-leaf-9"></div>' +
+                            '<div class="loading-leaf loading-leaf-10"></div>' +
+                            '<div class="loading-leaf loading-leaf-11"></div>' +
+                        '</div>' + (config.tip ? (typeof config.tip === 'string' ? '<p>' + config.tip + '</p>' : '') : '') +
+                      '</div>';
   }
   
-  layerbox.innerHTML = (config.shade ? '<div '+ (typeof config.shade === 'string' ? 'style="'+ config.shade +'"' : '') +' class="laymshade"></div>' : '')
+  layerbox.innerHTML = (config.shade ? '<div '+ (typeof config.shade === 'string' ? 'style="'+ config.shade +'"' : '') +' class="laymshade '+ ((config.type === 2) ? 'loadshade' : '') +'"></div>' : '')
   +'<div class="layermmain" '+ (!config.fixed ? 'style="position:static;"' : '') +'>'
     +'<div class="section">'
       +'<div class="layermchild '+ (config.className ? config.className : '') +' '+ ((!config.type && !config.shade) ? 'layermborder ' : '') + (config.anim ? 'layermanim' : '') +'" ' + ( config.style ? 'style="'+config.style+'"' : '' ) +'>'
