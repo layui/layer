@@ -1,13 +1,14 @@
 /*!
 
- @Name：layer mobile v1.8 弹层组件移动版
+ @Name：layer mobile v2.0 弹层组件移动版
  @Author：贤心
  @Site：http://layer.layui.com/mobie/
  @License：LGPL
     
  */
 
-;!function(win){    
+;!function(win){
+  
 "use strict";
 
 var doc = document, query = 'querySelectorAll', claname = 'getElementsByClassName', S = function(s){
@@ -16,11 +17,11 @@ var doc = document, query = 'querySelectorAll', claname = 'getElementsByClassNam
 
 //默认配置
 var config = {
-   type: 0,
-   shade: true,
-   shadeClose: true,
-   fixed: true,
-   anim: true
+  type: 0
+  ,shade: true
+  ,shadeClose: true
+  ,fixed: true
+  ,anim: 'scale' //默认动画类型
 };
 
 var ready = {
@@ -36,23 +37,12 @@ var ready = {
 
 //点触事件
 ready.touch = function(elem, fn){
-  var move;
-  if(!/Android|iPhone|SymbianOS|Windows Phone|iPad|iPod/.test(navigator.userAgent)){
-    return elem.addEventListener('click', function(e){
-      fn.call(this, e);
-    }, false);
-  }
-  elem.addEventListener('touchmove', function(){
-    move = true;
+  elem.addEventListener('click', function(e){
+    fn.call(this, e);
   }, false);
-  elem.addEventListener('touchend', function(e){
-    e.preventDefault();
-    move || fn.call(this, e);
-    move = false;
-  }, false); 
 };
 
-var index = 0, classs = ['layermbox'], Layer = function(options){
+var index = 0, classs = ['layui-m-layer'], Layer = function(options){
   var that = this;
   that.config = ready.extend(options);
   that.view();
@@ -64,24 +54,27 @@ Layer.prototype.view = function(){
   that.id = layerbox.id = classs[0] + index;
   layerbox.setAttribute('class', classs[0] + ' ' + classs[0]+(config.type || 0));
   layerbox.setAttribute('index', index);
-
+  
+  //标题区域
   var title = (function(){
     var titype = typeof config.title === 'object';
     return config.title
-    ? '<h3 style="'+ (titype ? config.title[1] : '') +'">'+ (titype ? config.title[0] : config.title)  +'</h3><button class="layermend"></button>'
+    ? '<h3 style="'+ (titype ? config.title[1] : '') +'">'+ (titype ? config.title[0] : config.title)  +'</h3>'
     : '';
   }());
   
+  //按钮区域
   var button = (function(){
+    typeof config.btn === 'string' && (config.btn = [config.btn]);
     var btns = (config.btn || []).length, btndom;
     if(btns === 0 || !config.btn){
       return '';
     }
-    btndom = '<span type="1">'+ config.btn[0] +'</span>'
+    btndom = '<span yes type="1">'+ config.btn[0] +'</span>'
     if(btns === 2){
-      btndom = '<span type="0">'+ config.btn[1] +'</span>' + btndom;
+      btndom = '<span no type="0">'+ config.btn[1] +'</span>' + btndom;
     }
-    return '<div class="layermbtn">'+ btndom + '</div>';
+    return '<div class="layui-m-layerbtn">'+ btndom + '</div>';
   }());
   
   if(!config.fixed){
@@ -91,15 +84,18 @@ Layer.prototype.view = function(){
   }
   
   if(config.type === 2){
-    config.content = '<i></i><i class="laymloadtwo"></i><i></i>';
+    config.content = '<i></i><i class="layui-m-layerload"></i><i></i><p>'+ (config.content||'') +'</p>';
   }
   
-  layerbox.innerHTML = (config.shade ? '<div '+ (typeof config.shade === 'string' ? 'style="'+ config.shade +'"' : '') +' class="laymshade"></div>' : '')
-  +'<div class="layermmain" '+ (!config.fixed ? 'style="position:static;"' : '') +'>'
-    +'<div class="section">'
-      +'<div class="layermchild '+ (config.className ? config.className : '') +' '+ ((!config.type && !config.shade) ? 'layermborder ' : '') + (config.anim ? 'layermanim' : '') +'" ' + ( config.style ? 'style="'+config.style+'"' : '' ) +'>'
+  if(config.skin) config.anim = 'up';
+  if(config.skin === 'msg') config.shade = false;
+  
+  layerbox.innerHTML = (config.shade ? '<div '+ (typeof config.shade === 'string' ? 'style="'+ config.shade +'"' : '') +' class="layui-m-layershade"></div>' : '')
+  +'<div class="layui-m-layermain" '+ (!config.fixed ? 'style="position:static;"' : '') +'>'
+    +'<div class="layui-m-layersection">'
+      +'<div class="layui-m-layerchild '+ (config.skin ? 'layui-m-layer-' + config.skin + ' ' : '') + (config.className ? config.className : '') + ' ' + (config.anim ? 'layui-m-anim-' + config.anim : '') +'" ' + ( config.style ? 'style="'+config.style+'"' : '' ) +'>'
         + title
-        +'<div class="layermcont">'+ config.content +'</div>'
+        +'<div class="layui-m-layercont">'+ config.content +'</div>'
         + button
       +'</div>'
     +'</div>'
@@ -130,15 +126,6 @@ Layer.prototype.action = function(config, elem){
     }, config.time*1000);
   }
   
-  //关闭按钮
-  if(config.title){
-    var end = elem[claname]('layermend')[0], endfn = function(){
-      config.cancel && config.cancel();
-      layer.close(that.index);
-    };
-    ready.touch(end, endfn);
-  }
-  
   //确认取消
   var btn = function(){
     var type = this.getAttribute('type');
@@ -150,7 +137,7 @@ Layer.prototype.action = function(config, elem){
     }
   };
   if(config.btn){
-    var btns = elem[claname]('layermbtn')[0].children, btnlen = btns.length;
+    var btns = elem[claname]('layui-m-layerbtn')[0].children, btnlen = btns.length;
     for(var ii = 0; ii < btnlen; ii++){
       ready.touch(btns[ii], btn);
     }
@@ -158,7 +145,7 @@ Layer.prototype.action = function(config, elem){
   
   //点遮罩关闭
   if(config.shade && config.shadeClose){
-    var shade = elem[claname]('laymshade')[0];
+    var shade = elem[claname]('layui-m-layershade')[0];
     ready.touch(shade, function(){
       layer.close(that.index, config.end);
     });
@@ -168,7 +155,7 @@ Layer.prototype.action = function(config, elem){
 };
 
 win.layer = {
-  v: '1.8',
+  v: '2.0',
   index: index,
   
   //核心方法
@@ -185,7 +172,7 @@ win.layer = {
     clearTimeout(ready.timer[index]);
     delete ready.timer[index];
     typeof ready.end[index] === 'function' && ready.end[index]();
-    delete ready.end[index]; 
+    delete ready.end[index];
   },
   
   //关闭所有layer层
@@ -209,7 +196,7 @@ win.layer = {
   
   document.head.appendChild(function(){
     var link = doc.createElement('link');
-    link.href = path + 'need/layer.css';
+    link.href = path + 'need/layer.css?2.0';
     link.type = 'text/css';
     link.rel = 'styleSheet'
     link.id = 'layermcss';
