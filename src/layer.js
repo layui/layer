@@ -1,4 +1,4 @@
-﻿/*!
+/*!
 
  @Name：layer v2.4 弹层组件
  @Author：贤心
@@ -52,7 +52,7 @@ var layer = {
   
   //载入配件
   use: function(module, fn, readyMethod){
-    var i = 0, head = $('head')[0];
+    var head = $('head')[0];
     var module = module.replace(/\s/g, '');
     var iscss = /\.css$/.test(module);
     var node = document.createElement(iscss ? 'link' : 'script');
@@ -229,7 +229,7 @@ Class.pt.vessel = function(conType, callback){
 
 //创建骨架
 Class.pt.creat = function(){
-  var that = this, config = that.config, times = that.index, nodeIndex;
+  var that = this, config = that.config, times = that.index;
   var content = config.content, conType = typeof content === 'object';
   
   if($('#'+config.id)[0])  return;
@@ -710,7 +710,7 @@ layer.min = function(index, options){
 //还原
 layer.restore = function(index){
   var layero = $('#'+ doms[0] + index), area = layero.attr('area').split(',');
-  var type = layero.attr('type');
+  layero.attr('type');
   layer.style(index, {
     width: parseFloat(area[0]), 
     height: parseFloat(area[1]), 
@@ -1064,14 +1064,12 @@ ready.run = function(){
     var o = new Class(deliver);
     return o.index;
   };
+  layer.use('skin/layer.css');
 };
 
-'function' === typeof define ? define(function(){
+'function' === typeof define ? define(['jquery'], function(){
   ready.run();
   return layer;
-}) : function(){
-   ready.run();
-   layer.use('skin/layer.css');
-}();
+}) : ready.run();
 
 }(window);
