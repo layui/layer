@@ -141,8 +141,9 @@ html #layui_layer_skinlayercss{display:none; position: absolute; width:1989px;}
 .layui-layer-page .layui-layer-content{position:relative; overflow:auto;}
 .layui-layer-page .layui-layer-btn,.layui-layer-iframe .layui-layer-btn{padding-top:10px;}
 .layui-layer-nobg{background:none;}
-.layui-layer-iframe .layui-layer-content{overflow:hidden;}
+.layui-layer-iframe .layui-layer-content{-webkit-overflow-scrolling: touch; overflow-y: auto;}
 .layui-layer-iframe iframe{display:block; width:100%;}
+
 .layui-layer-loading{border-radius:100%; background:none;  box-shadow:none;  border:none;}
 .layui-layer-loading .layui-layer-content{width:60px; height:24px; background:url(default/loading-0.gif) no-repeat;}
 .layui-layer-loading .layui-layer-loading1{width:37px; height:37px; background:url(default/loading-1.gif) no-repeat;}

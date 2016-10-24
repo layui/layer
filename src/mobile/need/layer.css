@@ -80,7 +80,7 @@ body .layui-m-layer .layui-m-layer-footer{position: fixed; width: 95%; max-width
 .layui-m-layer-footer .layui-m-layerbtn span[yes]{margin-top: 10px; border-radius: 5px;}
 
 /* 通用提示 */
-body .layui-m-layer .layui-m-layer-msg{width: auto; max-width: 90%; margin: 0 auto; bottom: -200px; background-color: rgba(0,0,0,.7); color: #fff;}
+body .layui-m-layer .layui-m-layer-msg{width: auto; max-width: 90%; margin: 0 auto; bottom: -150px; background-color: rgba(0,0,0,.7); color: #fff;}
 .layui-m-layer-msg .layui-m-layercont{padding: 10px 20px;}
 
 

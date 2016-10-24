@@ -32,7 +32,7 @@ var $, win, ready = {
 var layer = {
   v: '2.4',
   ie6: !!window.ActiveXObject&&!window.XMLHttpRequest,
-  index: 0,
+  index: (window.layer && window.layer.v) ? 100000 : 0,
   path: ready.getPath,
   config: function(options, fn){
     var item = 0;
