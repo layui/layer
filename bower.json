@@ -1,0 +1,20 @@
+{
+  "name": "layer",
+  "main": "src/layer.js",
+  "version": "2.4.0",
+  "homepage": "https://github.com/sentsin/layer",
+  "authors": [
+    "sentsin <xu@sentsin.com>"
+  ],
+  "description": "弹窗组件",
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "keywords": [
+    "layer",
+    "layui",
+    "dialog"
+  ],
+  "license": "LGPL"
+}

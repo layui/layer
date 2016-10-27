@@ -1,0 +1,25 @@
+﻿{
+  "name": "layer",
+  "version": "2.4.0",
+  "mobile": "2.0.0",
+  "description": "Web弹层组件",
+  "main": "src/layer.js",
+  "license": "LGPL",
+  "scripts": {
+    "run": "gulp"
+  },
+  "repository": {
+    "type": "https",
+    "url": "https://github.com/sentsin/layer.git"
+  },
+  "author": "贤心",
+  "homepage": "http://layer.layui.com/",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-uglify": "^1.5.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-header": "^1.8.8",
+    "del": "^2.2.2"
+  }   
+}
