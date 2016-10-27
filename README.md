@@ -15,4 +15,4 @@ layer是一款近年来口碑非常不错的web弹层组件，她具备全方位
 
 
 ## 备注
-[官网](http://layer.layui.com/)、[更新日志](https://github.com/sentsin/layer/blob/2.x/CHANGELOG.md)、[社区交流](http://fly.layui.com)
+[官网](http://layer.layui.com/)、[社区交流](http://fly.layui.com)
