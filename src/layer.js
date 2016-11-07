@@ -19,7 +19,7 @@ var isLayui = window.layui && layui.define, $, win, ready = {
 
   config: {}, end: {}, minIndex: 0, minLeft: [],
   btn: ['&#x786E;&#x5B9A;', '&#x53D6;&#x6D88;'],
-  
+
   //五种原始层模式
   type: ['dialog', 'page', 'iframe', 'loading', 'tips']
 };
@@ -27,7 +27,12 @@ var isLayui = window.layui && layui.define, $, win, ready = {
 //默认内置方法。
 var layer = {
   v: '3.0',
-  ie6: !!window.ActiveXObject&&!window.XMLHttpRequest,
+  ie: function(){ //ie版本
+    var agent = navigator.userAgent.toLowerCase();
+    return (!!window.ActiveXObject || "ActiveXObject" in window) ? (
+      (agent.match(/msie\s(\d+)/) || [])[1] || '11' //由于ie11并没有msie的标识
+    ) : false;
+  }(),
   index: (window.layer && window.layer.v) ? 100000 : 0,
   path: ready.getPath,
   config: function(options, fn){
@@ -295,7 +300,7 @@ Class.pt.creat = function(){
     config.scrollbar || doms.html.css('overflow', 'hidden').attr('layer-full', times);
   }).auto(times);
 
-  config.type == 2 && layer.ie6 && that.layero.find('iframe').attr('src', content[0]);
+  config.type == 2 && layer.ie == 6 && that.layero.find('iframe').attr('src', content[0]);
 
   //坐标自适应浏览器窗口尺寸
   config.type == 4 ? that.tips() : that.offset();
@@ -323,7 +328,7 @@ Class.pt.auto = function(index){
   var that = this, config = that.config, layero = $('#'+ doms[0] + index);
   if(config.area[0] === '' && config.maxWidth > 0){
     //为了修复IE7下一个让人难以理解的bug
-    if(/MSIE 7/.test(navigator.userAgent) && config.btn){
+    if(layer.ie && layer.ie < 8 && config.btn){
       layero.width(layero.innerWidth());
     }
     layero.outerWidth() > config.maxWidth && layero.width(config.maxWidth);
@@ -407,7 +412,7 @@ Class.pt.offset = function(){
     that.offsetTop = win.height() - (layero.find(doms[1]).outerHeight() || 0);
     that.offsetLeft = layero.css('left');
   }
-  
+
   layero.css({top: that.offsetTop, left: that.offsetLeft});
 };
 
@@ -518,7 +523,9 @@ Class.pt.move = function(){
     //拖拽移动
     if(dict.moveStart){
       var X = e.clientX - dict.offset[0]
-      ,Y = e.clientY - dict.offset[1]
+      ,Y = e.clientY - dict.offset[1];
+      
+      e.preventDefault();
       
       dict.stX = config.fixed ? 0 : win.scrollLeft();
       dict.stY = config.fixed ? 0 : win.scrollTop();
@@ -537,20 +544,20 @@ Class.pt.move = function(){
         left: X
         ,top: Y
       });
-      return false;
     }
     
     //Resize
     if(config.resize && dict.resizeStart){
       var X = e.clientX - dict.offset[0]
-      ,Y = e.clientY - dict.offset[1]
+      ,Y = e.clientY - dict.offset[1];
+      
+      e.preventDefault();
       
       layer.style(that.index, {
         width: dict.area[0] + X
         ,height: dict.area[1] + Y
       })
       dict.isResize = true;
-      return false;
     }
   }).on('mouseup', function(e){
     if(dict.moveStart){
@@ -579,7 +586,7 @@ Class.pt.callback = function(){
       config.success(layero, that.index);
     }
   }
-  layer.ie6 && that.IE6(layero);
+  layer.ie == 6 && that.IE6(layero);
   
   //按钮
   layero.find('.'+ doms[6]).children('a').on('click', function(){
@@ -876,17 +883,17 @@ layer.close = function(index){
   };
   layero.addClass(closeAnim);
   $('#layui-layer-moves, #layui-layer-shade' + index).remove();
-    layer.ie6 && ready.reselect();
-    ready.rescollbar(index);
-    typeof ready.end[index] === 'function' && ready.end[index]();
-    delete ready.end[index]; 
-    if(layero.attr('minLeft')){
-      ready.minIndex--;
-      ready.minLeft.push(layero.attr('minLeft'));
-    }
+  layer.ie == 6 && ready.reselect();
+  ready.rescollbar(index);
+  typeof ready.end[index] === 'function' && ready.end[index]();
+  delete ready.end[index]; 
+  if(layero.attr('minLeft')){
+    ready.minIndex--;
+    ready.minLeft.push(layero.attr('minLeft'));
+  }
   setTimeout(function(){
     remove();
-  }, 200);
+  }, (layer.ie && layer.ie < 10) ? 0 : 200);
 };
 
 //关闭所有层
