@@ -22,6 +22,7 @@
 * 将prompt层改成页面层结构，即当你弹出prompt层时，再弹出msg，不会将prompt销毁。
 * prompt层的textarea模式支持area参数来设定宽高
 * layer.css大面积改善
+* 降解IE6的fixed支持，不过仍然对ie6兼容（话说现在全浏览器兼容的组件已经不多了，layer后续会整理出不兼容ie6/7的版本）
 
 * 修复iframe层在用于iPhone设备时，无法触发滚动的Bug
 

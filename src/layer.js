@@ -257,6 +257,10 @@ Class.pt.creat = function(){
     config.anim = config.shift;
   }
   
+  if(layer.ie == 6){
+    config.fixed = false;
+  }
+  
   switch(config.type){
     case 0:
       config.btn = ('btn' in config) ? config.btn : ready.btn[0];
@@ -655,15 +659,6 @@ ready.reselect = function(){
 }; 
 
 Class.pt.IE6 = function(layero){
-  var that = this, _ieTop = layero.offset().top;
-  
-  //ie6的固定与相对定位
-  function ie6Fix(){
-    layero.css({top : _ieTop + (that.config.fixed ? win.scrollTop() : 0)});
-  };
-  ie6Fix();
-  win.scroll(ie6Fix);
-
   //隐藏select
   $('select').each(function(index , value){
     var sthis = $(this);
