@@ -24,7 +24,7 @@
 * layer.css大面积改善
 * 降解IE6的fixed支持，不过仍然对ie6兼容（话说现在全浏览器兼容的组件已经不多了，layer后续会整理出不兼容ie6/7的版本）
 
-* 修改图片超出屏幕后，重新计算大小的算法（Merge pull request #36 from 390029659/master）
+* 修改图片超出屏幕后，重新计算大小的算法（Merge pull request from 390029659/master）
 * 修复iframe层在用于iPhone设备时，无法触发滚动的Bug
 
 ---
