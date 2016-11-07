@@ -777,7 +777,7 @@ layer.style = function(index, options){
 layer.min = function(index, options){
   var layero = $('#'+ doms[0] + index);
   var titHeight = layero.find(doms[1]).outerHeight() || 0;
-  var left = layero.attr('minLeft') || (181*ready.minIndex)+'px';
+  var left = layero.attr('minLeft') || (261*ready.minIndex)+'px';
   ready.record(layero);
   
   if(ready.minLeft[0]){
