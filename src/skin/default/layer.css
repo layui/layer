@@ -23,7 +23,7 @@ html #layuicss-skinlayercss{display: none; position: absolute; width: 1989px;}
 .layui-layer-btn a{display:inline-block; *display:inline; *zoom:1; vertical-align:top;}
 
 .layui-layer-move{display: none; position: fixed; *position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; cursor: move; opacity: 0; filter:alpha(opacity=0); background-color: #fff; z-index: 2147483647;}
-.layui-layer-resize{position: absolute; width: 20px; height: 20px; right: -10px; bottom: -10px; cursor: se-resize;}
+.layui-layer-resize{position: absolute; width: 15px; height: 15px; right: 0; bottom: 0; cursor: se-resize;}
 
 /* 动画 */
 .layui-layer{border-radius: 2px; -webkit-animation-fill-mode: both; animation-fill-mode: both; -webkit-animation-duration:.3s; animation-duration:.3s;}
@@ -104,9 +104,6 @@ html #layuicss-skinlayercss{display: none; position: absolute; width: 1989px;}
 .layui-layer-page .layui-layer-content{position:relative; overflow:auto;}
 .layui-layer-page .layui-layer-btn,.layui-layer-iframe .layui-layer-btn{padding-top:10px;}
 .layui-layer-nobg{background:none;}
-.layui-layer-iframe,
-.layui-layer-iframe .layui-layer-content{-webkit-overflow-scrolling: touch;}
-.layui-layer-iframe .layui-layer-content{overflow-y: auto;}
 .layui-layer-iframe iframe{display: block; width: 100%;}
 
 .layui-layer-loading{border-radius:100%; background:none;  box-shadow:none;  border:none;}
@@ -177,5 +174,10 @@ html #layuicss-skinlayercss{display: none; position: absolute; width: 1989px;}
 .layui-layer-imgtit a{max-width:65%;  text-overflow: ellipsis; overflow: hidden; white-space: nowrap; color:#fff;}
 .layui-layer-imgtit a:hover{color:#fff; text-decoration:underline;}
 .layui-layer-imgtit em{padding-left:10px; font-style: normal;}
+
+
+@media screen and (max-width: 1100px) {
+  .layui-layer-iframe{overflow-y: auto; -webkit-overflow-scrolling: touch;}
+}
 
 
