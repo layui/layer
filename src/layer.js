@@ -41,6 +41,8 @@ var layer = {
     layer.path = ready.config.path || layer.path;
     typeof options.extend === 'string' && (options.extend = [options.extend]);
     
+    if(ready.config.path) layer.ready();
+    
     if(!options.extend) return this;
     
     isLayui 
