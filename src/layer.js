@@ -1134,11 +1134,18 @@ layer.photos = function(options, loop, key){
       type: 1,
       area: function(){
          var imgarea = [img.width, img.height];
-         var winarea = [$(window).width() - 50, $(window).height() - 50];
-         if(!options.full && imgarea[0] > winarea[0]){
-           imgarea[0] = winarea[0];
-           imgarea[1] = imgarea[0]*img.height/img.width;
-         }
+         var winarea = [$(window).width() - 100, $(window).height() - 100];
+		 if(!options.full && (imgarea[0]>winarea[0]||imgarea[1]>winarea[1])){//如果 实际图片的宽或者高比 屏幕大（那么进行缩放）
+			var wh = [imgarea[0]/winarea[0],imgarea[1]/winarea[1]];//取 宽度 缩放比例 高度缩放比例
+			if(wh[0] > wh[1]){//取缩放比例最大的进行缩放
+				imgarea[0] = imgarea[0]/wh[0];
+				imgarea[1] = imgarea[1]/wh[0];
+			}
+			else if(wh[0] < wh[1]){
+				imgarea[0] = imgarea[0]/wh[1];
+				imgarea[1] = imgarea[1]/wh[1];
+			}
+		 }
          return [imgarea[0]+'px', imgarea[1]+'px']; 
       }(),
       title: false,
