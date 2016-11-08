@@ -862,14 +862,14 @@ layer.title = function(name, index){
 layer.close = function(index){
   var layero = $('#'+ doms[0] + index), type = layero.attr('type'), closeAnim = 'layer-anim-close';
   if(!layero[0]) return;
-  var remove = function(){
+  var WRAP = 'layui-layer-wrap', remove = function(){
     if(type === ready.type[1] && layero.attr('conType') === 'object'){
       layero.children(':not(.'+ doms[5] +')').remove();
-      var wrap = layero.find('.layui-layer-wrap');
+      var wrap = layero.find('.'+WRAP);
       for(var i = 0; i < 2; i++){
         wrap.unwrap();
       }
-      wrap.css('display', wrap.data('display'));
+      wrap.css('display', wrap.data('display')).removeClass(WRAP);
     } else {
       //低版本IE 回收 iframe
       if(type === ready.type[2]){
