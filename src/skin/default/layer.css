@@ -142,6 +142,7 @@ html #layuicss-skinlayercss{display: none; position: absolute; width: 1989px;}
 .layui-layer-iconext{background:url(icon-ext.png) no-repeat;}
 
 /* prompt模式 */
+.layui-layer-prompt .layui-layer-note { margin-top: -12px; margin-bottom: 6px; }
 .layui-layer-prompt .layui-layer-input{display:block; width:220px; height:30px; margin:0 auto; line-height:30px; padding: 0 5px; border: 1px solid #ccc; box-shadow: 1px 1px 5px rgba(0,0,0,.1) inset; color:#333;}
 .layui-layer-prompt textarea.layui-layer-input{width:300px; height:100px; line-height:20px;}
 .layui-layer-prompt .layui-layer-content{padding: 20px;}
