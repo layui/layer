@@ -1066,7 +1066,7 @@ ready.run = function(){
   };
 };
 
-'function' === typeof define ? define(function(){
+'function' === typeof define ? define(['jquery'], function(){
   ready.run();
   return layer;
 }) : function(){
