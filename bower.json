@@ -1,7 +1,7 @@
 {
   "name": "layer",
   "main": "src/layer.js",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "homepage": "https://github.com/sentsin/layer",
   "authors": [
     "sentsin <xu@sentsin.com>"
@@ -16,5 +16,5 @@
     "layui",
     "dialog"
   ],
-  "license": "LGPL"
+  "license": "MIT"
 }

@@ -4,7 +4,7 @@
   "mobile": "2.0.0",
   "description": "Web弹层组件",
   "main": "src/layer.js",
-  "license": "LGPL",
+  "license": "MIT",
   "scripts": {
     "run": "gulp"
   },
