@@ -885,6 +885,8 @@ layer.close = function(index){
       layero[0].innerHTML = '';
       layero.remove();
     }
+    typeof ready.end[index] === 'function' && ready.end[index]();
+    delete ready.end[index];
   };
   
   if(layero.data('anim')){
@@ -894,8 +896,7 @@ layer.close = function(index){
   $('#layui-layer-moves, #layui-layer-shade' + index).remove();
   layer.ie == 6 && ready.reselect();
   ready.rescollbar(index);
-  typeof ready.end[index] === 'function' && ready.end[index]();
-  delete ready.end[index]; 
+   
   if(layero.attr('minLeft')){
     ready.minIndex--;
     ready.minLeft.push(layero.attr('minLeft'));
