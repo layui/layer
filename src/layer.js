@@ -1045,13 +1045,30 @@ layer.photos = function(options, loop, key){
     }, options));
   }, function(){
     layer.close(dict.loadi);
-    layer.msg('&#x5F53;&#x524D;&#x56FE;&#x7247;&#x5730;&#x5740;&#x5F02;&#x5E38;<br>&#x662F;&#x5426;&#x7EE7;&#x7EED;&#x67E5;&#x770B;&#x4E0B;&#x4E00;&#x5F20;&#xFF1F;', {
-      time: 30000, 
-      btn: ['&#x4E0B;&#x4E00;&#x5F20;', '&#x4E0D;&#x770B;&#x4E86;'], 
-      yes: function(){
-        data.length > 1 && dict.imgnext(true,true);
+    if(data.length > 1){
+      if(dict.imgIndex < data.length){
+        // 提示查看下一张
+        layer.msg('&#x5F53;&#x524D;&#x56FE;&#x7247;&#x5730;&#x5740;&#x5F02;&#x5E38;<br>&#x662F;&#x5426;&#x7EE7;&#x7EED;&#x67E5;&#x770B;&#x4E0B;&#x4E00;&#x5F20;&#xFF1F;', {
+          time: 30000, 
+          btn: ['&#x4E0B;&#x4E00;&#x5F20;', '&#x4E0D;&#x770B;&#x4E86;'], 
+          yes: function(){
+            dict.imgnext(true,true);
+          }
+        });
+      } else if(dict.imgIndex === data.length){
+        // 已是最后一张,提示查看上一张
+        layer.msg('&#24403;&#21069;&#22270;&#29255;&#22320;&#22336;&#24322;&#24120;<br>&#26159;&#21542;&#36820;&#22238;&#26597;&#30475;&#19978;&#19968;&#24352;&#65311;', {
+          time: 30000, 
+          btn: ['&#19978;&#19968;&#24352;', '&#x4E0D;&#x770B;&#x4E86;'], 
+          yes: function(){
+            dict.imgprev(true);
+          }
+        });
       }
-    });
+    } else {
+      // 只有一张,不提示
+      layer.msg('&#x5F53;&#x524D;&#x56FE;&#x7247;&#x5730;&#x5740;&#x5F02;&#x5E38;');
+    }
   });
 };
 
