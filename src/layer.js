@@ -196,7 +196,8 @@ Class.pt.config = {
   moveType: 1,
   resize: true,
   scrollbar: true, //是否允许浏览器滚动条
-  tips: 2
+  tips: 2,
+  hover: false //鼠标移入tips取消形式定时关闭，默认不开启改功能
 };
 
 //容器
@@ -318,9 +319,25 @@ Class.pt.creat = function(){
     });
   }
   
-  config.time <= 0 || setTimeout(function(){
-    layer.close(that.index)
-  }, config.time);
+  config.time <= 0 || (function(){
+    var timer = setTimeout(function(){
+      layer.close(that.index)
+    }, config.time);
+    if( !config.hover ) return;
+    // 鼠标移入关闭定时器
+    that.layero.on('mouseenter', function(){
+        clearTimeout(timer);
+        // 鼠标移除重新开始定时
+        that.layero.on('mouseleave', function(){
+          timer = setTimeout(function(){
+              that.layero.off('mouseover');
+              that.layero.off('mouseleave');
+              layer.close(that.index);
+          }, config.time);
+        });
+    });
+
+  }());
   that.move().callback();
   
   //为兼容jQuery3.0的css动画影响元素尺寸计算
