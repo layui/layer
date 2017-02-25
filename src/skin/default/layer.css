@@ -72,7 +72,7 @@ html #layuicss-skinlayercss{display: none; position: absolute; width: 1989px;}
 .layui-layer-setwin .layui-layer-max:hover{background-position:-16px -40px;}
 .layui-layer-setwin .layui-layer-maxmin{background-position:-65px -40px;}
 .layui-layer-setwin .layui-layer-maxmin:hover{background-position:-49px -40px;}
-.layui-layer-setwin .layui-layer-close1{background-position:0 -40px; cursor:pointer;}
+.layui-layer-setwin .layui-layer-close1{background-position: 1px -40px; cursor: pointer;}
 .layui-layer-setwin .layui-layer-close1:hover{opacity:0.7;}
 .layui-layer-setwin .layui-layer-close2{position:absolute; right:-28px; top:-28px; width:30px; height:30px;  margin-left:0; background-position:-149px -31px; *right:-18px; _display:none;}
 .layui-layer-setwin .layui-layer-close2:hover{ background-position:-180px -31px;}

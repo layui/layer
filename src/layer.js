@@ -1,9 +1,9 @@
 ﻿/**
 
- @Name：layer v3.0.1 Web弹层组件
+ @Name：layer v3.0.2 Web弹层组件
  @Author：贤心
  @Site：http://layer.layui.com
- @License：LGPL
+ @License：MIT
     
  */
 
@@ -26,7 +26,7 @@ var isLayui = window.layui && layui.define, $, win, ready = {
 
 //默认内置方法。
 var layer = {
-  v: '3.0.1',
+  v: '3.0.2',
   ie: function(){ //ie版本
     var agent = navigator.userAgent.toLowerCase();
     return (!!window.ActiveXObject || "ActiveXObject" in window) ? (
@@ -83,7 +83,7 @@ var layer = {
   },
   
   ready: function(callback){
-    var cssname = 'skinlayercss', ver = '1110';
+    var cssname = 'skinlayercss', ver = '302';
     isLayui ? layui.addcss('modules/layer/default/layer.css?v='+layer.v+ver, callback, cssname)
     : layer.link('skin/default/layer.css?v='+layer.v+ver, callback, cssname);
     return this;
@@ -167,9 +167,11 @@ var Class = function(setings){
   var that = this;
   that.index = ++layer.index;
   that.config = $.extend({}, that.config, ready.config, setings);
-  document.body ? that.creat() : setTimeout(function(){
-    that.creat();
-  }, 50);
+  layer.ready(function(){
+    document.body ? that.creat() : setTimeout(function(){
+      that.creat();
+    }, 50);
+  });
 };
 
 Class.pt = Class.prototype;
@@ -248,7 +250,7 @@ Class.pt.creat = function(){
   ,conType = typeof content === 'object'
   ,body = $('body');
   
-  if($('#'+config.id)[0])  return;
+  if(config.id && $('#'+config.id)[0])  return;
 
   if(typeof config.area === 'string'){
     config.area = config.area === 'auto' ? ['', ''] : [config.area, ''];
@@ -565,12 +567,13 @@ Class.pt.move = function(){
         ,height: dict.area[1] + Y
       })
       dict.isResize = true;
+      config.resizing && config.resizing(layero);
     }
   }).on('mouseup', function(e){
     if(dict.moveStart){
       delete dict.moveStart;
       ready.moveElem.hide();
-      config.moveEnd && config.moveEnd();
+      config.moveEnd && config.moveEnd(layero);
     }
     if(dict.resizeStart){
       delete dict.resizeStart;
@@ -895,8 +898,7 @@ layer.close = function(index){
   
   $('#layui-layer-moves, #layui-layer-shade' + index).remove();
   layer.ie == 6 && ready.reselect();
-  ready.rescollbar(index);
-   
+  ready.rescollbar(index); 
   if(layero.attr('minLeft')){
     ready.minIndex--;
     ready.minLeft.push(layero.attr('minLeft'));
