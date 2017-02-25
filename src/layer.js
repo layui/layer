@@ -929,9 +929,16 @@ var cache = layer.cache||{}, skin = function(type){
 //仿系统prompt
 layer.prompt = function(options, yes){
   var style = '';
-  options = options || {};
-  
-  if(typeof options === 'function') yes = options;
+  if(options && typeof options === 'function'){
+    yes = options;
+  }else{
+    options = $.extend({}, options) || {};
+  }
+  var custSuccess = options.success;
+  var defaultSuccess = function(layero){
+    prompt = layero.find('.layui-layer-input');
+    prompt.focus();
+  };
   
   if(options.area){
     var area = options.area;
@@ -948,9 +955,11 @@ layer.prompt = function(options, yes){
     ,content: content
     ,skin: 'layui-layer-prompt' + skin('prompt')
     ,maxWidth: win.width()
-    ,success: function(layero){
-      prompt = layero.find('.layui-layer-input');
-      prompt.focus();
+    ,success: function(layero,index){
+      if(typeof custSuccess === 'function' && custSuccess(layero, index) === false){
+        return;
+      }
+      defaultSuccess(layero);
     }
     ,resize: false
     ,yes: function(index){
@@ -968,8 +977,22 @@ layer.prompt = function(options, yes){
 
 //tab层
 layer.tab = function(options){
-  options = options || {};
+  //使用一个新的options对象，因为要删除其中的success属性，不想改动原options对象，因为可能被外部引用
+  options = $.extend({}, options) || {};
   var tab = options.tab || {};
+  var custSuccess = options.success;
+  var defaultSuccess = function(layero){
+      var btn = layero.find('.layui-layer-title').children();
+      var main = layero.find('.layui-layer-tabmain').children();
+      btn.on('mousedown', function(e){
+        e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
+        var othis = $(this), index = othis.index();
+        othis.addClass('layui-layer-tabnow').siblings().removeClass('layui-layer-tabnow');
+        main.eq(index).show().siblings().hide();
+        typeof options.change === 'function' && options.change(index);
+      });
+  };
+  delete options.success;
   return layer.open($.extend({
     type: 1,
     skin: 'layui-layer-tab' + skin('tab'),
@@ -994,16 +1017,12 @@ layer.tab = function(options){
       }
       return str;
     }() +'</ul>',
-    success: function(layero){
-      var btn = layero.find('.layui-layer-title').children();
-      var main = layero.find('.layui-layer-tabmain').children();
-      btn.on('mousedown', function(e){
-        e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
-        var othis = $(this), index = othis.index();
-        othis.addClass('layui-layer-tabnow').siblings().removeClass('layui-layer-tabnow');
-        main.eq(index).show().siblings().hide();
-        typeof options.change === 'function' && options.change(index);
-      });
+    success: function(layero, index){
+      if(typeof custSuccess === 'function' && custSuccess(layero, index) === false){
+        //只有在用户自定义的success回调显式返回false时，才会取消执行默认的success回调
+        return;
+      }
+      defaultSuccess(layero);
     }
   }, options));
 };
@@ -1011,11 +1030,22 @@ layer.tab = function(options){
 //相册层
 layer.photos = function(options, loop, key){
   var dict = {};
-  options = options || {};
+  options = $.extend({}, options) || {};
   if(!options.photos) return;
   var type = options.photos.constructor === Object;
   var photos = type ? options.photos : {}, data = photos.data || [];
   var start = photos.start || 0;
+  var custSuccess = options.success;
+  var defaultSuccess = function(layero){
+    
+    dict.bigimg = layero.find('.layui-layer-phimg');
+    dict.imgsee = layero.find('.layui-layer-imguide,.layui-layer-imgbar');
+    dict.event(layero);
+    options.tab && options.tab(data[start], layero);
+  };
+
+  delete options.success;
+
   dict.imgIndex = (start|0) + 1;
   
   options.img = options.img || 'img';
@@ -1183,10 +1213,10 @@ layer.photos = function(options, loop, key){
         +'</div>'
       +'</div>',
       success: function(layero, index){
-        dict.bigimg = layero.find('.layui-layer-phimg');
-        dict.imgsee = layero.find('.layui-layer-imguide,.layui-layer-imgbar');
-        dict.event(layero);
-        options.tab && options.tab(data[start], layero);
+        if(typeof custSuccess === 'function' && custSuccess(layero, index) === false){
+            return;
+        }
+        defaultSuccess(layero);
       }, end: function(){
         dict.end = true;
         $(document).off('keyup', dict.keyup);
