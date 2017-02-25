@@ -6,6 +6,10 @@
 * 增加自动ready处理机制，即如果你页面一打开就执行弹层，无需放入layer.ready中
 * 对moveEnd回调返回一个参数为当前容器的DOM对象
 * 添加一个amd条件,避免 define出错（Merge pull request #42 from wangyateng/master）
+* 修复tab,photos,prompt弹层默认success回调被覆盖导致功能不正常的问题（来自github用户 @waychan23 的友情提醒）
+* 完善多按钮场景换行的间距（之前是紧贴在一起，略不雅观）
+* 弹出图片层的动画时间改为800ms
+* 修复按方向键切换图片层过快时重复弹出的bug
 
 
 ---

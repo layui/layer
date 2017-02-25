@@ -944,6 +944,9 @@ layer.prompt = function(options, yes){
     return '<input type="'+ (options.formType == 1 ? 'password' : 'text') +'" class="layui-layer-input" value="'+ (options.value||'') +'">';
   }();
   
+  var success = options.success;
+  delete options.success;
+  
   return layer.open($.extend({
     type: 1
     ,btn: ['&#x786E;&#x5B9A;','&#x53D6;&#x6D88;']
@@ -953,6 +956,7 @@ layer.prompt = function(options, yes){
     ,success: function(layero){
       prompt = layero.find('.layui-layer-input');
       prompt.focus();
+      typeof success === 'function' && success(layero);
     }
     ,resize: false
     ,yes: function(index){
@@ -971,7 +975,12 @@ layer.prompt = function(options, yes){
 //tab层
 layer.tab = function(options){
   options = options || {};
-  var tab = options.tab || {};
+  
+  var tab = options.tab || {}
+  ,success = options.success;
+  
+  delete options.success;
+  
   return layer.open($.extend({
     type: 1,
     skin: 'layui-layer-tab' + skin('tab'),
@@ -1006,6 +1015,7 @@ layer.tab = function(options){
         main.eq(index).show().siblings().hide();
         typeof options.change === 'function' && options.change(index);
       });
+      typeof success === 'function' && success(layero);
     }
   }, options));
 };
@@ -1021,6 +1031,9 @@ layer.photos = function(options, loop, key){
   dict.imgIndex = (start|0) + 1;
   
   options.img = options.img || 'img';
+  
+  var success = options.success;
+  delete options.success;
 
   if(!type){ //页面直接获取
     var parent = $(options.photos), pushData = function(){
@@ -1100,7 +1113,9 @@ layer.photos = function(options, loop, key){
     if(data.length <= 1) return;
     photos.start = dict.imgIndex - 1;
     layer.close(dict.index);
-    layer.photos(options, true, key);
+    setTimeout(function(){
+      layer.photos(options, true, key);
+    }, 200);
   }
   
   //一些动作
@@ -1145,10 +1160,12 @@ layer.photos = function(options, loop, key){
     shade: 'shade' in options ? false : 0.9,
     scrollbar: false
   });
+
   loadImage(data[start].src, function(img){
     layer.close(dict.loadi);
     dict.index = layer.open($.extend({
       type: 1,
+      id: 'layui-layer-photos',
       area: function(){
         var imgarea = [img.width, img.height];
         var winarea = [$(window).width() - 100, $(window).height() - 100];
@@ -1189,6 +1206,7 @@ layer.photos = function(options, loop, key){
         dict.imgsee = layero.find('.layui-layer-imguide,.layui-layer-imgbar');
         dict.event(layero);
         options.tab && options.tab(data[start], layero);
+        typeof success === 'function' && success(layero);
       }, end: function(){
         dict.end = true;
         $(document).off('keyup', dict.keyup);
