@@ -147,10 +147,9 @@ html #layuicss-skinlayercss{display: none; position: absolute; width: 1989px;}
 .xubox_tabclose{position:absolute; right:10px; top:5px; cursor:pointer;}
 
 /* photo模式 */
-.layui-layer-phimg{width: 100%;height: 100%;}
 .layui-layer-photos{-webkit-animation-duration: .8s; animation-duration: .8s;}
 .layui-layer-photos .layui-layer-content{overflow:hidden; text-align: center;}
-.layui-layer-photos .layui-layer-phimg img{display: inline-block; *display:inline; *zoom:1; vertical-align:top;}
+.layui-layer-photos .layui-layer-phimg img{position: relative; width:100%; display: inline-block; *display:inline; *zoom:1; vertical-align:top;}
 .layui-layer-imguide,.layui-layer-imgbar{display:none;}
 .layui-layer-imgprev, .layui-layer-imgnext{position:absolute; top:50%; width:27px; _width:44px; height:44px;  margin-top:-22px; outline:none;blr:expression(this.onFocus=this.blur());}
 .layui-layer-imgprev{left:10px; background-position:-5px -5px; _background-position:-70px -5px;}
@@ -164,100 +163,12 @@ html #layuicss-skinlayercss{display: none; position: absolute; width: 1989px;}
 .layui-layer-imgtit a:hover{color:#fff; text-decoration:underline;}
 .layui-layer-imgtit em{padding-left:10px; font-style: normal;}
 
-
-@media screen and (max-width: 1100px) {
-  .layui-layer-iframe{overflow-y: auto; -webkit-overflow-scrolling: touch;}
+/* 关闭动画 */
+@-webkit-keyframes layer-bounceOut {
+  100% {opacity: 0; -webkit-transform: scale(.7); transform: scale(.7)}
+  30% {-webkit-transform: scale(1.05); transform: scale(1.05)}
+  0% {-webkit-transform: scale(1); transform: scale(1);}
 }
-.winControl {
-	position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 99999;
-}
-.winControl span {
-    display: inline-block;
-    padding: 4px 6px;
-    cursor: pointer;
-    line-height: 10px;
-}
-.winControl span:hover {
-    background: #E82B45;
-}
-[drag] {
-    -webkit-app-region: drag;
-}
-[noDrag] {
-    -webkit-app-region: no-drag;
-}
-i{
-    position: relative;
-	z-index:99999;
-	display: inline-block;
-}
-.icon_close-big{
-    width: 18px;
-    height: 18px;
-	background-image: url('icon/close_big.png');
-}
-.icon_close-small{
-    width: 13px;
-    height: 13px;
-	background-image: url('icon/close_small.png');
-	display: inline-block;
-}
-.icon_tool-fullscreen{
-    width: 18px;
-    height: 18px;
-	background-image: url('icon/full_screen.png');
-}
-.icon_tool-bigger{
-    width: 20px;
-    height: 19px;
-	background-image: url('icon/bigger.png');
-}
-.icon_tool-smaller{
-    width: 20px;
-    height: 19px;
-	background-image: url('icon/smaller.png');
-}
-.icon_tool-rotate{
-    width: 17px;
-    height: 20px;
-	background-image: url('icon/rotate.png');
-}
-.icon_tool-download{
-    width: 16px;
-    height: 20px;
-	background-image: url('icon/download.png');
-}
-.icon_tool-prev{
-    width: 22px;
-    height: 38px;
-	background-image: url('icon/prev.png');
-}
-.icon_tool-next{
-    width: 22px;
-    height: 38px;
-	background-image: url('icon/next.png');
-}
-/* 效果 */
-.rotate0{ 
-	transform: rotate(0deg); 
-	-webkit-transform: rotate(0deg); 
-} 
-.rotate90{ 
-	transform: rotate(90deg); 
-	-webkit-transform: rotate(90deg); 
-} 
-.rotate180{ 
-	transform: rotate(180deg); 
-	-webkit-transform: rotate(180deg); 
-} 
-.rotate270{ 
-	transform: rotate(270deg); 
-	-webkit-transform: rotate(270deg); 
-}
-
 @keyframes layer-bounceOut {
   100% {opacity: 0; -webkit-transform: scale(.7); -ms-transform: scale(.7); transform: scale(.7);}
   30% {-webkit-transform: scale(1.05); -ms-transform: scale(1.05); transform: scale(1.05);}
