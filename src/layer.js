@@ -1188,7 +1188,7 @@ layer.photos = function(options, loop, key){
       shade: 0.9,
       shadeClose: true,
       closeBtn: false,
-      move: '.layui-layer-phimg img',
+      move: '.layui-layer-phimg',
       moveType: 1,
       scrollbar: false,
       moveOut: true,
@@ -1264,8 +1264,8 @@ layer.photos = function(options, loop, key){
                             thumbX=e.pageX || e.clientX;
                             thumbY=e.pageY || e.clientY;
 
-                            cW = document.body.clientWidth;
-                            cH = document.body.clientHeight;
+                            cW = $gallery.width();
+                            cH = $gallery.height();
                             e.stopPropagation();
                         }).on("mousemove",function(e){
                             if(thumbX > 0){
@@ -1313,7 +1313,7 @@ layer.photos = function(options, loop, key){
                                 if(imageHeight < cH ) top = (cH - imageHeight) / 2;
                                 else top = -imageHeight * (top-it) / thumbImgHeight;
 
-                                $image.offset({
+                                $image.css({
                                     left : left,
                                     top : top
                                 });
@@ -1329,61 +1329,8 @@ layer.photos = function(options, loop, key){
                         $gallery.on("mouseover",function(e){
                             $tool.show();
 
-                        }).on("mouseenter",function(e){
-                            dragX = -1;
                         }).on("mouseout",function(e){
                             $tool.hide();
-                        }).on("mousedown",function(e){
-                            dragX=e.pageX || e.clientX;
-                            dragY=e.pageY || e.clientY;
-
-                            cW = document.body.clientWidth;
-                            cH = document.body.clientHeight;
-                            e.stopPropagation();
-                        }).on("mousemove",function(e){
-                            if(dragX > 0){
-                                var nextDragX=e.pageX || e.clientX;
-                                var nextDragY=e.pageY || e.clientY ;
-                                var o = $image.offset(),
-                                    left =o.left +  (nextDragX - dragX),
-                                    top =o.top + (nextDragY - dragY),
-                                    w = $image.width(),
-                                    h = $image.height();
-
-                                if(isVertical){
-                                    w = [h, h = w][0];
-                                }
-                                if(w > cW){
-                                    if(left > 0){
-                                        left = 0 ;
-                                    }
-                                    else if(left < cW - w){
-                                        left = cW - w;
-                                    }
-                                }else{
-                                    left = o.left;
-                                }
-                                if(h > cH){
-                                    if(top > 0){
-                                        top = 0 ;
-                                    }
-                                    else if(top < cH - h){
-                                        top = cH - h;
-                                    }
-                                } else{
-                                    top = o.top;
-                                }
-
-                                $image.offset({
-                                    left : left,
-                                    top : top
-                                });
-                                dragX=nextDragX;
-                                dragY=nextDragY;
-                                setThumbnails(); //缩略图拖拽点
-                            }
-                        }).on("mouseup",function(e){
-                            dragX = -1;
                         });
 
                         //全屏
@@ -1483,9 +1430,7 @@ layer.photos = function(options, loop, key){
                         }
 
                         function toggleImage(){
-                            imageWidth = $image.width();
-                            imageHeight = $image.height();
-							var imgarea = [imageWidth, imageHeight];
+							var imgarea = [$image.width(), $image.height()];
 							var winarea = [$(window).width() - 100, $(window).height() - 100];
 							if(!options.full && (imgarea[0]>winarea[0]||imgarea[1]>winarea[1])){//如果 实际图片的宽或者高比 屏幕大（那么进行缩放）
 								var wh = [imgarea[0]/winarea[0],imgarea[1]/winarea[1]];//取 宽度 缩放比例 高度缩放比例
@@ -1500,6 +1445,8 @@ layer.photos = function(options, loop, key){
 							}
                             $image.width(imgarea[0] + "px");
                             $image.height(imgarea[1] + "px");
+							imageWidth = $image.width();
+                            imageHeight = $image.height();
                             imgRatio = imageWidth/ imageHeight;
                             $thumbImg = $thumbnails.find("img").attr("src", $image.attr("src"));
                             $thumbnails.find("img").removeAttr("class").removeAttr("style");
@@ -1561,7 +1508,7 @@ layer.photos = function(options, loop, key){
                         //显示缩略图
                         function showThumbnails(width, height){
                             if(isVertical) width = [height, height = width][0];
-                            if(width > document.body.clientWidth || height > document.body.clientHeight){
+                            if(width > $gallery.width() || height > $gallery.height()){
                                 $thumbnails.show();
                                 setThumbnails();
                             } else{
@@ -1572,8 +1519,8 @@ layer.photos = function(options, loop, key){
                         //重置图片宽高
                         function resizeImage(rotateDeg){
 
-                            var mH = document.body.clientHeight - windowMargin,
-                                mW = document.body.clientWidth - windowMargin;
+                            var mH = $gallery.height() - windowMargin,
+                                mW = $gallery.width() - windowMargin;
                             if(rotateDeg == '90' || rotateDeg == '270'){
                                 mW = [mH, mH = mW][0];
                             }
@@ -1633,11 +1580,11 @@ layer.photos = function(options, loop, key){
                                 sH = $img.height(),
                                 w = $image.width(),
                                 h =  $image.height(),
-                                imf = $image.offset(),
+                                imf = $image.position(),
                                 imfl = imf.left,
                                 imft = imf.top,
-                                cW = document.body.clientWidth,
-                                cH = document.body.clientHeight,
+                                cW = $gallery.width(),
+                                cH = $gallery.height(),
                                 tW,
                                 tH,
                                 tl,
