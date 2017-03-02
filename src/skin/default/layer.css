@@ -268,6 +268,16 @@ i{
 	transform: rotate(270deg); 
 	-webkit-transform: rotate(270deg); 
 }
+@keyframes layer-bounceOut {
+  100% {opacity: 0; -webkit-transform: scale(.7); -ms-transform: scale(.7); transform: scale(.7);}
+  30% {-webkit-transform: scale(1.05); -ms-transform: scale(1.05); transform: scale(1.05);}
+  0% {-webkit-transform: scale(1); -ms-transform: scale(1);transform: scale(1);}
+}
+.layer-anim-close{-webkit-animation-name: layer-bounceOut;animation-name: layer-bounceOut; -webkit-animation-duration:.2s; animation-duration:.2s;}
+
+@media screen and (max-width: 1100px) {
+  .layui-layer-iframe{overflow-y: auto; -webkit-overflow-scrolling: touch;}
+}
 .image{
     position: absolute;
     margin:0; /*之所以不使用auto直接垂直居中，是因为当图片旋转时left值会很难计算*/
