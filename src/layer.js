@@ -346,7 +346,7 @@ Class.pt.auto = function(index){
   var btnHeight = layero.find('.'+doms[6]).outerHeight() || 0;
   function setHeight(elem){
     elem = layero.find(elem);
-    elem.height(area[1] - titHeight - btnHeight - 2*(parseFloat(elem.css('padding'))|0));
+    elem.height(area[1] - titHeight - btnHeight - (parseFloat(elem.css('padding-top'))|0) - (parseFloat(elem.css('padding-bottom'))|0));
   }
   switch(config.type){
     case 2: 
