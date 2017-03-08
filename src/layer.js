@@ -297,7 +297,8 @@ Class.pt.creat = function(){
         $('body').append(html[1]);
       }() : function(){
         if(!content.parents('.'+doms[0])[0]){
-          content.data('display', content.css('display')).show().addClass('layui-layer-wrap').wrap(html[1]);
+          // zjruan 20170315 【修改捕获页位置】 移动捕获层到页面底部
+          content.data('display', content.css('display')).show().addClass('layui-layer-wrap').after('<div id="'+ doms[0] + times +'-placeholder"></div>').appendTo('body').wrap(html[1]);
           $('#'+ doms[0] + times).find('.'+doms[5]).before(titleHTML);
         }
       }();
@@ -878,7 +879,8 @@ layer.close = function(index){
       for(var i = 0; i < 2; i++){
         wrap.unwrap();
       }
-      wrap.css('display', wrap.data('display')).removeClass(WRAP);
+      // zjruan 20170315 【修改捕获页位置】 还原捕获层位置
+      wrap.css('display', wrap.data('display')).removeClass(WRAP).replaceAll($('#'+ doms[0] + index +'-placeholder'));
     } else {
       //低版本IE 回收 iframe
       if(type === ready.type[2]){
