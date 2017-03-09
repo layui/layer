@@ -944,8 +944,9 @@ layer.prompt = function(options, yes){
   
   if(typeof options === 'function') yes = options;
   
+  var area = 'auto';
   if(options.area){
-    var area = options.area;
+    area = options.area;
     style = 'style="width: '+ area[0] +'; height: '+ area[1] + ';"';
     delete options.area;
   }
@@ -960,6 +961,7 @@ layer.prompt = function(options, yes){
     type: 1
     ,btn: ['&#x786E;&#x5B9A;','&#x53D6;&#x6D88;']
     ,content: content
+    ,area:area
     ,skin: 'layui-layer-prompt' + skin('prompt')
     ,maxWidth: win.width()
     ,success: function(layero){
