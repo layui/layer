@@ -944,7 +944,7 @@ layer.prompt = function(options, yes){
   
   if(typeof options === 'function') yes = options;
   
-  var area = 'auto';
+  var area = 'auto'; 
   if(options.area){
     area = options.area;
     style = 'style="width: '+ area[0] +'; height: '+ area[1] + ';"';
