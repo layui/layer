@@ -179,5 +179,232 @@ html #layuicss-skinlayercss{display: none; position: absolute; width: 1989px;}
 @media screen and (max-width: 1100px) {
   .layui-layer-iframe{overflow-y: auto; -webkit-overflow-scrolling: touch;}
 }
+ .winControl {
+	position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 99999;
+}
+.winControl span {
+    display: inline-block;
+    padding: 4px 6px;
+    cursor: pointer;
+    line-height: 10px;
+}
+.winControl span:hover {
+    background: #E82B45;
+}
+[drag] {
+    -webkit-app-region: drag;
+}
+[noDrag] {
+    -webkit-app-region: no-drag;
+}
+i{
+    position: relative;
+	z-index:99999;
+	display: inline-block;
+}
+.icon_close-big{
+    width: 18px;
+    height: 18px;
+	background-image: url('icon/close_big.png');
+}
+.icon_close-small{
+    width: 13px;
+    height: 13px;
+	background-image: url('icon/close_small.png');
+	display: inline-block;
+}
+.icon_tool-fullscreen{
+    width: 18px;
+    height: 18px;
+	background-image: url('icon/full_screen.png');
+}
+.icon_tool-bigger{
+    width: 20px;
+    height: 19px;
+	background-image: url('icon/bigger.png');
+}
+.icon_tool-smaller{
+    width: 20px;
+    height: 19px;
+	background-image: url('icon/smaller.png');
+}
+.icon_tool-rotate{
+    width: 17px;
+    height: 20px;
+	background-image: url('icon/rotate.png');
+}
+.icon_tool-download{
+    width: 16px;
+    height: 20px;
+	background-image: url('icon/download.png');
+}
+.icon_tool-prev{
+    width: 22px;
+    height: 38px;
+	background-image: url('icon/prev.png');
+}
+.icon_tool-next{
+    width: 22px;
+    height: 38px;
+	background-image: url('icon/next.png');
+}
+/* 效果 */
+.rotate0{ 
+	transform: rotate(0deg); 
+	-webkit-transform: rotate(0deg); 
+} 
+.rotate90{ 
+	transform: rotate(90deg); 
+	-webkit-transform: rotate(90deg); 
+} 
+.rotate180{ 
+	transform: rotate(180deg); 
+	-webkit-transform: rotate(180deg); 
+} 
+.rotate270{ 
+	transform: rotate(270deg); 
+	-webkit-transform: rotate(270deg); 
+}
+@keyframes layer-bounceOut {
+  100% {opacity: 0; -webkit-transform: scale(.7); -ms-transform: scale(.7); transform: scale(.7);}
+  30% {-webkit-transform: scale(1.05); -ms-transform: scale(1.05); transform: scale(1.05);}
+  0% {-webkit-transform: scale(1); -ms-transform: scale(1);transform: scale(1);}
+}
+.layer-anim-close{-webkit-animation-name: layer-bounceOut;animation-name: layer-bounceOut; -webkit-animation-duration:.2s; animation-duration:.2s;}
 
+@media screen and (max-width: 1100px) {
+  .layui-layer-iframe{overflow-y: auto; -webkit-overflow-scrolling: touch;}
+}
+.image{
+    position: absolute;
+    margin:0; /*之所以不使用auto直接垂直居中，是因为当图片旋转时left值会很难计算*/
+    padding:0;
+    z-index: -1;
+    display: none;
+}
+.image.active{
+	display:block;
+}
+.tool{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    display: none;
+    z-index: 99999;
+}
+.toolct{
+    display: inline-block;
+    height: 30px;
+    background-color: #6f6965;
+    padding: 5px 14px;
+    box-sizing: border-box;
+    border-radius: 6px;
+}
+.toolct a{
+    margin-right: 20px;
+}
+.toolct span{
+    margin-right: 20px;
+}
+.toolct i{
+	display: inline-block;
+	cursor: pointer;
+}
+.percentTip{
+	position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    width: 100px;
+    height: 30px;
+    z-index: 9999;
+    text-align: center;
+    line-height: 30px;
+    font-size: 16px;
+    border-radius: 8px;
+    color: #ffffff;
+	filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#4F504E',endColorStr='#151313',gradientType='1');
+	background: linear-gradient(315deg, #4F504E, #151313);
+	background: -moz-linear-gradient(315deg, #4F504E, #151313);
+	background: -o-linear-gradient(left,#4F504E, #151313);
+	background: -webkit-gradient(linear,100%  0%, 100% 0%, from(#4F504E), to(#151313));
+}
+.thumbnails{
+	position: absolute;
+    right: 1px;
+    bottom: 1px;
+    border: 1px solid #ffffff;
+    z-index: 99999;
+    border-radius: 5px;
+    background-color: rgba(177, 177, 177, 0.5);
+    display: none;
+}
+.thumbnails .thumbDrag{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    box-sizing: border-box;
+}
+.thumbnails .thumbDrag span{
+	width:100%;
+	height:100%;
+	border: 1px solid white;
+	display: block;
+    box-sizing: border-box;
+}
+.thumbnails .thumbClose{
+	position: absolute;
+    right: 1px;
+    top: -2px;
+    cursor: pointer;
+    height: 13px;
+}
+.thumbnails img{
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.oper{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    height: 38px;
+    z-index: 99999;
+}
+.oper i{
+    display: none;
+    cursor: pointer;
+}
+.oper span{
+	width: 22px;
+    height: 38px;
+}
+.oper .prev{
+	float:left;
+	margin-left: 9px;
+}
+.oper .next{
+	float:right;
+	margin-right: 9px;
+}
+.oper .prev.active i, .oper .next.active i{
+	display: inline-block;
+}
 
