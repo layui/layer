@@ -232,7 +232,7 @@ Class.pt.vessel = function(conType, callback){
         for(var i = 0, len = config.btn.length; i < len; i++){
           button += '<a class="'+ doms[6] +''+ i +'">'+ config.btn[i] +'</a>'
         }
-        return '<div class="'+ doms[6] +' layui-layer-btn-'+ (config.btnAlign||'') +'">'+ button +'</div>'
+        return '<div class="'+ doms[6] + ((config.btnAlign&&config.btnAlign.length>0)? (' layui-layer-btn-' + config.btnAlign) : ' ') +'">'+ button +'</div>'
       }() : '')
       + (config.resize ? '<span class="layui-layer-resize"></span>' : '')
     + '</div>'
