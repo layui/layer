@@ -1,4 +1,13 @@
 ﻿
+# v3.1.0 未正式发布
+
+* 去除type:2时如果content未填写而弹出layer官网的默认设置
+* 修复layer.js 未设置btnAlign时,包裹按钮的div.layui-layer-btn  出现一多余class（Merge pull request from meihangbo/patch-2）
+
+
+---
+
+
 # v3.0.3 2017.03.06
 
 * 增加参数 isOutAnim，用于控制是否显示关闭动画，true 或者 false

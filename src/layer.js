@@ -232,7 +232,7 @@ Class.pt.vessel = function(conType, callback){
         for(var i = 0, len = config.btn.length; i < len; i++){
           button += '<a class="'+ doms[6] +''+ i +'">'+ config.btn[i] +'</a>'
         }
-        return '<div class="'+ doms[6] + ((config.btnAlign&&config.btnAlign.length>0)? (' layui-layer-btn-' + config.btnAlign) : ' ') +'">'+ button +'</div>'
+        return '<div class="'+ doms[6] + (config.btnAlign ? (' layui-layer-btn-' + config.btnAlign) : '') +'">'+ button +'</div>'
       }() : '')
       + (config.resize ? '<span class="layui-layer-resize"></span>' : '')
     + '</div>'
@@ -270,7 +270,7 @@ Class.pt.creat = function(){
       layer.closeAll('dialog');
     break;
     case 2:
-      var content = config.content = conType ? config.content : [config.content||'http://layer.layui.com', 'auto'];
+      var content = config.content = conType ? config.content : [config.content, 'auto'];
       config.content = '<iframe scrolling="'+ (config.content[1]||'auto') +'" allowtransparency="true" id="'+ doms[4] +''+ times +'" name="'+ doms[4] +''+ times +'" onload="this.className=\'\';" class="layui-layer-load" frameborder="0" src="' + config.content[0] + '"></iframe>';
     break;
     case 3:
