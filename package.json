@@ -1,6 +1,6 @@
 {
   "name": "layer",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "mobile": "2.0.0",
   "description": "Web弹层组件",
   "main": "src/layer.js",

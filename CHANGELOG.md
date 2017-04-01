@@ -1,4 +1,24 @@
 ﻿
+# v3.1.0 未正式发布
+
+* 去除type:2时如果content未填写而弹出layer官网的默认设置
+* 修复layer.js 未设置btnAlign时,包裹按钮的div.layui-layer-btn  出现一多余class（Merge pull request from meihangbo/patch-2）
+
+
+---
+
+
+# v3.0.3 2017.03.06
+
+* 增加参数 isOutAnim，用于控制是否显示关闭动画，true 或者 false
+* 撤销自动ready处理机制，因为在初始时与Ajax同步等使用场景存在耦合等问题
+* 修复Firefox下对默认层设置了高度，按钮被溢出的bug
+* photos层的出场动画不再是随机，而是采用默认动画（也可以通过参数 anim 来自定义）
+* 去除photos层的默认关闭动画（觉得觉得不闪眼的话，也可以通过参数isOutAnim开启）
+
+
+---
+
 
 # v3.0.2 2017.02.25
 
