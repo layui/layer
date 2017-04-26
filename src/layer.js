@@ -1232,7 +1232,7 @@ layer.photos = function(options, loop, key){
          此处执行options中传入的end回调函数
          */
         typeof end === 'function' && end();
-        }
+      }
     }, options));
   }, function(){
     layer.close(dict.loadi);
