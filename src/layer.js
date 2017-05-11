@@ -1191,13 +1191,15 @@ layer.photos = function(options, loop, key){
             imgarea[1] = imgarea[1]/wh[1];
           }
         }
-        
+        if(imgarea[0]<600)
+			imgarea[0] = 600;
+		if(imgarea[1]<400)
+			imgarea[1] = 400;
         return [imgarea[0]+'px', imgarea[1]+'px']; 
       }(),
       title: false,
-      shade: 0.9,
-      shadeClose: true,
-      closeBtn: false,
+      shade: 0,
+      closeBtn: true,
       move: '.layui-layer-phimg img',
       moveType: 1,
       scrollbar: false,
@@ -1205,19 +1207,438 @@ layer.photos = function(options, loop, key){
       //anim: Math.random()*5|0,
       isOutAnim: false,
       skin: 'layui-layer-photos' + skin('photos'),
-      content: '<div class="layui-layer-phimg">'
-        +'<img src="'+ data[start].src +'" alt="'+ (data[start].alt||'') +'" layer-pid="'+ data[start].pid +'">'
-        +'<div class="layui-layer-imgsee">'
-          +(data.length > 1 ? '<span class="layui-layer-imguide"><a href="javascript:;" class="layui-layer-iconext layui-layer-imgprev"></a><a href="javascript:;" class="layui-layer-iconext layui-layer-imgnext"></a></span>' : '')
-          +'<div class="layui-layer-imgbar" style="display:'+ (key ? 'block' : '') +'"><span class="layui-layer-imgtit"><a href="javascript:;">'+ (data[start].alt||'') +'</a><em>'+ dict.imgIndex +'/'+ data.length +'</em></span></div>'
-        +'</div>'
-      +'</div>',
+      content: '<div class="layui-layer-phimg">'+
+					'<img class="image active" src="'+ data[start].src +'" alt="'+ (data[start].alt||'') +'" layer-pid="'+ data[start].pid +'">'+
+					'<div class="thumbnails">'+
+						'<span class="thumbClose" title="关闭缩略图">'+
+							'<i class="icon_close-small"></i>'+
+						'</span>'+
+						'<img ondragstart="return false;"/>'+
+						'<div class="thumbDrag">'+
+							'<span></span>'+
+						'</div>'+
+					'</div>'+
+					'<div class="layui-layer-imgsee">'+
+						(data.length > 1 ? '<span class="layui-layer-imguide"><a href="javascript:;" class="layui-layer-iconext layui-layer-imgprev" title="'+ dict.imgIndex +'/'+ data.length +'"></a><a href="javascript:;" class="layui-layer-iconext layui-layer-imgnext" title="'+ dict.imgIndex +'/'+ data.length +'"></a></span>' : '')+
+						//'<div class="layui-layer-imgbar" style="display:'+ (key ? 'block' : '') +'">'+
+							'<div class="tool" style="display:'+ (key ? 'block' : '') +'">'+
+								'<div class="toolct">'+
+									'<span class="oper_fullscreen" title="查看全屏"><i class="icon_tool-fullscreen"></i></span>'+
+									'<span class="oper_bigger" title="放大图片"><i class="icon_tool-bigger"></i></span>'+
+									'<span class="oper_smaller" title="缩小图片"><i class="icon_tool-smaller"></i></span>'+
+									'<span class="oper_rotate" title="向右旋转"><i class="icon_tool-rotate"></i></span>'+
+									'<a class="oper_download" title="下载图片" href="'+data[start].src+'" download="'+(data[start].alt || 5 * Math.random() | 0)+'">'+
+										'<i class="icon_tool-download"></i>'+
+									'</a>'+
+								'</div>'+
+							'</div>'+
+						//'</div> '+
+					'</div> '+
+				'</div>',
       success: function(layero, index){
         dict.bigimg = layero.find('.layui-layer-phimg');
         dict.imgsee = layero.find('.layui-layer-imguide,.layui-layer-imgbar');
         dict.event(layero);
         options.tab && options.tab(data[start], layero);
-        typeof success === 'function' && success(layero);
+	typeof success === 'function' && success(layero);
+
+		/*
+		图片查看插件
+        */
+		var windowMargin = 8;
+                        var isFirefox = navigator.userAgent.indexOf("Firefox") > -1 ;
+                        var MOUSEWHEEL_EVENT = isFirefox ? "DOMMouseScroll" : "mousewheel";
+                        var o = {
+                            //图片缩放倍率
+                            ratio: 1.2,
+                            //右下角缩略图宽度
+                            thumbnailsWidth: 180,
+                            //右下角缩略图高度
+                            thumbnailsHeight: 120
+                        };
+                        var $tool = $(".layui-layer-phimg").find(".tool"),
+                            $fullscreen = $(".layui-layer-phimg").find(".oper_fullscreen"),
+                            $bigger = $(".layui-layer-phimg").find(".oper_bigger"),
+                            $smaller =  $(".layui-layer-phimg").find(".oper_smaller"),
+                            $rotate = $(".layui-layer-phimg").find(".oper_rotate"),
+                            $download = $(".layui-layer-phimg").find(".oper_download"),
+                            $thumbnails = $(".layui-layer-phimg").find(".thumbnails"),
+                            $gallery = $(".layui-layer-phimg"),
+                            $image = $(".layui-layer-phimg>.image"),
+                            $thumbImg,
+                            imageWidth,
+                            imageHeight,
+                            imgRatio,
+                            dragX,
+                            dragY,
+                            cW,
+                            cH,
+                            w,h,isVertical,
+                            thumbX,
+                            thumbY;
+                        //缩略图
+                        $thumbnails.css({
+                            height: o.thumbnailsHeight,
+                            width : o.thumbnailsWidth
+                        }).on("mouseenter",function(e){
+                            thumbX = -1;
+                        }).on("mousedown",function(e){
+                            thumbX=e.pageX || e.clientX;
+                            thumbY=e.pageY || e.clientY;
+
+                            cW = $gallery.width();
+                            cH = $gallery.height();
+                            e.stopPropagation();
+                        }).on("mousemove",function(e){
+                            if(thumbX > 0){
+                                var nextDragX=e.pageX || e.clientX;
+                                var nextDragY=e.pageY || e.clientY;
+                                var $td= $(this).find(".thumbDrag"),
+                                    imageWidth = $image.width(),
+                                    imageHeight = $image.height(),
+                                    thumbImgWidth = $thumbImg.width(),
+                                    thumbImgHeight = $thumbImg.height(),
+                                    left =parseFloat($td.css("left")) +  (nextDragX - thumbX),
+                                    top =parseFloat($td.css("top")) + (nextDragY - thumbY),
+                                    w = $td.width(),
+                                    h = $td.height(),
+                                    it,
+                                    il,
+                                    maxL,
+                                    maxT;
+
+                                if(isVertical){
+                                    thumbImgWidth = [thumbImgHeight, thumbImgHeight = thumbImgWidth][0];
+                                    imageWidth = [imageHeight, imageHeight = imageWidth][0];
+                                }
+                                it = (o.thumbnailsHeight - thumbImgHeight) / 2 ,
+                                    il = (o.thumbnailsWidth - thumbImgWidth) / 2,
+                                    maxL = o.thumbnailsWidth - w - il - 2, //减去2像素边框部分
+                                    maxT = o.thumbnailsHeight - h - it - 2;
+
+                                if(left < il ) left = il;
+                                else if(left > maxL) left = maxL;
+
+                                if(top < it ) top = it;
+                                else if(top > maxT) top = maxT;
+
+                                $td.css({
+                                    left : left,
+                                    top : top
+                                })
+                                thumbX=nextDragX;
+                                thumbY=nextDragY;
+
+                                if(imageWidth < cW) left = (cW - imageWidth) / 2;
+                                else left = -imageWidth * (left-il) / thumbImgWidth;
+
+                                if(imageHeight < cH ) top = (cH - imageHeight) / 2;
+                                else top = -imageHeight * (top-it) / thumbImgHeight;
+
+                                $image.css({
+                                    left : left,
+                                    top : top
+                                });
+                            }
+                        }).on("mouseup",function(e){
+                            thumbX = -1;
+                        });
+                        $thumbnails.find(".thumbClose").on("click",function(){
+                            $thumbnails.hide();
+                        });
+
+                        //显示工具栏
+                        $gallery.on("mouseover",function(e){
+                            $tool.show();
+
+                        }).on("mouseout",function(e){
+                            $tool.hide();
+                        });
+
+                        //全屏
+                        var isMax,
+                            preWidth= $gallery.width(),
+                            preHeight= $gallery.height(),
+                            preTop= $("#layui-layer"+index).css("top"),
+                            preLeft= $("#layui-layer"+index).css("left");
+                        $fullscreen.on("click", function(){
+                            if(!isMax){
+                                $("#layui-layer"+index).css({
+                                    width: '100%',
+                                    height: '100%',
+                                    left:'0px',
+                                    top:'0px'
+                                });
+                                isMax = true;
+                            }
+                            else {
+                                $("#layui-layer"+index).css({
+                                    width: preWidth,
+                                    height: preHeight,
+                                    left:preLeft,
+                                    top:preTop
+                                });
+                                isMax = false;
+                            }
+                            setImagePosition();
+                        });
+
+                        //放大图片
+                        $bigger.on("click", function(){
+                            biggerImage();
+                        });
+
+                        //缩小图片
+                        $smaller.on("click", function(){
+                            smallerImage();
+                        });
+
+                        //旋转
+                        $rotate.on("click", function(){
+
+                            var rotateClass = $image.attr("class").match(/(rotate)(\d*)/);
+
+                            if(rotateClass){
+                                var nextDeg = (rotateClass[2] * 1 + 90) % 360;
+                                $image.removeClass(rotateClass[0]).addClass("rotate" + nextDeg);
+                                $thumbImg.removeClass(rotateClass[0]).addClass("rotate" + nextDeg);
+                                resizeImage(nextDeg);
+                                resizeThumbImg(nextDeg);
+                                isVertical = nextDeg == 90 || nextDeg == 270;
+                            } else{
+                                $image.addClass("rotate90");
+                                $thumbImg.addClass("rotate90");
+                                resizeImage("90");
+                                resizeThumbImg("90");
+                                isVertical = true;
+                            }
+                        });
+
+                        // //下载
+                        // $download.on("click", function(){
+                        //     var imgUrl = $image.attr("src");
+                        //     if(!imgUrl) return;
+                        //     alert("没有找到兼容所有浏览器方法，所以暂不实现");
+                        // });
+
+                        $(window).on("resize",function(){
+                            setImagePosition();
+                        });
+
+                        if(document.attachEvent){
+                            document.attachEvent("on"+MOUSEWHEEL_EVENT, function(e){
+                                mouseWheelScroll(e);
+                            });
+                        } else if(document.addEventListener){
+                            document.addEventListener(MOUSEWHEEL_EVENT, function(e){
+                                mouseWheelScroll(e);
+                            }, false);
+                        }
+
+                        function mouseWheelScroll(e){
+                            var _delta = parseInt(e.wheelDelta || -e.detail);
+                            //向上滚动
+                            if (_delta > 0) {
+                                biggerImage();
+                            }
+                            //向下滚动
+                            else {
+                                smallerImage();
+                            }
+                        }
+
+                        function init(){
+                            toggleImage();
+                        }
+
+                        function toggleImage(){
+							var imgarea = [$image.width(), $image.height()];
+							var winarea = [$(window).width() - 100, $(window).height() - 100];
+							if(!options.full && (imgarea[0]>winarea[0]||imgarea[1]>winarea[1])){//如果 实际图片的宽或者高比 屏幕大（那么进行缩放）
+								var wh = [imgarea[0]/winarea[0],imgarea[1]/winarea[1]];//取 宽度 缩放比例 高度缩放比例
+								if(wh[0] > wh[1]){//取缩放比例最大的进行缩放
+									imgarea[0] = imgarea[0]/wh[0];
+									imgarea[1] = imgarea[1]/wh[0];
+								}
+								else if(wh[0] < wh[1]){
+									imgarea[0] = imgarea[0]/wh[1];
+									imgarea[1] = imgarea[1]/wh[1];
+								}
+							}
+                            $image.width(imgarea[0] + "px");
+                            $image.height(imgarea[1] + "px");
+							imageWidth = $image.width();
+                            imageHeight = $image.height();
+                            imgRatio = imageWidth/ imageHeight;
+                            $thumbImg = $thumbnails.find("img").attr("src", $image.attr("src"));
+                            $thumbnails.find("img").removeAttr("class").removeAttr("style");
+                            isVertical = false;
+                            $thumbnails.hide();
+                            setImagePosition();
+                        }
+
+                        function biggerImage(){
+                            var w = $image.width(),
+                                h = $image.height(),
+                                nextW = w * o.ratio,
+                                nextH = h * o.ratio;
+                            if(nextW - w < 1) nextW = Math.ceil(nextW);
+                            var percent =  (nextW / imageWidth * 100).toFixed(0) ;
+                            if(percent > 90 && percent < 110){
+                                percent = 100;
+                                nextW = imageWidth;
+                                nextH = imageHeight;
+                            }
+                            else if(percent > 1600) {
+                                percent = 1600;
+                                nextW = imageWidth * 16;
+                                nextH = imageHeight * 16;
+                            }
+
+                            $image.width(nextW).height(nextH);
+                            setImagePosition();
+                            showPercentTip(percent);
+                            showThumbnails(nextW, nextH);
+                        }
+
+                        function smallerImage(){
+                            var w = $image.width(),
+                                h = $image.height(),
+                                nextW,
+                                nextH;
+                            var percent =  (w / o.ratio / imageWidth * 100).toFixed(0) ;
+                            if(percent < 5) {
+                                percent = 5;
+                                nextW = imageWidth / 20;
+                                nextH = imageHeight / 20;
+                            }
+                            else if(percent > 90 && percent < 110){
+                                percent = 100;
+                                nextW = imageWidth;
+                                nextH = imageHeight;
+                            } else{
+                                nextW = w / o.ratio;
+                                nextH = h / o.ratio;
+                            }
+
+                            $image.width(nextW).height(nextH);
+                            setImagePosition();
+                            showPercentTip(percent);
+                            showThumbnails(nextW, nextH);
+                        }
+
+                        //显示缩略图
+                        function showThumbnails(width, height){
+                            if(isVertical) width = [height, height = width][0];
+                            if(width > $gallery.width() || height > $gallery.height()){
+                                $thumbnails.show();
+                                setThumbnails();
+                            } else{
+                                $thumbnails.hide();
+                            }
+                        }
+
+                        //重置图片宽高
+                        function resizeImage(rotateDeg){
+
+                            var mH = $gallery.height() - windowMargin,
+                                mW = $gallery.width() - windowMargin;
+                            if(rotateDeg == '90' || rotateDeg == '270'){
+                                mW = [mH, mH = mW][0];
+                            }
+
+                            var width, height;
+                            width = Math.min(imageWidth, mW);
+                            height = Math.min(imageHeight, mH);
+
+                            if(width / height > imgRatio){
+                                width = height * imgRatio;
+                            } else{
+                                height = width / imgRatio;
+                            }
+
+                            $image.css({
+                                width:width,
+                                height:height
+                            });
+                            setImagePosition();
+                        }
+
+                        function resizeThumbImg(rotateDeg){
+                            var maxW = o.thumbnailsWidth, maxH = o.thumbnailsHeight;
+                            if(rotateDeg == '90' || rotateDeg == '270'){
+                                maxW = [maxH, maxH = maxW][0];
+                            }
+                            $thumbImg.css({
+                                maxWidth : maxW,
+                                maxHeight : maxH
+                            });
+                            $thumbnails.hide();
+                        }
+
+                        //显示百分比提示
+                        function showPercentTip(percent){
+                            $gallery.find(".percentTip").remove();
+                            $("<div class='percentTip'><span>"+percent+"%</span></div>").appendTo($gallery).fadeOut(1500);
+                        }
+
+                        //设置图片位置
+                        function setImagePosition(){
+                            var w = $image.width(),
+                                h = $image.height(),
+                                cW = $gallery.width(),
+                                cH = $gallery.height();
+
+                            var left = (cW - w)/2,
+                                top = (cH - h)/2;
+
+                            $image.css("left", left+"px").css("top", top+"px");
+							$tool.css("left",($gallery.width()-$tool.width())/2);
+                        }
+
+                        //设置缩略图拖拽区域
+                        function setThumbnails(){
+                            var $img = $thumbnails.find("img"),
+                                sW = $img.width(),
+                                sH = $img.height(),
+                                w = $image.width(),
+                                h =  $image.height(),
+                                imf = $image.position(),
+                                imfl = imf.left,
+                                imft = imf.top,
+                                cW = $gallery.width(),
+                                cH = $gallery.height(),
+                                tW,
+                                tH,
+                                tl,
+                                tt;
+
+                            if(isVertical){
+                                sW = [sH, sH = sW][0];
+                                w = [h, h = w][0];
+                            }
+
+                            tW = sW / (w / cW);
+                            if(w < cW) tW = sW;
+                            tH = sH / (h / cH);
+                            if(h < cH) tH = sH;
+                            tl = (o.thumbnailsWidth - sW)/2 + -imfl/w * sW ;
+                            if(w < cW) tl = (o.thumbnailsWidth - sW)/2;
+                            tt = (o.thumbnailsHeight - sH)/2 + -imft/h * sH ;
+                            if(h < cH) tt = (o.thumbnailsHeight - sH)/2;
+                            $thumbnails.find(".thumbDrag").css({
+                                width: tW,
+                                height: tH,
+                                left: tl,
+                                top: tt
+                            });
+                        }
+
+                        init();
+
+                        /*
+                        图片查看器结束
+                         */
       }, end: function(){
         dict.end = true;
         $(document).off('keyup', dict.keyup);

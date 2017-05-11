@@ -12,4 +12,4 @@ layer致力于打造国内最盛行的弹层组件，为web开发提供强劲动
 
 
 ## 相关
-[官网](http://layer.layui.com/)、[社区交流](http://fly.layui.com)
+[官网](http://layer.layui.com/)、[社区](http://fly.layui.com)
