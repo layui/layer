@@ -1042,7 +1042,11 @@ layer.photos = function(options, loop, key){
   options.img = options.img || 'img';
   
   var success = options.success;
-  delete options.success;
+  /*
+   闲心的源码中有以下这句，删除了options中的success方法，所以不会在下面的success回调中执行传进来的回调函数
+   删除这里的注释，就可以在下面的success回调中执行options中传入的回调函数
+   */
+  //delete options.success;
 
   if(!type){ //页面直接获取
     var parent = $(options.photos), pushData = function(){
@@ -1217,10 +1221,17 @@ layer.photos = function(options, loop, key){
         dict.imgsee = layero.find('.layui-layer-imguide,.layui-layer-imgbar');
         dict.event(layero);
         options.tab && options.tab(data[start], layero);
+        /*
+         此处执行options中传入的success回调函数
+         */
         typeof success === 'function' && success(layero);
       }, end: function(){
         dict.end = true;
         $(document).off('keyup', dict.keyup);
+        /*
+         此处执行options中传入的end回调函数
+         */
+        typeof end === 'function' && end();
       }
     }, options));
   }, function(){
