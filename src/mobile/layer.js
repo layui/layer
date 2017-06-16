@@ -1,10 +1,14 @@
 /*!
-
  @Name：layer mobile v1.7 弹层组件移动版
  @Author：贤心
  @Site：http://layer.layui.com/mobie/
  @License：LGPL
-    
+ */
+
+/**
+ * update by XiaodongTong on 2017-6-16 15:03:09 
+ * Site：https://github.com/XiaodongTong/layer/tree/2.x/src/mobile
+ * Description：优化调用方式，让 layer-mobile 像使用PC端的 layer.js一样好用 
  */
 
 ;!function(win){    
@@ -219,3 +223,78 @@ win.layer = {
 }();
 
 }(window);
+
+/*------------ 增加msg、confirm、alert、btmConfirm、btmMsg-------------*/
+; (function (window, layer) {
+    //提示
+    layer.msg = function (msg, end) {
+        return layer.open({
+            content: msg
+            , skin: 'msg'
+            , time: 2 //2秒后自动关闭
+            , anim: 'scale'
+            , end: end
+        });
+    };
+    //询问框
+    layer.cf = layer.confirm = function (content, opt, yes, no) {
+        var type = typeof opt === 'function';
+        if (type) {
+            no = yes;
+            yes = opt;
+            opt.btn = ['确定', '取消'];
+            opt.title = '';
+        }
+        return layer.open({            
+            btn: opt.btn 
+            , content: content
+            , yes: yes
+            , no: no
+            , title: opt.title ? opt.title : ''
+        });
+    }
+    //信息框
+    layer.alert = function (content, opt, yes) {
+        var type = typeof opt === 'function';
+        if (type) {
+            yes = opt;
+            opt.btn = '确定';
+            opt.title = '';
+        }
+        return layer.open({
+            content: content
+            , btn: opt.btn
+            , yes: yes
+            , title: opt.title ? opt.title: ''
+        });
+    }
+    //底部提示
+    layer.btmMsg = function (content,end) {
+        layer.open({
+            content: content
+            , skin: 'footer'
+            , time: 1.5
+            , shade: 'background-color: rgba(0,0,0,.3)'
+            , end: end
+        });
+    };
+    //底部询问框
+    layer.btmConfirm = function (content, btn, yes, no) {
+        var type = typeof btn === 'function';
+        if (type) {
+            no = yes;
+            yes = btn;
+            btn = ['确定', '取消'];
+        }
+        layer.open({
+            content: content
+            , btn: btn
+            , skin: 'footer'
+            , yes:  yes
+            , no: no
+        });
+    }
+
+})(window, layer);
+
+
