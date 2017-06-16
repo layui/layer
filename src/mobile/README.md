@@ -21,13 +21,13 @@
 ```
   //msg:弹出的文字
   //end:提示框自动关闭后的回调方法
-  layer(msg,end) 
+  layer.msg(msg,end) 
   
   //可以仅提示，不传递end
-  layer('你知道么？')
+  layer.msg('你知道么？')
    
   //也可以同时都传递
-  layer('你知道么？',function(){
+  layer.msg('你知道么？',function(){
       layer('不知道！');
   });
 ```
