@@ -167,6 +167,7 @@ var Class = function(setings){
   var that = this;
   that.index = ++layer.index;
   that.config = $.extend({}, that.config, ready.config, setings);
+  that.config.content && (that.config.content = that.getContent(that.config.content));
   document.body ? that.creat() : setTimeout(function(){
     that.creat();
   }, 30);
@@ -200,6 +201,12 @@ Class.pt.config = {
   tips: 2
 };
 
+Class.pt.getContent = function(content){
+    if(content instanceof HTMLElement || (typeof content === 'object' && content.nodeType === 1 && typeof content.nodeName === 'string')){
+	    return $(content);
+	}
+	return content;
+}
 //容器
 Class.pt.vessel = function(conType, callback){
   var that = this, times = that.index, config = that.config;
