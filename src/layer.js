@@ -56,7 +56,7 @@ var layer = {
     var module = module.replace(/\s/g, '');
     var iscss = /\.css$/.test(module);
     var node = document.createElement(iscss ? 'link' : 'script');
-    var id = 'layui_layer_' + module.replace(/\.|\//g, '');
+    var id = 'layui_layer_' + module.replace(/\.|\/|\?|\=|\#/g, '');
     if(!layer.path) return;
     if(iscss){
       node.rel = 'stylesheet';
