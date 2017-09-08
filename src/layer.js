@@ -1222,7 +1222,7 @@ layer.photos = function(options, loop, key){
       }, end: function(){
         dict.end = true;
         $(document).off('keyup', dict.keyup);
-        typeof options.successCallback === 'function' && options.endCallback();
+        typeof options.endCallback === 'function' && options.endCallback();
       }
     }, options));
   }, function(){
