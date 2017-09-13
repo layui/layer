@@ -1,8 +1,11 @@
 ﻿
-# v3.1.0 未正式发布
+# v3.1.0 2017.09.13
 
-* 去除type:2时如果content未填写而弹出layer官网的默认设置
-* 修复layer.js 未设置btnAlign时,包裹按钮的div.layui-layer-btn  出现一多余class（Merge pull request from meihangbo/patch-2）
+* 紧急修复在最新版 Chrome（61.0.3163.79）下遮罩层出现的奇异花屏现象 
+* 修复 layer.js 未设置btnAlign时，包裹按钮的 div.layui-layer-btn 出现一多余 class
+* 对默认按钮颜色、Tips层、Prompt层、Tab层等进行了样式调整，以便更显大气，且更符合layui风格
+* 增加maxHeight参数，用于设定弹层的最大高度 
+* 去除 type:2 时如果content未填写而弹出 layer 官网的默认设置
 
 
 ---
