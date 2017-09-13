@@ -1242,9 +1242,11 @@ layer.photos = function(options, loop, key){
         dict.event(layero);
         options.tab && options.tab(data[start], layero);
         typeof success === 'function' && success(layero);
+        typeof options.successCallback === 'function' && options.successCallback();
       }, end: function(){
         dict.end = true;
         $(document).off('keyup', dict.keyup);
+        typeof options.endCallback === 'function' && options.endCallback();
       }
     }, options));
   }, function(){
