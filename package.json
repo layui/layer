@@ -1,5 +1,6 @@
 {
-  "name": "layer",
+  "name": "layui-layer",
+  "realname": "layer",
   "version": "3.1.0",
   "mobile": "2.0.0",
   "description": "Web弹层组件",
@@ -10,7 +11,7 @@
   },
   "repository": {
     "type": "https",
-    "url": "https://github.com/sentsin/layer.git"
+    "url": "git+https://github.com/sentsin/layer.git"
   },
   "author": "贤心",
   "homepage": "http://layer.layui.com/",
@@ -21,5 +22,20 @@
     "gulp-rename": "^1.2.2",
     "gulp-header": "^1.8.8",
     "del": "^2.2.2"
-  }   
+  },
+  "bugs": {
+    "url": "https://github.com/sentsin/layer/issues"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "keywords": [
+    "layer",
+    "dialog",
+    "tips",
+    "alert",
+    "confirm",
+    "window"
+  ]
 }
