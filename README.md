@@ -11,8 +11,8 @@ layer是一款近年来口碑非常不错的web弹层组件，她具备全方位
 
 ## 现状
 从两年前初出茅庐，到后来成为小众组件，再发展到今天，已为数以万计的人所熟知。
-据不完全统计，截至到2015年09月01号，layer已服务于10万余家web平台。
+据不完全统计，截至到2016年07月03日，layer已服务于超过20万web平台。
 
 
-## 备注
-[官网](http://layer.layui.com/)、[更新日志](https://github.com/sentsin/layer/blob/2.x/CHANGELOG.md)、[社区交流](http://fly.layui.com)
+## 相关
+[官网](http://layer.layui.com/)、[社区交流](http://fly.layui.com)

@@ -1,13 +1,12 @@
-﻿/*!
+﻿/**
  
- @Name: layer's style
+ @Name: layer
  @Author: 贤心
- @Blog： sentsin.com
  
- */
+ **/
 
 *html{background-image:url(about:blank); background-attachment:fixed;}
-html #layui_layer_skinlayercss{display:none; position: absolute; width:1989px;}
+html #layui_layer_skindefaultlayercss{display:none; position: absolute; width:1989px;}
 
 /* common */
 .layui-layer-shade, .layui-layer{position:fixed; _position:absolute; pointer-events: auto;}
@@ -18,8 +17,8 @@ html #layui_layer_skinlayercss{display:none; position: absolute; width:1989px;}
 .layui-layer-content{position:relative;}
 .layui-layer-border{border:1px solid #B2B2B2; border:1px solid rgba(0,0,0,.3); box-shadow: 1px 1px 5px rgba(0,0,0,.2);}
 .layui-layer-moves{position:absolute; border:3px solid #666; border:3px solid rgba(0,0,0,.5); cursor:move; background-color:#fff; background-color:rgba(255,255,255,.3); filter:alpha(opacity=50);}
-.layui-layer-load{background:url(default/loading-0.gif) #fff center center no-repeat;}
-.layui-layer-ico{ background:url(default/icon.png) no-repeat;}
+.layui-layer-load{background:url(loading-0.gif) #fff center center no-repeat;}
+.layui-layer-ico{ background:url(icon.png) no-repeat;}
 .layui-layer-dialog .layui-layer-ico,
 .layui-layer-setwin a,
 .layui-layer-btn a{display:inline-block; *display:inline; *zoom:1; vertical-align:top;}
@@ -141,12 +140,13 @@ html #layui_layer_skinlayercss{display:none; position: absolute; width:1989px;}
 .layui-layer-page .layui-layer-content{position:relative; overflow:auto;}
 .layui-layer-page .layui-layer-btn,.layui-layer-iframe .layui-layer-btn{padding-top:10px;}
 .layui-layer-nobg{background:none;}
-.layui-layer-iframe .layui-layer-content{overflow:hidden;}
+.layui-layer-iframe .layui-layer-content{-webkit-overflow-scrolling: touch; overflow-y: auto;}
 .layui-layer-iframe iframe{display:block; width:100%;}
+
 .layui-layer-loading{border-radius:100%; background:none;  box-shadow:none;  border:none;}
-.layui-layer-loading .layui-layer-content{width:60px; height:24px; background:url(default/loading-0.gif) no-repeat;}
-.layui-layer-loading .layui-layer-loading1{width:37px; height:37px; background:url(default/loading-1.gif) no-repeat;}
-.layui-layer-loading .layui-layer-loading2, .layui-layer-ico16{width:32px; height:32px; background:url(default/loading-2.gif) no-repeat;}
+.layui-layer-loading .layui-layer-content{width:60px; height:24px; background:url(loading-0.gif) no-repeat;}
+.layui-layer-loading .layui-layer-loading1{width:37px; height:37px; background:url(loading-1.gif) no-repeat;}
+.layui-layer-loading .layui-layer-loading2, .layui-layer-ico16{width:32px; height:32px; background:url(loading-2.gif) no-repeat;}
 .layui-layer-tips{background:none; box-shadow:none; border:none;}
 .layui-layer-tips .layui-layer-content{position:relative; line-height:22px; min-width: 12px; padding:5px 10px; font-size:12px; _float:left; border-radius:3px; box-shadow: 1px 1px 3px rgba(0,0,0,.3); background-color:#FF9900; color:#fff;}
 .layui-layer-tips .layui-layer-close{right:-2px; top:-1px;}
@@ -176,7 +176,7 @@ html #layui_layer_skinlayercss{display:none; position: absolute; width:1989px;}
  
  */
 
-.layui-layer-iconext{background:url(default/icon-ext.png) no-repeat;}
+.layui-layer-iconext{background:url(icon-ext.png) no-repeat;}
 
 /* prompt模式 */
 .layui-layer-prompt .layui-layer-input{display:block; width:220px; height:30px; margin:0 auto; line-height:30px; padding: 0 5px; border: 1px solid #ccc; box-shadow: 1px 1px 5px rgba(0,0,0,.1) inset; color:#333;}
