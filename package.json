@@ -16,12 +16,12 @@
   "author": "贤心",
   "homepage": "http://layer.layui.com/",
   "devDependencies": {
-    "gulp": "^3.9.0",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-header": "^1.8.9",
     "gulp-minify-css": "^1.2.4",
-    "gulp-uglify": "^1.5.4",
     "gulp-rename": "^1.2.2",
-    "gulp-header": "^1.8.8",
-    "del": "^2.2.2"
+    "gulp-uglify": "^1.5.4"
   },
   "bugs": {
     "url": "https://github.com/sentsin/layer/issues"
