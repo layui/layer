@@ -1074,6 +1074,11 @@ layer.photos = function(options, loop, key){
   dict.imgIndex = (start|0) + 1;
   
   options.img = options.img || 'img';
+
+  // 增加图片信息输入控件显示模式
+  // 'hover'  hover in 的时候显示， out的时候隐藏
+  // 'always'  一直显示
+  options.infoshow = options.barshowtype || 'hover'
   
   var success = options.success;
   delete options.success;
@@ -1164,11 +1169,13 @@ layer.photos = function(options, loop, key){
   
   //一些动作
   dict.event = function(){
-    dict.bigimg.hover(function(){
-      dict.imgsee.show();
-    }, function(){
-      dict.imgsee.hide();
-    });
+    if(options.infoshow =='hover'){
+      dict.bigimg.hover(function(){
+        dict.imgsee.show();
+      }, function(){
+        dict.imgsee.hide();
+      });
+    }
     
     dict.bigimg.find('.layui-layer-imgprev').on('click', function(event){
       event.preventDefault();
@@ -1249,6 +1256,9 @@ layer.photos = function(options, loop, key){
       success: function(layero, index){
         dict.bigimg = layero.find('.layui-layer-phimg');
         dict.imgsee = layero.find('.layui-layer-imguide,.layui-layer-imgbar');
+        if(options.infoshow =='always'){
+          dict.imgsee.show();
+        }
         dict.event(layero);
         options.tab && options.tab(data[start], layero);
         typeof success === 'function' && success(layero);
