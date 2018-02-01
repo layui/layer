@@ -1003,7 +1003,7 @@ layer.prompt = function(options, yes){
     ,resize: false
     ,yes: function(index){
       var value = prompt.val();
-      if(value === ''){
+      if(!options.allowNull && value === ''){
         prompt.focus();
       } else if(value.length > (options.maxlength||500)) {
         layer.tips('&#x6700;&#x591A;&#x8F93;&#x5165;'+ (options.maxlength || 500) +'&#x4E2A;&#x5B57;&#x6570;', prompt, {tips: 1});
