@@ -933,7 +933,7 @@ layer.close = function(index){
     layero.addClass('layer-anim '+ closeAnim);
   }
   
-  $('#layui-layer-moves, #layui-layer-shade' + index).remove();
+  $('.layui-layer-move, #layui-layer-shade' + index).remove();
   layer.ie == 6 && ready.reselect();
   ready.rescollbar(index); 
   if(layero.attr('minLeft')){
