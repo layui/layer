@@ -18,7 +18,7 @@ html #layuicss-layer{display: none; position: absolute; width: 1989px;}
 .layui-layer-border{border: 1px solid #B2B2B2; border: 1px solid rgba(0,0,0,.1); box-shadow: 1px 1px 5px rgba(0,0,0,.2);}
 .layui-layer-load{background:url(loading-1.gif) #eee center center no-repeat;}
 .layui-layer-ico{ background:url(icon.png) no-repeat;}
-.layui-layer-dialog .layui-layer-ico,
+.layui-layer-dialog .layui-layer-ico,.layui-layer-notice .layui-layer-ico,
 .layui-layer-setwin a,
 .layui-layer-btn a{display:inline-block; *display:inline; *zoom:1; vertical-align:top;}
 
@@ -75,9 +75,9 @@ html #layuicss-layer{display: none; position: absolute; width: 1989px;}
 .layui-layer-btn-c{text-align: center;}
 
 /* 定制化 */
-.layui-layer-dialog{min-width:260px;}
-.layui-layer-dialog .layui-layer-content{position: relative; padding:20px; line-height:24px; word-break: break-all; overflow:hidden; font-size:14px; overflow-x: hidden; overflow-y:auto;}
-.layui-layer-dialog .layui-layer-content .layui-layer-ico{position:absolute; top:16px; left:15px; _left:-40px; width:30px; height:30px;}
+.layui-layer-dialog,.layui-layer-notice{min-width:260px;}
+.layui-layer-dialog .layui-layer-content,.layui-layer-notice .layui-layer-content{position: relative; padding:20px; line-height:24px; word-break: break-all; overflow:hidden; font-size:14px; overflow-x: hidden; overflow-y:auto;}
+.layui-layer-dialog .layui-layer-content .layui-layer-ico,.layui-layer-notice .layui-layer-content .layui-layer-ico{position:absolute; top:16px; left:15px; _left:-40px; width:30px; height:30px;}
 .layui-layer-ico1{background-position:-30px 0 }
 .layui-layer-ico2{background-position:-60px 0;}
 .layui-layer-ico3{background-position:-90px 0;}
@@ -88,7 +88,7 @@ html #layuicss-layer{display: none; position: absolute; width: 1989px;}
 .layui-layer-msg{min-width:180px; border:1px solid #D3D4D3; box-shadow: none;}
 .layui-layer-hui{min-width:100px;  background-color: #000; filter:alpha(opacity=60); background-color: rgba(0,0,0,0.6); color: #fff; border:none;}
 .layui-layer-hui .layui-layer-content{padding:12px 25px; text-align:center;}
-.layui-layer-dialog .layui-layer-padding{padding: 20px 20px 20px 55px; text-align: left;}
+.layui-layer-dialog .layui-layer-padding,.layui-layer-notice .layui-layer-padding{padding: 20px 20px 20px 55px; text-align: left;}
 .layui-layer-page .layui-layer-content{position:relative; overflow:auto;}
 .layui-layer-page .layui-layer-btn,.layui-layer-iframe .layui-layer-btn{padding-top:10px;}
 .layui-layer-nobg{background:none;}
@@ -155,7 +155,6 @@ html #layuicss-layer{display: none; position: absolute; width: 1989px;}
 .layui-layer-imgnext{right:10px; _right:8px; background-position:-5px -50px; _background-position:-70px -50px;}
 .layui-layer-imgnext:hover{background-position:-33px -50px; _background-position:-120px -50px;}
 .layui-layer-imgbar{position:absolute; left:0; bottom:0; width:220px; height:32px; line-height:32px; color:#fff; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; font-size:0;}
-.layui-layer-imgtit{/*position:absolute; left:20px;*/}
 .layui-layer-imgtit *{display:inline-block; *display:inline; *zoom:1; vertical-align:top; font-size:12px;}
 .layui-layer-imgtit a{max-width:65%;  text-overflow: ellipsis; overflow: hidden; white-space: nowrap; color:#fff;}
 .layui-layer-imgtit a:hover{color:#fff; text-decoration:underline;}
@@ -267,23 +266,12 @@ i{
 	transform: rotate(270deg); 
 	-webkit-transform: rotate(270deg); 
 }
-@keyframes layer-bounceOut {
-  100% {opacity: 0; -webkit-transform: scale(.7); -ms-transform: scale(.7); transform: scale(.7);}
-  30% {-webkit-transform: scale(1.05); -ms-transform: scale(1.05); transform: scale(1.05);}
-  0% {-webkit-transform: scale(1); -ms-transform: scale(1);transform: scale(1);}
-}
-.layer-anim-close{-webkit-animation-name: layer-bounceOut;animation-name: layer-bounceOut; -webkit-animation-duration:.2s; animation-duration:.2s;}
-
-@media screen and (max-width: 1100px) {
-  .layui-layer-iframe{overflow-y: auto; -webkit-overflow-scrolling: touch;}
-}
 .image{
     position: absolute;
     margin:0; /*之所以不使用auto直接垂直居中，是因为当图片旋转时left值会很难计算*/
     padding:0;
     z-index: 10;
     display: none;
-	moz-user-select: -moz-none;
     -moz-user-select: none;
     -o-user-select:none;
     -khtml-user-select:none;
@@ -383,7 +371,6 @@ i{
     left: 0;
     right: 0;
     bottom: 0;
-	moz-user-select: -moz-none;
     -moz-user-select: none;
     -o-user-select:none;
     -khtml-user-select:none;

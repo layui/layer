@@ -31,7 +31,7 @@ var isLayui = window.layui && layui.define, $, win, ready = {
   btn: ['&#x786E;&#x5B9A;', '&#x53D6;&#x6D88;'],
 
   //五种原始层模式
-  type: ['dialog', 'page', 'iframe', 'loading', 'tips'],
+  type: ['dialog', 'page', 'iframe', 'loading', 'tips', 'notice'],
   
   //获取节点的style属性值
   getStyle: function(node, name){
@@ -144,7 +144,8 @@ var layer = {
       closeBtn: false,
       btn: false,
       resize: false,
-      end: end
+      end: end,
+      anim: 1
     }, (type && !ready.config.skin) ? {
       skin: skin + ' layui-layer-hui',
       anim: anim
@@ -155,6 +156,26 @@ var layer = {
        }
        return options;
     }()));  
+  },
+
+  notice: function(content, options, end){ //最常用提示层
+    var type = typeof options === 'function', rskin = ready.config.skin;
+    var skin = (rskin ? rskin + ' ' + rskin + '-notice' : '')||'layui-layer-notice';
+    if(type) end = options;
+    return layer.open($.extend({
+      content: content,
+      shade: false,
+      skin: skin,
+      time: 3000,
+      btn: false,
+      area: '330px',
+      resize: false,
+      type: 5,
+      anim:5,
+      offset: 'notice',
+      tipsMore: true,
+      end: end
+    }, type ? {} : options));  
   },
   
   load: function(icon, options){
@@ -193,7 +214,7 @@ Class.pt = Class.prototype;
 
 //缓存常用字符
 var doms = ['layui-layer', '.layui-layer-title', '.layui-layer-main', '.layui-layer-dialog', 'layui-layer-iframe', 'layui-layer-content', 'layui-layer-btn', 'layui-layer-close'];
-doms.anim = ['layer-anim-00', 'layer-anim-01', 'layer-anim-02', 'layer-anim-03', 'layer-anim-04', 'layer-anim-05', 'layer-anim-06'];
+doms.anim = ['layer-anim-00', 'layer-anim-01', 'layer-anim-02', 'layer-anim-03', 'layer-anim-04', 'layer-anim-05', 'layer-anim-06','layer-anim-07'];
 
 //默认配置
 Class.pt.config = {
@@ -304,6 +325,10 @@ Class.pt.creat = function(){
       config.tips = typeof config.tips === 'object' ? config.tips : [config.tips, true];
       config.tipsMore || layer.closeAll('tips');
     break;
+    case 5:
+      config.btn = ('btn' in config) ? config.btn : ready.btn[0];
+      config.tipsMore || layer.closeAll('notice');
+    break;
   }
   
   //建立容器
@@ -343,7 +368,17 @@ Class.pt.creat = function(){
   }
   
   config.time <= 0 || setTimeout(function(){
-    layer.close(that.index)
+    if(config.type == 5){
+      $.each($('.'+doms[0]+'-notice'), function(i, item){
+        var othis = $(this);  
+        if(othis.attr('times') > that.index){
+          othis.offset({top:(othis.offset().top - that.layero.outerHeight() - 16)});
+        }          
+      });
+      layer.close(that.index)
+    }else{
+      layer.close(that.index)
+    }
   }, config.time);
   that.move().callback();
   
@@ -436,6 +471,19 @@ Class.pt.offset = function(){
     } else if(config.offset === 'rb'){ //右下角
       that.offsetTop = win.height() - area[1];
       that.offsetLeft = win.width() - area[0];
+    } else if(config.offset === 'notice'){ 
+      var top = 0;
+      if($('.'+doms[0]+'-notice').length > 1){
+        $.each($('.'+doms[0]+'-notice'), function(){
+          var othis = $(this);  
+          if(this.id !== layero[0].id) {
+            top = top > othis.offset().top ? top : othis.offset().top;
+          }
+        });
+        top = top + area[1];
+      }
+      that.offsetTop = top + 16;
+      that.offsetLeft = win.width() - area[0] - 16;
     } else {
       that.offsetTop = config.offset;
     }
@@ -656,6 +704,14 @@ Class.pt.callback = function(){
   function cancel(){
     var close = config.cancel && config.cancel(that.index, layero);
     close === false || layer.close(that.index);
+    if(that.config.type === 5){
+        $.each($('.'+doms[0]+'-notice'), function(i, item){
+          var othis = $(this);  
+          if(othis.attr('times') > that.index){
+            othis.offset({top:(othis.offset().top - layero.outerHeight() - 16)});
+          }          
+        });
+    }
   }
   
   //右上角关闭回调

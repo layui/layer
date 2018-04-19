@@ -1,0 +1,52 @@
+.layer-element{
+    border-radius: 4px;
+    border: 1px solid #ebeef5;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+}
+.layer-element .layui-layer-title{
+    font-size: 18px;
+    color: #303133;
+    background-color: #fff;
+    border-bottom:none;
+}
+.layer-element-notice .layui-layer-title{
+    font-weight: 700;
+    font-size: 16px;
+    color: #303133;
+    margin: 0;
+    padding-left:27px;
+    height: 30px;
+    border-radius: 16px;
+}
+.layer-element-notice{
+    border-radius: 16px;
+    border: 1px solid #ebeef5;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+}
+.layer-element-notice .layui-layer-content{
+    padding: 5px 27px 13px 27px;
+    font-size: 14px;
+    line-height: 21px;
+    color: #606266;
+    text-align: justify;
+}
+
+
+
+@-webkit-keyframes 
+layer-zoomInRight{
+	0%
+	{opacity:0;-webkit-transform:translateX(400px);
+	transform: translateX(400px);-webkit-animation-timing-function:linear;animation-timing-function:linear}
+	60%
+	{opacity:1;-webkit-transform: translateX(0);
+	transform: translateX(0);-webkit-animation-timing-function:linear;animation-timing-function:linear}}
+@keyframes 
+layer-zoomInRight{
+	0%
+	{opacity:0;-webkit-transform:translateX(400px);
+	transform: translateX(400px);-webkit-animation-timing-function:linear;animation-timing-function:linear}
+	60%
+	{opacity:1;-webkit-transform: translateX(0);
+	transform: translateX(0);-webkit-animation-timing-function:linear;animation-timing-function:linear}}
+    .layer-anim-07{-webkit-animation-name:layer-zoomInRight;animation-name:layer-zoomInRight;animation-duration: 0.8s;-webkit-animation-duration: 0.8s}

@@ -9,8 +9,6 @@
   <script src="../src/layer.js"></script>
 
   <style>
-  html{background-color:#E3E3E3; font-size:14px; color:#000; font-family:'微软雅黑'}
-  a,a:hover{ text-decoration:none;}
   pre{font-family:'微软雅黑'}
   .box{padding:20px; background-color:#fff; margin:50px 100px; border-radius:5px;}
   .box a{padding-right:15px;}
@@ -23,36 +21,30 @@
 </head>
 <body>
 <div class="box">
-<pre>
- @Name：layer-v<script>document.write(layer.v)</script> 弹层组件说明
- @Author：贤心
- @Site：<a href="http://layer.layui.com/"  target="_blank">http://layer.layui.com/</a>
-
-
-<strong>【注意事项】</strong>
-一、使用时，请把文件夹layer整个放置在您站点的任何一个目录，只需引入layer.js即可，除jQuery外，其它文件无需再引入。
-二、如果您的js引入是通过合并处理或者您不想采用layer自动获取的绝对路径，您可以通过layer.config()来配置（详见官网API页）
-三、jquery需1.8+
-四、更多使用说明与演示，请参见layer官网。
-五、使用时请务必保留来源，请勿用于违反我国法律的web平台。
-六、layer遵循LGPL协议，将永久性提供无偿服务。版权最终解释权：贤心。
-</pre>
+<div>
+  <button id="alert">alert</button>
+  <button id="confirm">confirm</button>
+  <button id="msg">msg</button>
+  <button id="Notice">Notice</button>
 </div>
-<div id="layer-photos-demo" class="layer-photos-demo">
-          <img layer-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1488370038114&di=f0daa074625c17c69a5fb32c2bdbd539&imgtype=0&src=http%3A%2F%2F5.595818.com%2Fresource%2Fsoftware%2F000%2F012%2F8921f9deb38bc002007663788b16a11c.jpg" layer-pid="" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1488370038114&di=f0daa074625c17c69a5fb32c2bdbd539&imgtype=0&src=http%3A%2F%2F5.595818.com%2Fresource%2Fsoftware%2F000%2F012%2F8921f9deb38bc002007663788b16a11c.jpg" alt="说好的，一起Fly" layer-index="0">
-          <img layer-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1488370088593&di=d0f708353b8669c93028a71f121f31ae&imgtype=0&src=http%3A%2F%2Fimg002.21cnimg.com%2Fphotos%2Falbum%2F20160326%2Fm600%2FB920004B5414AE4C7D6F2BAB2966491E.jpeg" layer-pid="" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1488370088593&di=d0f708353b8669c93028a71f121f31ae&imgtype=0&src=http%3A%2F%2Fimg002.21cnimg.com%2Fphotos%2Falbum%2F20160326%2Fm600%2FB920004B5414AE4C7D6F2BAB2966491E.jpeg" alt="LayIM" layer-index="1">
-          <img layer-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1488964839&di=dc21870ce25fb4a47694e6b127b16e49&imgtype=jpg&er=1&src=http%3A%2F%2Fd.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F3b87e950352ac65c1b6a0042f9f2b21193138a97.jpg" layer-pid="" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1488964839&di=dc21870ce25fb4a47694e6b127b16e49&imgtype=jpg&er=1&src=http%3A%2F%2Fd.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F3b87e950352ac65c1b6a0042f9f2b21193138a97.jpg" alt="佟丽娅女神" layer-index="2">
-          <img layer-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1488370253653&di=38f81ea3150d22adc14adfeba97f2851&imgtype=0&src=http%3A%2F%2Fimg.bbs.cnhubei.com%2Fforum%2Fdvbbs%2F2004-4%2F200441915031894.jpg" layer-pid="" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1488370253653&di=38f81ea3150d22adc14adfeba97f2851&imgtype=0&src=http%3A%2F%2Fimg.bbs.cnhubei.com%2Fforum%2Fdvbbs%2F2004-4%2F200441915031894.jpg" alt="凤姐是个好人" layer-index="3">
+</div>
+<!-- <div id="layer-photos-demo" class="layer-photos-demo">
+
         </div>
 <div class="box" style="text-align:center">
   <a href="http://layer.layui.com/" target="_blank">更多示例</a>
   <a href="http://www.layui.com/doc/modules/layer.html" target="_blank">使用文档</a>
   <a href="http://fly.layui.com/" id="suggest">交流反馈</a>
   <a href="javascript:;" id="about">关于</a>
-</div>
+</div> -->
 
 <script>
 ;!function(){
+
+  layer.config({
+    extend: 'element/style.css', //加载新皮肤
+    skin: 'layer-element' //一旦设定，所有弹层风格都采用此主题。
+  });
 
 layer.photos({
   photos: '#layer-photos-demo'
@@ -62,6 +54,27 @@ layer.photos({
 //关于
 $('#about').on('click', function(){
   layer.alert(layer.v + ' - 贤心出品 sentsin.com');
+});
+$('#alert').on('click',function(){
+  layer.alert('内容',{anim:0,icon: 1});//, {icon: 1}
+});
+$('#confirm').on('click',function(){
+  layer.confirm('您是如何看待前端开发？', {
+    btn: ['重要','奇葩'] //按钮
+  }, function(){
+    layer.msg('的确很重要', {icon: 1});
+  }, function(){
+    layer.msg('也可以这样', {
+      time: 20000, //20s后自动关闭
+      btn: ['明白了', '知道了']
+    });
+  });
+});
+$('#msg').on('click',function(){
+  layer.msg('内容',{anim:3,icon: 1})//, {icon: 1}
+});
+$('#Notice').on('click',function(){
+  layer.notice('内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容',{title:'提示',anim:7,icon: 1})//, {icon: 1}
 });
 
 }();
