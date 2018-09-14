@@ -995,10 +995,10 @@ layer.prompt = function(options, yes){
     ,content: content
     ,skin: 'layui-layer-prompt' + skin('prompt')
     ,maxWidth: win.width()
-    ,success: function(layero){
+    ,success: function(layero,index){
       prompt = layero.find('.layui-layer-input');
       prompt.focus();
-      typeof success === 'function' && success(layero);
+      typeof success === 'function' && success(layero,index);
     }
     ,resize: false
     ,yes: function(index){
