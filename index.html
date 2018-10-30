@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>手机版测试</title>
+    <script src="http://cdn.bootcss.com/jquery/1.12.3/jquery.min.js"></script>
+    <script src="dist/mobile/layer.js"></script>
+    <style>
+        body {
+            font-family: 'seanfont', "microsoft yahei";
+            font-size: 14px;
+            line-height: 22px;
+            color: #333;
+            padding: 10px;
+            margin: 0;
+        }
+        h1 {
+            font-size: 16px;
+        }
+        .btn {
+            margin: 0 10px 10px 0;
+            padding: 0 18px;
+            display: inline-block;
+            height: 38px;
+            line-height: 38px;
+            background-color: #fff;
+            white-space: nowrap;
+            text-align: center;
+            font-size: 14px;
+            border: 1px solid #C9C9C9;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>点击下面的按钮体验新功能：</h1>
+    <div class="btn" id="loading0">layer原有的loading</div>
+    <div class="btn" id="loading1">新添加的loading</div>
+
+    <script>
+        $(function(){
+            $("#loading0").on("click", function(){
+                layer.open({type: 2, content: '数据加载中...'});
+            });
+            $("#loading1").on("click", function(){
+                layer.open({type: 2, loadingType: 1, content: '数据加载中...'});
+            });
+        });
+    </script>
+</body>
+</html>
