@@ -22,6 +22,7 @@ var config = {
   ,shadeClose: true
   ,fixed: true
   ,anim: 'scale' //默认动画类型
+  ,loadingType: 0 // type为2时选择loading类型
 };
 
 var ready = {
@@ -84,7 +85,11 @@ Layer.prototype.view = function(){
   }
   
   if(config.type === 2){
-    config.content = '<i></i><i class="layui-m-layerload"></i><i></i><p>'+ (config.content||'') +'</p>';
+    if(config.loadingType === 0){
+      config.content = '<i></i><i class="layui-m-layerload"></i><i></i><p>'+ (config.content||'') +'</p>';
+    }else if(config.loadingType === 1){
+      config.content = '<i class="layui-m-layerload1"></i><p>'+ (config.content||'') +'</p>';
+    }
   }
   
   if(config.skin) config.anim = 'up';

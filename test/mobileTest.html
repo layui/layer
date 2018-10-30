@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>手机版测试</title>
+    <script src="http://cdn.bootcss.com/jquery/1.12.3/jquery.min.js"></script>
+    <script src="../dist/mobile/layer.js"></script>
+</head>
+<body>
+    <div id="loading0">自带loading</div>
+    <div id="loading1">loading旋转</div>
+
+    <script>
+        $(function(){
+            $("#loading0").on("click", function(){
+                layer.open({type: 2, content: '数据加载中...'});
+            });
+            $("#loading1").on("click", function(){
+                layer.open({type: 2, loadingType: 1, content: '数据加载中...'});
+            });
+        });
+    </script>
+</body>
+</html>

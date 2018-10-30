@@ -48,7 +48,7 @@
 .layui-m-layer2 .layui-m-layercont i{width:25px; height:25px; margin-left:8px; display:inline-block; background-color:#fff; border-radius:100%;}
 .layui-m-layer2 .layui-m-layercont p{margin-top: 20px;}
 
-/* loading */
+/* loadingType: 0 */
 @-webkit-keyframes layui-m-anim-loading{
     0%,80%,100%{transform:scale(0); -webkit-transform:scale(0)}
     40%{transform:scale(1); -webkit-transform:scale(1)}
@@ -57,10 +57,22 @@
     0%,80%,100%{transform:scale(0); -webkit-transform:scale(0)}
     40%{transform:scale(1); -webkit-transform:scale(1)}
 }
+/* loadingType: 1 */
+@-webkit-keyframes layui-m-anim-loading1 {
+  0%{-webkit-transform: rotate(0deg);transform: rotate(0deg)}
+  100%{-webkit-transform: rotate(1turn);transform: rotate(1turn)}
+}
+@keyframes layui-m-anim-loading1 {
+  0%{-webkit-transform: rotate(0deg);transform: rotate(0deg)}
+  100%{-webkit-transform: rotate(1turn);transform: rotate(1turn)}
+}
 .layui-m-layer2 .layui-m-layercont i{-webkit-animation: layui-m-anim-loading 1.4s infinite ease-in-out; animation: layui-m-anim-loading 1.4s infinite ease-in-out; -webkit-animation-fill-mode: both; animation-fill-mode: both;}
 
 .layui-m-layer2 .layui-m-layercont i:first-child{margin-left:0; -webkit-animation-delay: -.32s; animation-delay: -.32s;}
 .layui-m-layer2 .layui-m-layercont i.layui-m-layerload{-webkit-animation-delay: -.16s; animation-delay: -.16s;}
+.layui-m-layer2 .layui-m-layercont i.layui-m-layerload1{width: 36px;height: 36px;display: inline-block;vertical-align: middle;-webkit-animation: layui-m-anim-loading1 1s steps(12) infinite;animation: layui-m-anim-loading1 1s steps(12) infinite;
+  background: transparent url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHBhdGggZmlsbD0ibm9uZSIgZD0iTTAgMGgxMDB2MTAwSDB6Ii8+PHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iMjAiIHg9IjQ2LjUiIHk9IjQwIiBmaWxsPSIjRTlFOUU5IiByeD0iNSIgcnk9IjUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgLTMwKSIvPjxyZWN0IHdpZHRoPSI3IiBoZWlnaHQ9IjIwIiB4PSI0Ni41IiB5PSI0MCIgZmlsbD0iIzk4OTY5NyIgcng9IjUiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSgzMCAxMDUuOTggNjUpIi8+PHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iMjAiIHg9IjQ2LjUiIHk9IjQwIiBmaWxsPSIjOUI5OTlBIiByeD0iNSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKDYwIDc1Ljk4IDY1KSIvPjxyZWN0IHdpZHRoPSI3IiBoZWlnaHQ9IjIwIiB4PSI0Ni41IiB5PSI0MCIgZmlsbD0iI0EzQTFBMiIgcng9IjUiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSg5MCA2NSA2NSkiLz48cmVjdCB3aWR0aD0iNyIgaGVpZ2h0PSIyMCIgeD0iNDYuNSIgeT0iNDAiIGZpbGw9IiNBQkE5QUEiIHJ4PSI1IiByeT0iNSIgdHJhbnNmb3JtPSJyb3RhdGUoMTIwIDU4LjY2IDY1KSIvPjxyZWN0IHdpZHRoPSI3IiBoZWlnaHQ9IjIwIiB4PSI0Ni41IiB5PSI0MCIgZmlsbD0iI0IyQjJCMiIgcng9IjUiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSgxNTAgNTQuMDIgNjUpIi8+PHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iMjAiIHg9IjQ2LjUiIHk9IjQwIiBmaWxsPSIjQkFCOEI5IiByeD0iNSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKDE4MCA1MCA2NSkiLz48cmVjdCB3aWR0aD0iNyIgaGVpZ2h0PSIyMCIgeD0iNDYuNSIgeT0iNDAiIGZpbGw9IiNDMkMwQzEiIHJ4PSI1IiByeT0iNSIgdHJhbnNmb3JtPSJyb3RhdGUoLTE1MCA0NS45OCA2NSkiLz48cmVjdCB3aWR0aD0iNyIgaGVpZ2h0PSIyMCIgeD0iNDYuNSIgeT0iNDAiIGZpbGw9IiNDQkNCQ0IiIHJ4PSI1IiByeT0iNSIgdHJhbnNmb3JtPSJyb3RhdGUoLTEyMCA0MS4zNCA2NSkiLz48cmVjdCB3aWR0aD0iNyIgaGVpZ2h0PSIyMCIgeD0iNDYuNSIgeT0iNDAiIGZpbGw9IiNEMkQyRDIiIHJ4PSI1IiByeT0iNSIgdHJhbnNmb3JtPSJyb3RhdGUoLTkwIDM1IDY1KSIvPjxyZWN0IHdpZHRoPSI3IiBoZWlnaHQ9IjIwIiB4PSI0Ni41IiB5PSI0MCIgZmlsbD0iI0RBREFEQSIgcng9IjUiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSgtNjAgMjQuMDIgNjUpIi8+PHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iMjAiIHg9IjQ2LjUiIHk9IjQwIiBmaWxsPSIjRTJFMkUyIiByeD0iNSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKC0zMCAtNS45OCA2NSkiLz48L3N2Zz4=) no-repeat;
+  background-size: 100%}
 .layui-m-layer2 .layui-m-layercont>div{line-height:22px; padding-top:7px; margin-bottom:20px; font-size: 14px;}
 .layui-m-layerbtn{display: box; display: -moz-box; display: -webkit-box; width: 100%; position:relative; height: 50px; line-height: 50px; font-size: 0; text-align:center;  border-top:1px solid #D0D0D0; background-color: #F2F2F2; border-radius: 0 0 5px 5px;}
 .layui-m-layerbtn span{position:relative; display: block; -moz-box-flex: 1; box-flex: 1; -webkit-box-flex: 1;  text-align:center; font-size:14px; border-radius: 0 0 5px 5px; cursor:pointer;}
