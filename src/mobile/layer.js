@@ -84,21 +84,26 @@ Layer.prototype.view = function(){
     config.style += ' top:'+ ( doc.body.scrollTop + config.top) + 'px';
   }
   
+  // 加载区域
   if(config.type === 2){
     if(config.loadingType === 0){
-      config.content = '<i></i><i class="layui-m-layerload"></i><i></i><p>'+ (config.content||'') +'</p>';
-    }else if(config.loadingType === 1){
-      config.content = '<i class="layui-m-layerload1"></i><p>'+ (config.content||'') +'</p>';
+      config.content = '<i class="layui-m-layerload-default"></i><i class="layui-m-layerload-default layui-m-layerload"></i><i class="layui-m-layerload-default"></i><p>'+ (config.content||'') +'</p>';
+    }else{
+      var loadingClass = '';
+      (config.loadingType === 1 || config.loadingType === 4) && (loadingClass = 'layui-m-layerload-type1');
+      (config.loadingType === 2 || config.loadingType === 5) && (loadingClass = 'layui-m-layerload-type2');
+      (config.loadingType === 3 || config.loadingType === 6) && (loadingClass = 'layui-m-layerload-type3');
+      config.content = '<i class="' + loadingClass + '"></i><p>'+ (config.content||'') +'</p>';
     }
   }
   
   if(config.skin) config.anim = 'up';
   if(config.skin === 'msg') config.shade = false;
   
-  layerbox.innerHTML = (config.shade ? '<div '+ (typeof config.shade === 'string' ? 'style="'+ config.shade +'"' : '') +' class="layui-m-layershade"></div>' : '')
+  layerbox.innerHTML = (config.shade ? '<div '+ (typeof config.shade === 'string' ? 'style="'+ config.shade +'"' : '') +' class="layui-m-layershade ' + (config.loadingType > 3 ? 'layui-m-layershade-transparent' : '') +'"></div>' : '')
   +'<div class="layui-m-layermain" '+ (!config.fixed ? 'style="position:static;"' : '') +'>'
     +'<div class="layui-m-layersection">'
-      +'<div class="layui-m-layerchild '+ (config.skin ? 'layui-m-layer-' + config.skin + ' ' : '') + (config.className ? config.className : '') + ' ' + (config.anim ? 'layui-m-anim-' + config.anim : '') +'" ' + ( config.style ? 'style="'+config.style+'"' : '' ) +'>'
+      +'<div class="layui-m-layerchild '+ (config.skin ? 'layui-m-layer-' + config.skin + ' ' : '') + (config.className ? config.className : '') + ' ' + (config.anim ? 'layui-m-anim-' + config.anim : '') + ' ' + (config.loadingType > 3 ? 'layui-m-layerchild-transparent' : '') +'" ' + ( config.style ? 'style="'+config.style+'"' : '' ) +'>'
         + title
         +'<div class="layui-m-layercont">'+ config.content +'</div>'
         + button

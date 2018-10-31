@@ -15,4 +15,10 @@ layer致力于打造国内最盛行的弹层组件，为web开发提供强劲动
 
 ## 二次开发
 主要是对移动版的 `layer` 增加一些自己需要的功能，[点击体验](https://fxss5201.github.io/layer/)：
- 1. loading 增加一种新的样式，只需要在原有的 `layer.open` 基础上参数上设置 `loadingType: 1` 就可以调用新的 loading 样式
+ 1. loading 增加了多种新的样式，只需要在原有的 `layer.open` 基础上参数上设置 `loadingType` 参数就可以调用新的 loading 样式
+     * `loadingType: 1`：全页面的新 loading
+     * `loadingType: 2`：全页面的 loading 成功样式
+     * `loadingType: 3`：全页面的 loading 失败样式
+     * `loadingType: 4`：小区域的新 loading
+     * `loadingType: 5`：小区域的 loading 成功样式
+     * `loadingType: 6`：小区域的 loading 失败样式

@@ -19,6 +19,9 @@
         h1 {
             font-size: 16px;
         }
+        h2 {
+            font-size: 14px;
+        }
         .btn {
             margin: 0 10px 10px 0;
             padding: 0 18px;
@@ -33,12 +36,19 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        
     </style>
 </head>
 <body>
     <h1>点击下面的按钮体验新功能：</h1>
+    <h2>加载：</h2>
     <div class="btn" id="loading0">layer原有的loading</div>
-    <div class="btn" id="loading1">新添加的loading</div>
+    <div class="btn" id="loading1">loadingType: 1</div>
+    <div class="btn" id="loading2">loadingType: 2</div>
+    <div class="btn" id="loading3">loadingType: 3</div>
+    <div class="btn" id="loading4">loadingType: 4</div>
+    <div class="btn" id="loading5">loadingType: 5</div>
+    <div class="btn" id="loading6">loadingType: 6</div>
 
     <script>
         $(function(){
@@ -47,6 +57,21 @@
             });
             $("#loading1").on("click", function(){
                 layer.open({type: 2, loadingType: 1, content: '数据加载中...'});
+            });
+            $("#loading2").on("click", function(){
+                layer.open({type: 2, loadingType: 2, content: '数据获取成功'});
+            });
+            $("#loading3").on("click", function(){
+                layer.open({type: 2, loadingType: 3, content: '数据获取失败'});
+            });
+            $("#loading4").on("click", function(){
+                layer.open({type: 2, loadingType: 4, content: '数据加载中...'});
+            });
+            $("#loading5").on("click", function(){
+                layer.open({type: 2, loadingType: 5, content: '数据获取成功'});
+            });
+            $("#loading6").on("click", function(){
+                layer.open({type: 2, loadingType: 6, content: '数据获取失败'});
             });
         });
     </script>
