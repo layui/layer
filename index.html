@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>手机版测试</title>
     <script src="https://cdn.bootcss.com/jquery/1.12.3/jquery.min.js"></script>
-    <script src="dist/mobile/layer.js?_v=0.0.01"></script>
+    <script src="dist/mobile/layer.js?_v=0.0.02"></script>
     <style>
         body {
             font-family: 'seanfont', "microsoft yahei";
@@ -56,7 +56,7 @@
                 layer.open({type: 2, content: '数据加载中...'});
             });
             $("#loading1").on("click", function(){
-                layer.open({type: 2, loadingType: 1, content: '数据加载中...', anim: false});
+                layer.open({type: 2, loadingType: 1, content: '数据加载中...'});
             });
             $("#loading2").on("click", function(){
                 layer.open({type: 2, loadingType: 2, content: '数据获取成功'});
@@ -65,7 +65,7 @@
                 layer.open({type: 2, loadingType: 3, content: '数据获取失败'});
             });
             $("#loading4").on("click", function(){
-                layer.open({type: 2, loadingType: 4, content: '数据加载中...', anim: false});
+                layer.open({type: 2, loadingType: 4, content: '数据加载中...'});
             });
             $("#loading5").on("click", function(){
                 layer.open({type: 2, loadingType: 5, content: '数据获取成功'});

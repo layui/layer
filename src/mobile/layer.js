@@ -90,7 +90,7 @@ Layer.prototype.view = function(){
       config.content = '<i class="layui-m-layerload-default"></i><i class="layui-m-layerload-default layui-m-layerload"></i><i class="layui-m-layerload-default"></i><p>'+ (config.content||'') +'</p>';
     }else{
       var loadingClass = '';
-      (config.loadingType === 1 || config.loadingType === 4) && (loadingClass = 'layui-m-layerload-type1');
+      if(config.loadingType === 1 || config.loadingType === 4){loadingClass = 'layui-m-layerload-type1';config.anim = false;}
       (config.loadingType === 2 || config.loadingType === 5) && (loadingClass = 'layui-m-layerload-type2');
       (config.loadingType === 3 || config.loadingType === 6) && (loadingClass = 'layui-m-layerload-type3');
       config.content = '<i class="' + loadingClass + '"></i><p>'+ (config.content||'') +'</p>';
