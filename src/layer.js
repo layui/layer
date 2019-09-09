@@ -409,7 +409,7 @@ Class.pt.offset = function(){
   var area = [layero.outerWidth(), layero.outerHeight()];
   var type = typeof config.offset === 'object';
   that.offsetTop = (win.height() - area[1])/2;
-  that.offsetLeft = (win.width() - area[0])/2;
+  that.offsetLeft = ((window.innerWidth) - area[0])/2;
   
   if(type){
     that.offsetTop = config.offset[0];
