@@ -1,7 +1,7 @@
 {
   "name": "layer",
   "main": "src/layer.js",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "homepage": "https://github.com/sentsin/layer",
   "authors": [
     "sentsin <xu@sentsin.com>"

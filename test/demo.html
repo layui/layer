@@ -26,25 +26,24 @@
 <body>
 <div class="box">
 <pre>
- @Name：layer-v<script>document.write(layer.v)</script> 弹层组件说明
- @Author：贤心
- @Site：<a href="http://layer.layui.com/"  target="_blank">http://layer.layui.com/</a>
+ @Name：layer
+ @Version：v<script>document.write(layer.v)</script>
+ @Description：通用 Web 弹层组件
 
 
 <strong>【注意事项】</strong>
-一、使用时，请把文件夹layer整个放置在您站点的任何一个目录，只需引入layer.js即可，除jQuery外，其它文件无需再引入。
-二、如果您的js引入是通过合并处理或者您不想采用layer自动获取的绝对路径，您可以通过layer.config()来配置（详见官网API页）
-三、jquery需1.8+
-四、更多使用说明与演示，请参见layer官网。
-五、使用时请务必保留来源，请勿用于违反我国法律法规的web平台。
-六、layer遵循MIT开源协议，将永久性提供无偿服务。
+一、使用时，请把文件夹 layer 整个放置在您站点的任何一个目录，只需引入 layer.js 即可，除 jQuery 外，其它文件无需再引入。
+二、如果您的 js 引入是通过合并处理或者您不想采用layer自动获取的绝对路径，您可以通过 layer.config() 来配置（详见官网 API 页）
+三、jQuery 需 1.8+
+四、更多使用说明与演示，请参见 layer 官网。
+五、使用时请务必保留来源，请勿用于违反我国法律法规的 Web 平台。
+六、layer 是一款无偿的公益性项目，遵循 MIT 开源协议。
 </pre>
 </div>
 
 <div class="box" style="text-align:center">
   <a href="http://layer.layui.com/" target="_blank">更多示例</a>
   <a href="http://www.layui.com/doc/modules/layer.html" target="_blank">使用文档</a>
-  <a href="http://fly.layui.com/" id="suggest">交流反馈</a>
   <a href="javascript:;" id="about">关于</a>
 </div>
 
@@ -68,7 +67,7 @@ layer.ready(function(){
 
 //关于
 $('#about').on('click', function(){
-  layer.alert(layer.v + ' - 贤心出品 sentsin.com');
+  layer.alert('layui 出品');
 });
 
 }();

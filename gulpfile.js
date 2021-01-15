@@ -1,5 +1,5 @@
 ﻿/**
- layer构建
+ layer 构建
 */
 
 var pkg = require('./package.json');
@@ -20,13 +20,13 @@ var task = {
     .pipe(gulp.dest('./dist'));
     
     return gulp.src('./src/layer.js').pipe(uglify())
-     .pipe(header('/*! <%= pkg.realname %>-v<%= pkg.version %> <%= pkg.description %> <%= pkg.license %> License  <%= pkg.homepage %>  By <%= pkg.author %> */\n ;', {pkg: pkg}))
+     .pipe(header('/** <%= pkg.realname %>-v<%= pkg.version %> <%= pkg.description %> <%= pkg.license %> License */\n ;', {pkg: pkg}))
     .pipe(gulp.dest('./dist'));
     
   }
   ,mobile: function() {
     return gulp.src('./src/mobile/layer.js').pipe(uglify())
-     .pipe(header('/*! <%= pkg.realname %> mobile-v<%= pkg.mobile %> <%= pkg.description %> <%= pkg.license %> License  <%= pkg.homepage %>mobile  By <%= pkg.author %> */\n ;', {pkg: pkg}))
+     .pipe(header('/*! <%= pkg.realname %> mobile-v<%= pkg.mobile %> <%= pkg.description %> <%= pkg.license %> License */\n ;', {pkg: pkg}))
     .pipe(gulp.dest('./dist/mobile'));
   }
   ,other: function(){
