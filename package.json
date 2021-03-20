@@ -1,9 +1,9 @@
 {
   "name": "layui-layer",
   "realname": "layer",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "mobile": "2.0.0",
-  "description": "Web 弹层组件",
+  "description": "Web 通用弹出层组件",
   "main": "src/layer.js",
   "license": "MIT",
   "scripts": {
@@ -13,7 +13,6 @@
     "type": "https",
     "url": "git+https://github.com/sentsin/layer.git"
   },
-  "author": "贤心",
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-minify-css": "^1.2.4",

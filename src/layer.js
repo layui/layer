@@ -1,7 +1,6 @@
 /**
 
- @Name：layer-v3.2.0 Web 弹层组件
- @Author：贤心
+ @Name：layer - Web 弹出层组件
  @License：MIT
     
  */
@@ -71,7 +70,7 @@ var isLayui = window.layui && layui.define, $, win, ready = {
 
 //默认内置方法。
 var layer = {
-  v: '3.2.0',
+  v: '3.3.0',
   ie: function(){ //ie版本
     var agent = navigator.userAgent.toLowerCase();
     return (!!window.ActiveXObject || "ActiveXObject" in window) ? (
@@ -174,17 +173,22 @@ var layer = {
       shade: false,
       resize: false,
       fixed: false,
-      maxWidth: 210
+      maxWidth: 260
     }, options));
   }
 };
 
 var Class = function(setings){  
-  var that = this;
+  var that = this, creat = function(){
+    layer.ready(function(){
+      that.creat();
+    });
+  };
   that.index = ++layer.index;
+  that.config.maxWidth = $(win).width() - 15*2; //初始最大宽度：当前屏幕宽，左右留 15px 边距
   that.config = $.extend({}, that.config, ready.config, setings);
-  document.body ? that.creat() : setTimeout(function(){
-    that.creat();
+  document.body ? creat() : setTimeout(function(){
+    creat();
   }, 30);
 };
 
@@ -286,7 +290,7 @@ Class.pt.creat = function(){
       layer.closeAll('dialog');
     break;
     case 2:
-      var content = config.content = conType ? config.content : [config.content||'http://layer.layui.com', 'auto'];
+      var content = config.content = conType ? config.content : [config.content||'', 'auto'];
       config.content = '<iframe scrolling="'+ (config.content[1]||'auto') +'" allowtransparency="true" id="'+ doms[4] +''+ times +'" name="'+ doms[4] +''+ times +'" onload="this.className=\'\';" class="layui-layer-load" frameborder="0" src="' + config.content[0] + '"></iframe>';
     break;
     case 3:
@@ -981,8 +985,8 @@ layer.prompt = function(options, yes){
     style = 'style="width: '+ area[0] +'; height: '+ area[1] + ';"';
     delete options.area;
   }
-  var prompt, content = options.formType == 2 ? '<textarea class="layui-layer-input"' + style +'>' + (options.value||'') +'</textarea>' : function(){
-    return '<input type="'+ (options.formType == 1 ? 'password' : 'text') +'" class="layui-layer-input" value="'+ (options.value||'') +'">';
+  var prompt, content = options.formType == 2 ? '<textarea class="layui-layer-input"' + style +'></textarea>' : function(){
+    return '<input type="'+ (options.formType == 1 ? 'password' : 'text') +'" class="layui-layer-input">';
   }();
   
   var success = options.success;
@@ -996,7 +1000,7 @@ layer.prompt = function(options, yes){
     ,maxWidth: win.width()
     ,success: function(layero){
       prompt = layero.find('.layui-layer-input');
-      prompt.focus();
+      prompt.val(options.value || '').focus();
       typeof success === 'function' && success(layero);
     }
     ,resize: false
