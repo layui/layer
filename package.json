@@ -1,7 +1,7 @@
 {
-  "name": "layui-layer",
+  "name": "layui/layer",
   "realname": "layer",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "mobile": "2.0.0",
   "description": "Web 通用弹出层组件",
   "main": "src/layer.js",
@@ -29,6 +29,7 @@
   },
   "dependencies": {},
   "keywords": [
+    "layui",
     "layer",
     "dialog",
     "tips",
