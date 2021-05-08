@@ -20,7 +20,7 @@ var task = {
     .pipe(gulp.dest('./dist'));
     
     return gulp.src('./src/layer.js').pipe(uglify())
-     .pipe(header('/** <%= pkg.realname %>-v<%= pkg.version %> <%= pkg.description %> <%= pkg.license %> License */\n ;', {pkg: pkg}))
+     .pipe(header('/*! <%= pkg.realname %>-v<%= pkg.version %> <%= pkg.description %> <%= pkg.license %> License */\n ;', {pkg: pkg}))
     .pipe(gulp.dest('./dist'));
     
   }
