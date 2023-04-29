@@ -982,6 +982,8 @@ layer.close = function(index, callback){
           layero.find('.'+doms[5])[0].removeChild(iframe);
         } catch(e){}
       }
+      //这里的innerHTML 在IE9中调用关闭导致IE崩溃
+     //我使用这里注释了下面第一行，元芳怎么看？
       layero[0].innerHTML = '';
       layero.remove();
     }
